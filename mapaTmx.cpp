@@ -58,7 +58,7 @@ mapaTmx::mapaTmx() {
     }
 
     cout << "INICIALIZADOS LOS TILEMAP 1" << endl;
-    
+     
     tilemapSprite = new Sprite***[numlayers];
 
     for (int l = 0; l < numlayers; l++) {

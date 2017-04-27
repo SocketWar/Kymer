@@ -1,7 +1,7 @@
-#include <iostream>
 #include "cabecera.hpp"
 #include "Estado.h"
 #include "mapaTmx.h"
+
 const int update = 1000 / 25;
 const int frameskip = 5;
 int anchura = 800;
@@ -63,7 +63,6 @@ int main() {
                 if (evento.type == Event::Closed)
                     Window.close();
 
-
                 if (Keyboard::isKeyPressed(Keyboard::W))
                     cuadrado.move(0, -tiempo.asSeconds() * velocidad);
 
@@ -88,7 +87,7 @@ int main() {
         cuadrado.setPosition(movinterpoladox, movinterpoladoy);
 
 
-        Window.clear(); 
+        Window.clear(Color(150, 200, 200)); 
         m->muestraMapa(Window);
         Window.draw(cuadrado);
         Window.display();

@@ -4,7 +4,7 @@ mapaTmx::mapaTmx() {
     cout << "ENTRADO EN CONSTRUCTOR" << endl;
 
     tex = new Texture();
-    if (!tex->loadFromFile("res/img/map.png")) {
+    if (!tex->loadFromFile("res/img/sheet.png")) {
         cerr << "Error cargando la imagen map.png";
         exit(0);
     }
@@ -101,15 +101,10 @@ mapaTmx::mapaTmx() {
 }
 
 void mapaTmx::muestraMapa(RenderWindow &window) {
-    cout << "INCIO MUESTRA MAPA" << endl;
-
     for (int l = 0; l < numlayers; l++) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int gid = tilemap[l][y][x] - 1;
-                cout << "GID: " << gid << endl;
-
-                cout << " X: " << x << " Y: " << y << " L: " << l << endl;
                 if (gid >= 0) {
                     tilemapSprite[l][y][x]->setTextureRect(sprites[gid].getTextureRect());
                     tilemapSprite[l][y][x]->setPosition(x*tileWidth, y * tileHeight);

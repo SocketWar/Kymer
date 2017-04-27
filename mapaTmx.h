@@ -13,22 +13,34 @@ using namespace tinyxml2;
 class mapaTmx {
 public:
     mapaTmx();
-    void muestraMapa(RenderWindow &window);
+    void CargaPropiedades();
+    void MuestraMapa(RenderWindow &window);
+    void Muestrainfo();
     
     int width;
     int height;
-    int tileWidth;
-    int tileHeight;
+    //Vector2i dimension;
+    Vector2i tileSheetDim;
+    
+    int tileSheetWidth;
+    int tileSheetHeight;
+    
+    //int imageSheet
+    
+    int size;
+    int space;
+    int numlayers;
     
     Texture *tex;
     XMLDocument *doc;
     XMLElement *map;
+    XMLElement *tileset;
+    XMLElement *image;
     
     Sprite ****tilemapSprite;
     int ***tilemap;
     
     XMLElement *layer;
-    int numlayers;
     Sprite *sprites;
     
     XMLElement *lay;

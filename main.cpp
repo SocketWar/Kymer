@@ -88,7 +88,7 @@ int main() {
 
 
         Window.clear(Color(150, 200, 200)); 
-        m->muestraMapa(Window);
+        m->MuestraMapa(Window);
         Window.draw(cuadrado);
         Window.display();
     }

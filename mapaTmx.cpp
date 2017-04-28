@@ -101,51 +101,61 @@ mapaTmx::mapaTmx(){
     };
     
     //if (!load("res/img/sheet.png", dimTiles, level, 16, 8))
-    if (!load("res/img/sheet.png", dimTiles, tilemap[0], Vector2i(16, 8)))
+    if (!load("res/img/sheet.png", dimTiles, tilemap, dimEnTiles))
         cout<< "PUTA MIERDA" << endl;
     
     Muestrainfo();
 }
 
-bool mapaTmx::load(const string &tileset, Vector2i tileSize, int **tiles, Vector2i dimensiones) {
+bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vector2i dimensiones) {
     // load the tileset texture
     if (!m_tileset.loadFromFile(tileset))
         return false;
+
+    int capaActual = 4;
+
 
     // resize the vertex array to fit the level size
     m_vertices.setPrimitiveType(Quads);
     m_vertices.resize(dimensiones.x * dimensiones.y * 4);
 
-    
-    //for (int l = 0; l < numlayers; l++) {
-    // populate the vertex array, with one quad per tile
-    for (unsigned int y = 0; y < dimensiones.x; ++y) {
-        for (unsigned int x = 0; x < dimensiones.y; ++x) {
-            // get the current tile number
-            int tileNumber = tiles[0][y + x * dimensiones.x];
-            //int tileNumber = tiles[y][x * dimensiones.x];
-            
-            
-            // find its position in the tileset texture
-            int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
-            int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
+    int amount = 0;
+    for (int l = 0; l < numlayers; l++) {
+        // populate the vertex array, with one quad per tile
+        for (unsigned int y = 0; y < dimensiones.x; ++y) {
+            for (unsigned int x = 0; x < dimensiones.y; ++x) {
+                amount++;
+                // get the current tile number
+                int tileNumber = tiles[l][0][y + x * dimensiones.x];
+                //int tileNumber = tiles[y][x * dimensiones.x];
+                if (tileNumber > 0) {
 
-            // get a pointer to the current tile's quad
-            sf::Vertex* quad = &m_vertices[(y + x * dimensiones.x) * 4];
+                    // find its position in the tileset texture
+                    int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
+                    int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
 
-            // define its 4 corners
-            quad[0].position = sf::Vector2f(y * tileSize.x, x * tileSize.y);
-            quad[1].position = sf::Vector2f((y + 1) * tileSize.x, x * tileSize.y);
-            quad[2].position = sf::Vector2f((y + 1) * tileSize.x, (x + 1) * tileSize.y);
-            quad[3].position = sf::Vector2f(y * tileSize.x, (x + 1) * tileSize.y);
+                    cout << "TILENUMBER: " << tileNumber << endl;
+                    //cout << "TU: " << tu << " TV: " << tv << endl;
 
-            // define its 4 texture coordinates
-            quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-            quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-            quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+                    // get a pointer to the current tile's quad
+                    sf::Vertex* quad = &m_vertices[(y + x * dimensiones.x) * 4];
+
+                    // define its 4 corners
+                    quad[0].position = sf::Vector2f(y * tileSize.x, x * tileSize.y);
+                    quad[1].position = sf::Vector2f((y + 1) * tileSize.x, x * tileSize.y);
+                    quad[2].position = sf::Vector2f((y + 1) * tileSize.x, (x + 1) * tileSize.y);
+                    quad[3].position = sf::Vector2f(y * tileSize.x, (x + 1) * tileSize.y);
+
+                    // define its 4 texture coordinates
+                    quad[0].texCoords = sf::Vector2f(tu * tileSize.x + space, tv * tileSize.y + space);
+                    quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x + space, tv * tileSize.y + space);
+                    quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x + space, (tv + 1) * tileSize.y + space);
+                    quad[3].texCoords = sf::Vector2f(tu * tileSize.x + space, (tv + 1) * tileSize.y + space);
+                }
+            }
         }
     }
+    cout << "AMOUNT " << amount << endl;
 
     return true;
 }

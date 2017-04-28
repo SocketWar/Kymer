@@ -33,13 +33,12 @@ mapaTmx::mapaTmx(){
         layer = layer->NextSiblingElement("layer");
     }
     cout << "OK" << endl;
-
+    
     cout << "CREANDO LOS SPRITES DE CAPAS...";
     sprites = new Sprite[tileCount];
     for (int c = 0; c < tileCount; c++) {
         sprites[c].setTexture(*tex);
-        sprites[c].setTextureRect(
-            IntRect(c*dimTiles.x + space, 0, dimTiles.x, dimTiles.y));
+        sprites[c].setTextureRect(IntRect(c*dimTiles.x + space, 0, dimTiles.x, dimTiles.y));
     }
     cout << "OK" << endl;
     
@@ -90,7 +89,7 @@ mapaTmx::mapaTmx(){
     if(load("res/img/sheet.png", dimTiles, tilemap, dimEnTiles))
         cout<< "LOAD...OK" << endl;
     
-    Muestrainfo();
+    //Muestrainfo();
 }
 
 bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vector2i dimensiones) {
@@ -107,31 +106,29 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
         for (unsigned int y = 0; y < dimensiones.x; ++y) {
             for (unsigned int x = 0; x < dimensiones.y; ++x) {
                 // get the current tile number
-                int tileNumber = tiles[l][x][y];
-                //int tileNumber = tiles[y][x * dimensiones.x];
-                if (tileNumber > 0) {
+                int gid = tilemap[l][x][y];
+                
+                if (gid > 0) {
                     // find its position in the tileset texture
-                    int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
-                    int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
-
-                    //cout << "TILENUMBER: " << tileNumber << endl;
-                    //cout << "TU: " << tu << " TV: " << tv << endl;
-
+                    //int tu = gid % (m_tileset.getSize().x / tileSize.x);
+                    //int tv = gid / (m_tileset.getSize().x / tileSize.x);
+                    
+                    Vector2i pxCords = gidToPixel(gid);
+                    
                     // get a pointer to the current tile's quad
-                    sf::Vertex* quad = &m_vertices[(y + x * dimensiones.x) * 4];
-                    
-                    Rect<int> r = tilemapSprite[l][0][y + x * dimensiones.x]->getTextureRect();
-                    
+                    Vertex *quad = &m_vertices[(y + x * dimensiones.x) * 4];
+
                     // define its 4 corners
-                    sf::Vector2f primero(y * tileSize.x, x * tileSize.y);
-                    sf::Vector2f segundo((y + 1) * tileSize.x, x * tileSize.y);
-                    sf::Vector2f tercero((y + 1) * tileSize.x, (x + 1) * tileSize.y);
-                    sf::Vector2f cuarto(y * tileSize.x, (x + 1) * tileSize.y);
+                    Vector2f primero(y * tileSize.x, x * tileSize.y);
+                    Vector2f segundo((y + 1) * tileSize.x, x * tileSize.y);
+                    Vector2f tercero((y + 1) * tileSize.x, (x + 1) * tileSize.y);
+                    Vector2f cuarto(y * tileSize.x, (x + 1) * tileSize.y);
                     
-                    cout << "PRIMERO => " << primero.x << ", " << primero.y << endl;
-                    cout << "SEGUNDO => " << segundo.x << ", " << segundo.y << endl;
-                    cout << "TERCERO => " << tercero.x << ", " << tercero.y << endl;
-                    cout << "CUARTO => " << cuarto.x << ", " << cuarto.y << endl;
+                    cout << endl << "GID: " << gid-1 << endl;
+                    cout << "POSICION => [" << primero.x << ", " << primero.y << "] ";
+                    cout << "[" << segundo.x << ", " << segundo.y << "] ";
+                    cout << "[" << tercero.x << ", " << tercero.y << "] ";
+                    cout << "[" << cuarto.x << ", " << cuarto.y << "] " << endl;
                     
                     
                     quad[0].position = primero;
@@ -139,14 +136,26 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
                     quad[2].position = tercero;
                     quad[3].position = cuarto;
 
-                    //cout << " x: " << r.left << " y:" << r.top << endl;
-                    //cout << " x: " << quad->position.x << " y:" << quad->position.y << endl;
-                    
                     // define its 4 texture coordinates
-                    quad[0].texCoords = sf::Vector2f(tu * tileSize.x + space, tv * tileSize.y + space);
-                    quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x + space, tv * tileSize.y + space);
-                    quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x + space, (tv + 1) * tileSize.y + space);
-                    quad[3].texCoords = sf::Vector2f(tu * tileSize.x + space, (tv + 1) * tileSize.y + space);
+                    
+                    //Vector2f recorte1((tu * tileSize.x + space)+1, (tv * tileSize.y + space)+1);
+                    //Vector2f recorte2(((tu + 1) * tileSize.x + space)+1, (tv * tileSize.y + space)+1);
+                    //Vector2f recorte3(((tu + 1) * tileSize.x + space)+1, ((tv + 1) * tileSize.y + space)+1);
+                    //Vector2f recorte4((tu * tileSize.x + space)+1, ((tv + 1) * tileSize.y + space)+1);
+                    Vector2f recorte1(pxCords.x, pxCords.y);
+                    Vector2f recorte2(pxCords.x + dimTiles.x, pxCords.y);
+                    Vector2f recorte3(pxCords.x + dimTiles.x, pxCords.y + dimTiles.y);
+                    Vector2f recorte4(pxCords.x, pxCords.y + dimTiles.y);
+                    
+                    cout << "RECORTE => [" << recorte1.x << ", " << recorte1.y << "] ";
+                    cout << "[" << recorte2.x << ", " << recorte2.y << "] ";
+                    cout << "[" << recorte3.x << ", " << recorte3.y << "] ";
+                    cout << "[" << recorte4.x << ", " << recorte4.y << "] " << endl;
+                    
+                    quad[0].texCoords = recorte1;
+                    quad[1].texCoords = recorte2;
+                    quad[2].texCoords = recorte3;
+                    quad[3].texCoords = recorte4;
                 }
             }
         }
@@ -157,10 +166,15 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
 
 Vector2i mapaTmx::gidToPixel(int gid) {
     Vector2i res(0.00, 0.00);
-
+    gid = gid - 1;
     res.x = gid % nElementos.x;
+    cout << endl << "SOBRANTE => " << res.x;
+    
     res.x = res.x * dimTiles.x;
-    res.y = (gid / nElementos.x) + 1;
+    res.y = (gid / nElementos.x);
+    
+    cout << ", " << res.y << endl;
+    
     res.y = res.y * dimTiles.y;
 
     return res;

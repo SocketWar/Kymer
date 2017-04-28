@@ -1,7 +1,9 @@
 #include <iostream>
 #include "cabecera.hpp"
 #include "Estado.h"
-#include "mapaTmx.h"
+#include "MovimientoIA.h"
+#include "Jugador.h"
+
 const int update = 1000 / 25;
 const int frameskip = 5;
 int anchura = 800;
@@ -31,66 +33,50 @@ int main() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    float velocidad = 100.0f;
     float movinterpoladox = 0;
     float movinterpoladoy = 0;
-    int cont1 = 0;
-    int cont2 = 0;
-    //cuadrado
-    RectangleShape cuadrado;
-    Vector2f tamanyo(50, 50);
-    cuadrado.setSize(tamanyo);
-    cuadrado.setPosition(anchura / 2, altura / 2);
-    cuadrado.setFillColor(Color::Blue);
 
-    Estado nuevo(cuadrado.getPosition().x, cuadrado.getPosition().y);
+    Jugador trol(anchura,altura);
+    Estado nuevo(trol.getposX(), trol.getposY());
     Estado viejo(0, 0);
-
-    mapaTmx *m = new mapaTmx();
-
+    
+    
     while (Window.isOpen()) {
         bucle = 0;
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
+
             tiempoupdate += update;
             bucle++;
+            
             viejo = nuevo;
-
+           
             Event evento;
-
             while (Window.pollEvent(evento)) {
 
                 if (evento.type == Event::Closed)
-                    Window.close();
-
-
-                if (Keyboard::isKeyPressed(Keyboard::W))
-                    cuadrado.move(0, -tiempo.asSeconds() * velocidad);
-
-                if (Keyboard::isKeyPressed(Keyboard::S))
-                    cuadrado.move(0, tiempo.asSeconds() * velocidad);
-
-                if (Keyboard::isKeyPressed(Keyboard::D))
-                    cuadrado.move(tiempo.asSeconds() * velocidad, 0);
-
-                if (Keyboard::isKeyPressed(Keyboard::A))
-                    cuadrado.move(-tiempo.asSeconds() * velocidad, 0);
-
-
+                    Window.close();  
             }
-
-            nuevo.actualizartiempo(cuadrado.getPosition().x, cuadrado.getPosition().y);
-        }
-
+            
+            trol.Movimiento(tiempo);
+            trol.Saltar();
+            //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
+            //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);
+            
+            nuevo.actualizartiempo(trol.getposX(), trol.getposY());
+           
+              }
+        
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
         movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
-        cuadrado.setPosition(movinterpoladox, movinterpoladoy);
+        trol.getJugador().setPosition(movinterpoladox, movinterpoladoy);
+        
+      
 
-
-        Window.clear(); 
-        m->muestraMapa(Window);
-        Window.draw(cuadrado);
+        Window.clear();
+        Window.draw(trol.getJugador());
+        
         Window.display();
     }
     return 0;

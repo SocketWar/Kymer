@@ -170,12 +170,12 @@ Vector2i mapaTmx::gidToPixel(int gid) {
     res.x = gid % nElementos.x;
     cout << endl << "SOBRANTE => " << res.x;
     
-    res.x = res.x * dimTiles.x;
+    res.x = res.x * dimTiles.x + res.x * space;
     res.y = (gid / nElementos.x);
     
     cout << ", " << res.y << endl;
     
-    res.y = res.y * dimTiles.y;
+    res.y = res.y * dimTiles.y  + res.y * space;
 
     return res;
 }

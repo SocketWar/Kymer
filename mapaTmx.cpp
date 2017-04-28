@@ -22,6 +22,9 @@ mapaTmx::mapaTmx() {
     
     CargaPropiedades();
     
+    nElementos.x = dimTileSheet.x / (dimTiles.x + space);
+    nElementos.y = dimTileSheet.y / (dimTiles.y + space);
+    
     cout << "CREANDO LAS CAPAS...";
     layer = map->FirstChildElement("layer");
     numlayers = 0;
@@ -36,7 +39,7 @@ mapaTmx::mapaTmx() {
     for (int c = 0; c < tileCount; c++) {
         sprites[c].setTexture(*tex);
         sprites[c].setTextureRect(
-            IntRect(c*dimTiles.x + space, 0, dimTiles.x, dimTiles.y));
+            IntRect(c*dimTiles.x, 0, dimTiles.x, dimTiles.y));
     }
     cout << "OK" << endl;
     
@@ -59,7 +62,7 @@ mapaTmx::mapaTmx() {
     tilemapSprite = new Sprite***[numlayers];
 
     for (int l = 0; l < numlayers; l++) {
-        tilemapSprite[l] = new sf::Sprite**[dimEnTiles.y];
+        tilemapSprite[l] = new Sprite**[dimEnTiles.y];
     }
     cout << "OK" << endl;
     
@@ -145,8 +148,6 @@ void mapaTmx::CargaPropiedades(){
     
     if(err == 0)
         cout << "OK" << endl;
-    
-    CalculaElementos();
 }
 
 void mapaTmx::MuestraMapa(RenderWindow &window) {
@@ -157,8 +158,8 @@ void mapaTmx::MuestraMapa(RenderWindow &window) {
                 if (gid >= 0) {
                     tilemapSprite[l][y][x]->setTextureRect(sprites[gid].getTextureRect());
                     tilemapSprite[l][y][x]->setPosition(
-                        x * dimTiles.x, y * dimTiles.y);                    
-                    window.draw(*tilemapSprite[l][y][x]);
+                    x * dimTiles.x, y * dimTiles.y);                    
+                    window.draw(*(tilemapSprite[l][y][x]));
                 } else {
                     tilemapSprite[l][y][x] = NULL;
                 }
@@ -167,26 +168,7 @@ void mapaTmx::MuestraMapa(RenderWindow &window) {
     }
 }
 
-void mapaTmx::CalculaElementos(){
-    cout << "------- CALCULOS -------" << endl;
-    
-    nElementos.x = dimTileSheet.x / (dimTiles.x + space);
-    nElementos.y = dimTileSheet.y / (dimTiles.y + space);
-    
-    cout << "nElementos: " << nElementos.x << ", " << nElementos.y << endl;
-    
-    Vector2i aux;
-    aux = gidToPos(150);
-    cout << "AUX(150): " << aux.x << ", " << aux.y << endl;
-    aux = gidToPos(145);
-    cout << "AUX(145): " << aux.x << ", " << aux.y << endl;
-    aux = gidToPos(6);
-    cout << "AUX(6): " << aux.x << ", " << aux.y << endl;
-    
-    cout << "------- CALCULOS -------" << endl;
-}
-
-Vector2i mapaTmx::gidToPos(int gid) {
+Vector2i mapaTmx::gidToPixel(int gid) {
     // IDENTIFICADOR / NUM ELEMENTOS EN ANCHO PARA LA Y
     // (IDENTIFICADOR % NUM ELEMENTOS EN ANCHO ) * NUM ELEMENTOS EN ANCHO PARA X
     Vector2i res(0.00, 0.00);

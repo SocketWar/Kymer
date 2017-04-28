@@ -17,8 +17,7 @@ public:
     
 private:
     void CargaPropiedades();
-    void CalculaElementos();
-    Vector2i gidToPos(int gid);
+    Vector2i gidToPixel(int gid);
     void Muestrainfo();
 
     Vector2i dimEnTiles;

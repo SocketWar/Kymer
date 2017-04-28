@@ -101,13 +101,13 @@ mapaTmx::mapaTmx(){
     };
     
     //if (!load("res/img/sheet.png", dimTiles, level, 16, 8))
-    if (!load("res/img/sheet.png", dimTiles, tilemap[0][0], Vector2i(16, 8)))
+    if (!load("res/img/sheet.png", dimTiles, tilemap[0], Vector2i(16, 8)))
         cout<< "PUTA MIERDA" << endl;
     
     Muestrainfo();
 }
 
-bool mapaTmx::load(const string &tileset, Vector2i tileSize, int *tiles, Vector2i dimensiones) {
+bool mapaTmx::load(const string &tileset, Vector2i tileSize, int **tiles, Vector2i dimensiones) {
     // load the tileset texture
     if (!m_tileset.loadFromFile(tileset))
         return false;
@@ -119,23 +119,25 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int *tiles, Vector2
     
     //for (int l = 0; l < numlayers; l++) {
     // populate the vertex array, with one quad per tile
-    for (unsigned int i = 0; i < dimensiones.x; ++i) {
-        for (unsigned int j = 0; j < dimensiones.y; ++j) {
+    for (unsigned int y = 0; y < dimensiones.x; ++y) {
+        for (unsigned int x = 0; x < dimensiones.y; ++x) {
             // get the current tile number
-            int tileNumber = tiles[i + j * dimensiones.x];
-
+            int tileNumber = tiles[0][y + x * dimensiones.x];
+            //int tileNumber = tiles[y][x * dimensiones.x];
+            
+            
             // find its position in the tileset texture
             int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
             int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
 
             // get a pointer to the current tile's quad
-            sf::Vertex* quad = &m_vertices[(i + j * dimensiones.x) * 4];
+            sf::Vertex* quad = &m_vertices[(y + x * dimensiones.x) * 4];
 
             // define its 4 corners
-            quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
-            quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
-            quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
-            quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
+            quad[0].position = sf::Vector2f(y * tileSize.x, x * tileSize.y);
+            quad[1].position = sf::Vector2f((y + 1) * tileSize.x, x * tileSize.y);
+            quad[2].position = sf::Vector2f((y + 1) * tileSize.x, (x + 1) * tileSize.y);
+            quad[3].position = sf::Vector2f(y * tileSize.x, (x + 1) * tileSize.y);
 
             // define its 4 texture coordinates
             quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);

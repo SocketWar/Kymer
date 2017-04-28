@@ -15,7 +15,7 @@ public:
     mapaTmx();
     //void MuestraMapa(RenderWindow &window);
     
-     bool load(const std::string& tileset, sf::Vector2i tileSize, int* tiles, Vector2i dimensiones);
+     bool load(const std::string& tileset, sf::Vector2i tileSize, int **tiles, Vector2i dimensiones);
     
 private:
     void CargaPropiedades();

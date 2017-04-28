@@ -107,7 +107,7 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
         for (unsigned int y = 0; y < dimensiones.x; ++y) {
             for (unsigned int x = 0; x < dimensiones.y; ++x) {
                 // get the current tile number
-                int tileNumber = tiles[l][0][y + x * dimensiones.x];
+                int tileNumber = tiles[l][x][y];
                 //int tileNumber = tiles[y][x * dimensiones.x];
                 if (tileNumber > 0) {
                     // find its position in the tileset texture
@@ -119,13 +119,29 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
 
                     // get a pointer to the current tile's quad
                     sf::Vertex* quad = &m_vertices[(y + x * dimensiones.x) * 4];
-
+                    
+                    Rect<int> r = tilemapSprite[l][0][y + x * dimensiones.x]->getTextureRect();
+                    
                     // define its 4 corners
-                    quad[0].position = sf::Vector2f(y * tileSize.x, x * tileSize.y);
-                    quad[1].position = sf::Vector2f((y + 1) * tileSize.x, x * tileSize.y);
-                    quad[2].position = sf::Vector2f((y + 1) * tileSize.x, (x + 1) * tileSize.y);
-                    quad[3].position = sf::Vector2f(y * tileSize.x, (x + 1) * tileSize.y);
+                    sf::Vector2f primero(y * tileSize.x, x * tileSize.y);
+                    sf::Vector2f segundo((y + 1) * tileSize.x, x * tileSize.y);
+                    sf::Vector2f tercero((y + 1) * tileSize.x, (x + 1) * tileSize.y);
+                    sf::Vector2f cuarto(y * tileSize.x, (x + 1) * tileSize.y);
+                    
+                    cout << "PRIMERO => " << primero.x << ", " << primero.y << endl;
+                    cout << "SEGUNDO => " << segundo.x << ", " << segundo.y << endl;
+                    cout << "TERCERO => " << tercero.x << ", " << tercero.y << endl;
+                    cout << "CUARTO => " << cuarto.x << ", " << cuarto.y << endl;
+                    
+                    
+                    quad[0].position = primero;
+                    quad[1].position = segundo;
+                    quad[2].position = tercero;
+                    quad[3].position = cuarto;
 
+                    //cout << " x: " << r.left << " y:" << r.top << endl;
+                    //cout << " x: " << quad->position.x << " y:" << quad->position.y << endl;
+                    
                     // define its 4 texture coordinates
                     quad[0].texCoords = sf::Vector2f(tu * tileSize.x + space, tv * tileSize.y + space);
                     quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x + space, tv * tileSize.y + space);

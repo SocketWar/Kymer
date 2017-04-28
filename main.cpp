@@ -2,6 +2,7 @@
 #include "cabecera.hpp"
 #include "Estado.h"
 #include "mapaTmx.h"
+
 const int update = 1000 / 25;
 const int frameskip = 5;
 int anchura = 800;

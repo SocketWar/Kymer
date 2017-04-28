@@ -15,10 +15,10 @@ public:
     mapaTmx();
     //void MuestraMapa(RenderWindow &window);
     
-     bool load(const std::string& tileset, sf::Vector2u tileSize, int* tiles, unsigned int width, unsigned int height);
+     bool load(const std::string& tileset, sf::Vector2i tileSize, int* tiles, Vector2i dimensiones);
     
 private:
-    //void CargaPropiedades();
+    void CargaPropiedades();
     Vector2i gidToPixel(int gid);
     void Muestrainfo();
 

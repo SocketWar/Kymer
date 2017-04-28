@@ -87,22 +87,8 @@ mapaTmx::mapaTmx(){
     }
     cout << "OK" << endl;
     
-    
-    
-    // define the level with an array of tile indices
-    int level[] =
-    {
-        0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 
-        0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 
-        0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 3, 3, 3, 0, 
-        0, 0, 1, 1, 1, 2, 0, 0, 0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0, 
-        2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 3, 2, 2, 2, 
-        0, 0, 0, 0, 1, 1, 1, 1,
-    };
-    
-    //if (!load("res/img/sheet.png", dimTiles, level, 16, 8))
-    if (!load("res/img/sheet.png", dimTiles, tilemap, dimEnTiles))
-        cout<< "PUTA MIERDA" << endl;
+    if(load("res/img/sheet.png", dimTiles, tilemap, dimEnTiles))
+        cout<< "LOAD...OK" << endl;
     
     Muestrainfo();
 }
@@ -112,29 +98,23 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
     if (!m_tileset.loadFromFile(tileset))
         return false;
 
-    int capaActual = 4;
-
-
     // resize the vertex array to fit the level size
     m_vertices.setPrimitiveType(Quads);
     m_vertices.resize(dimensiones.x * dimensiones.y * 4);
 
-    int amount = 0;
     for (int l = 0; l < numlayers; l++) {
         // populate the vertex array, with one quad per tile
         for (unsigned int y = 0; y < dimensiones.x; ++y) {
             for (unsigned int x = 0; x < dimensiones.y; ++x) {
-                amount++;
                 // get the current tile number
                 int tileNumber = tiles[l][0][y + x * dimensiones.x];
                 //int tileNumber = tiles[y][x * dimensiones.x];
                 if (tileNumber > 0) {
-
                     // find its position in the tileset texture
                     int tu = tileNumber % (m_tileset.getSize().x / tileSize.x);
                     int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
 
-                    cout << "TILENUMBER: " << tileNumber << endl;
+                    //cout << "TILENUMBER: " << tileNumber << endl;
                     //cout << "TU: " << tu << " TV: " << tv << endl;
 
                     // get a pointer to the current tile's quad
@@ -155,14 +135,11 @@ bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vecto
             }
         }
     }
-    cout << "AMOUNT " << amount << endl;
 
     return true;
 }
 
 Vector2i mapaTmx::gidToPixel(int gid) {
-    // IDENTIFICADOR / NUM ELEMENTOS EN ANCHO PARA LA Y
-    // (IDENTIFICADOR % NUM ELEMENTOS EN ANCHO ) * NUM ELEMENTOS EN ANCHO PARA X
     Vector2i res(0.00, 0.00);
 
     res.x = gid % nElementos.x;
@@ -237,7 +214,6 @@ void mapaTmx::CargaPropiedades(){
     if(err == 0)
         cout << "OK" << endl;
 }
-
 
 /*
 mapaTmx::mapaTmx() {

@@ -10,13 +10,15 @@ using namespace std;
 using namespace sf;
 using namespace tinyxml2;
 
-class mapaTmx {
+class mapaTmx : public Drawable, public Transformable {
 public:
     mapaTmx();
-    void MuestraMapa(RenderWindow &window);
+    //void MuestraMapa(RenderWindow &window);
+    
+     bool load(const std::string& tileset, sf::Vector2u tileSize, int* tiles, unsigned int width, unsigned int height);
     
 private:
-    void CargaPropiedades();
+    //void CargaPropiedades();
     Vector2i gidToPixel(int gid);
     void Muestrainfo();
 
@@ -43,6 +45,24 @@ private:
     
     XMLElement *lay;
     XMLElement *data;
+    
+    
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    {
+        // apply the transform
+        states.transform *= getTransform();
+
+        // apply the tileset texture
+        states.texture = &m_tileset;
+
+        // draw the vertex array
+        target.draw(m_vertices, states);
+    }
+
+    sf::VertexArray m_vertices;
+    sf::Texture m_tileset;
+    
+
 };
 
 #endif /* MAPATMX_H */

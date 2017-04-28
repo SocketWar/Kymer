@@ -46,7 +46,16 @@ int main() {
     Estado nuevo(cuadrado.getPosition().x, cuadrado.getPosition().y);
     Estado viejo(0, 0);
 
-    mapaTmx *m = new mapaTmx();
+    //mapaTmx *m = new mapaTmx();
+    
+    
+    
+    
+
+    // create the tilemap from the level definition
+    mapaTmx map;
+    
+    
 
     while (Window.isOpen()) {
         bucle = 0;
@@ -88,7 +97,8 @@ int main() {
 
 
         Window.clear(Color(150, 200, 200)); 
-        m->MuestraMapa(Window);
+        //Window.draw(*m);
+        Window.draw(map);
         Window.draw(cuadrado);
         Window.display();
     }

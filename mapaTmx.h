@@ -13,21 +13,20 @@ using namespace tinyxml2;
 class mapaTmx {
 public:
     mapaTmx();
-    void CargaPropiedades();
     void MuestraMapa(RenderWindow &window);
+    
+private:
+    void CargaPropiedades();
+    void CalculaElementos();
+    Vector2i gidToPos(int gid);
     void Muestrainfo();
+
+    Vector2i dimEnTiles;
+    Vector2i dimTiles;
+    Vector2i dimTileSheet;
+    Vector2i nElementos;
     
-    int width;
-    int height;
-    //Vector2i dimension;
-    Vector2i tileSheetDim;
-    
-    int tileSheetWidth;
-    int tileSheetHeight;
-    
-    //int imageSheet
-    
-    int size;
+    int tileCount;
     int space;
     int numlayers;
     
@@ -45,10 +44,6 @@ public:
     
     XMLElement *lay;
     XMLElement *data;
-    
-    
-private:
-
 };
 
 #endif /* MAPATMX_H */

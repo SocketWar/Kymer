@@ -31,11 +31,10 @@ int main() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    float velocidad = 100.0f;
+    float velocidad = 550.0f;
     float movinterpoladox = 0;
     float movinterpoladoy = 0;
-    int cont1 = 0;
-    int cont2 = 0;
+
     //cuadrado
     RectangleShape cuadrado;
     Vector2f tamanyo(50, 50);
@@ -49,6 +48,8 @@ int main() {
     // create the tilemap from the level definition
     mapaTmx map;
 
+    View vista(cuadrado.getPosition(), Vector2f(anchura, altura));
+    
     while (Window.isOpen()) {
         bucle = 0;
         tiempo = clocl2.restart();
@@ -64,16 +65,16 @@ int main() {
                 if (evento.type == Event::Closed)
                     Window.close();
 
-                if (Keyboard::isKeyPressed(Keyboard::W))
+                if (Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::Up))
                     cuadrado.move(0, -tiempo.asSeconds() * velocidad);
 
-                if (Keyboard::isKeyPressed(Keyboard::S))
+                if (Keyboard::isKeyPressed(Keyboard::S) || Keyboard::isKeyPressed(Keyboard::Down))
                     cuadrado.move(0, tiempo.asSeconds() * velocidad);
 
-                if (Keyboard::isKeyPressed(Keyboard::D))
+                if (Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Right))
                     cuadrado.move(tiempo.asSeconds() * velocidad, 0);
 
-                if (Keyboard::isKeyPressed(Keyboard::A))
+                if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::Left))
                     cuadrado.move(-tiempo.asSeconds() * velocidad, 0);
 
 
@@ -86,7 +87,9 @@ int main() {
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
         movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
         cuadrado.setPosition(movinterpoladox, movinterpoladoy);
-
+        
+        vista.setCenter(cuadrado.getPosition());
+        Window.setView(vista);
 
         Window.clear(Color(150, 200, 200)); 
         Window.draw(map);

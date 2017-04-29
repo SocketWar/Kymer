@@ -2,78 +2,135 @@
 #include "Jugador.h"
 #include "Estado.h"
 
-Jugador::Jugador(int anchura, int altura) {
-
-
-    tamanyo.x=50;
-    tamanyo.y=50;
-    cuadrado.setSize(tamanyo);
-    cuadrado.setPosition(anchura / 2, altura / 2);
-    cuadrado.setFillColor(Color::Blue);
-    cuadrado.setOrigin(50 / 2, 50 / 2);
-    gravedad=1.5f;
-    distanciasuelo=300;
-    velocidadsalto=20.0f;
-    velocidad.x=0;
-    velocidad.y=0;
+Jugador::Jugador(int anchura, int altura, string enlace) {
     
-    velocidadm = 600.0f;
+    gravedad = 2.0f;
+    distanciasuelo = 322;
+    velocidadsalto = 30.0f;
+    velocidad.x = 0;
+    velocidad.y = 0;
+    
+    velocidadanimacion=0.1;
+    velocidadmovimiento = 800.0f;
     posX = cuadrado.getPosition().x;
     posY = cuadrado.getPosition().y;
+
+
+    animacion = new Animacion(enlace);
+    animacion->spritePersonaje();
 
 }
 
 void Jugador::Movimiento(Time &time) {
 
-    
     float tiempo = time.asSeconds();
-
-    if(Keyboard::isKeyPressed(Keyboard::D))
-     cuadrado.move(tiempo * velocidadm, 0);
-    if(Keyboard::isKeyPressed(Keyboard::A))
-     cuadrado.move(-tiempo * velocidadm, 0);
     
+    Vector2f movimiento(0.0f,0.0f);
+    actual = 0;
+    totalSpritesAnimacion = animacion->getNumAnimaciones()[0];;
+
+    if (Keyboard::isKeyPressed(Keyboard::Right)) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+        actual = 1;
+        animacion->orientacion(1);
+        movimiento.x= tiempo*velocidadmovimiento;
+    }
+    if (Keyboard::isKeyPressed(Keyboard::Left)) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+        actual = 1;
+        animacion->orientacion(0);
+        movimiento.x= -tiempo*velocidadmovimiento;
+    }
+    if (Keyboard::isKeyPressed(Keyboard::Down)) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
+        actual = 2;
+    }   
+    if (Keyboard::isKeyPressed(Keyboard::A)) {
+
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
+        actual = 5;
+        movimiento.x=0;
+    }
+    if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::A) ) {
+        
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[7];
+        actual = 7;
+    }
+   
+    posiciones.x=actual;
+    posiciones.y=totalSpritesAnimacion;
+    animacion->movimiento(movimiento);
 }
 
-void Jugador::Saltar(){
-    
-    
-    if(Keyboard::isKeyPressed(Keyboard::Space) && cuadrado.getPosition().y == distanciasuelo-cuadrado.getSize().y)
-    velocidad.y=-velocidadsalto;
-    
-     
-    if(cuadrado.getPosition().y + cuadrado.getSize().y < distanciasuelo || velocidad.y<0){
+void Jugador::Saltar() {
+
+     Sprite comprobacion = animacion->getSpriteE();
         
-        velocidad.y+=gravedad;
-        
-   }else{
-       
-        cuadrado.setPosition(cuadrado.getPosition().x,distanciasuelo-cuadrado.getSize().y);
-        velocidad.y=0;
+    if (Keyboard::isKeyPressed(Keyboard::Space) && comprobacion.getPosition().y == distanciasuelo){
+        velocidad.y = -velocidadsalto;
+        posiciones.x=actual;
+        posiciones.y=totalSpritesAnimacion;
     }
-  
-    cuadrado.move(velocidad.x,velocidad.y);
+
+     if(comprobacion.getPosition().y!=distanciasuelo){
+         
+         totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+            actual = 3;
+     }
+         
+    if (comprobacion.getPosition().y + comprobacion.getScale().y < distanciasuelo || velocidad.y < 0) {
+
+        velocidad.y += gravedad;
+
+    } else {
+
+        comprobacion.setPosition(comprobacion.getPosition().x, distanciasuelo-comprobacion.getScale().y);
+        velocidad.y = 0;
+
+    }
+
+        animacion->movimiento(velocidad);
 }
 
 float Jugador::getposX() {
-    
-    posX=cuadrado.getPosition().x;
+
+    posX = cuadrado.getPosition().x;
     return posX;
 
 }
 
 float Jugador::getposY() {
-    posY=cuadrado.getPosition().y;
+    posY = cuadrado.getPosition().y;
     return posY;
 
 }
 
-RectangleShape Jugador::getJugador(){
-    
+RectangleShape Jugador::getJugador() {
+
     return cuadrado;
+
+}
+
+Animacion Jugador::getAnimacion(){
+    
+    return *animacion;
     
 }
 
+int Jugador::getActual(){
+    
+    return actual;
+}
 
+int Jugador::gettotalSpritesAnimacion(){
+    
+    return totalSpritesAnimacion;
+}
 
-
+int Jugador::getframeActual(Time& tiempo){
+   
+    int frameActual = static_cast<int>((tiempo.asSeconds() / 0.1) *  3) %  totalSpritesAnimacion;
+    
+    return frameActual;
+    
+}

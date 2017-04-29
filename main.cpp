@@ -9,6 +9,8 @@ const int frameskip = 5;
 int anchura = 800;
 int altura = 600;
 
+ 
+
 float InterpolacionRenderx(Estado& Anterior, Estado& Nuevo, float interpolacion) {
 
     float movimientox = Anterior.getx()*(1 - interpolacion) + Nuevo.getx() * interpolacion;
@@ -29,6 +31,7 @@ int main() {
     Clock clock1;
     Clock clocl2;
     Time tiempo;
+    Time tiempoAnimacion;
 
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
@@ -36,7 +39,7 @@ int main() {
     float movinterpoladox = 0;
     float movinterpoladoy = 0;
 
-    Jugador trol(anchura,altura);
+    Jugador trol(anchura,altura,"res/img/Personajev1.png");
     Estado nuevo(trol.getposX(), trol.getposY());
     Estado viejo(0, 0);
     
@@ -45,7 +48,7 @@ int main() {
         bucle = 0;
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
-
+            tiempoAnimacion+=tiempo;
             tiempoupdate += update;
             bucle++;
             
@@ -62,10 +65,10 @@ int main() {
             trol.Saltar();
             //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
             //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);
-            
             nuevo.actualizartiempo(trol.getposX(), trol.getposY());
-           
+            
               }
+                   
         
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
@@ -75,7 +78,7 @@ int main() {
       
 
         Window.clear();
-        Window.draw(trol.getJugador());
+        Window.draw(trol.getAnimacion().getSprite(trol.getActual(),trol.getframeActual(tiempoAnimacion)));
         
         Window.display();
     }

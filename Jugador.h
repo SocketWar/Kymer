@@ -2,12 +2,16 @@
 #include <iostream>
 #include "cabecera.hpp"
 #include "Animacion.h"
+#include "Bala.h"
 
 class Jugador {
 public:
     Jugador(int anchura,int altura,string enlace);
     void Movimiento(Time &tiempo);
     void Saltar();
+    void Disparar();
+    void UpdateDisparo();
+    void RenderDisparo(RenderWindow &window);
     RectangleShape getJugador();
     float getposX();
     float getposY();
@@ -33,6 +37,11 @@ private:
     int actual;
     Vector2i posiciones;
     float velocidadanimacion;
+    std::vector<Bala*> CARGADOR;
+    sf::Texture TEX;
+    float countBala;
+    sf::Clock RelojBala;
+    float velocidadAnimacion;
     
 };
 

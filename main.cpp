@@ -30,6 +30,9 @@ int main() {
     //clock update y movimiento
     Clock clock1;
     Clock clocl2;
+    Clock relojBala;
+    Time tiempoBala;
+    float countBala=0;
     Time tiempo;
     Time tiempoAnimacion;
 
@@ -46,6 +49,7 @@ int main() {
     
     while (Window.isOpen()) {
         bucle = 0;
+        tiempoBala=relojBala.getElapsedTime();
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
             tiempoAnimacion+=tiempo;
@@ -63,12 +67,16 @@ int main() {
             
             trol.Movimiento(tiempo);
             trol.Saltar();
+            trol.Disparar();
+            
+            trol.UpdateDisparo();
+            
             //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
             //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);
             nuevo.actualizartiempo(trol.getposX(), trol.getposY());
             
-              }
-                   
+        }
+        
         
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
@@ -79,7 +87,7 @@ int main() {
 
         Window.clear();
         Window.draw(trol.getAnimacion().getSprite(trol.getActual(),trol.getframeActual(tiempoAnimacion)));
-        
+        trol.RenderDisparo(Window);
         Window.display();
     }
     return 0;

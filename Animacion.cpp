@@ -3,7 +3,7 @@
 
 Animacion::Animacion(string texto) {
     
-    
+    ORIENTACION=1;
      tex = new Texture(); //reserva de memoria
         if (!tex->loadFromFile(texto))
     {
@@ -71,6 +71,7 @@ Sprite Animacion::getSpriteE(){
 
 void Animacion::orientacion(int orientacion){
     int escala = 0;
+    ORIENTACION=orientacion;
     if(orientacion ==0){//miramos a la izq
         escala = -4;
     }

@@ -42,6 +42,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Jugador.o \
 	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/MovimientoIA.o \
+	${OBJECTDIR}/ObjetoPuntuacion.o \
+	${OBJECTDIR}/hud.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapaTmx.o \
 	${OBJECTDIR}/tinyxml2.o
@@ -111,6 +113,16 @@ ${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MovimientoIA.o MovimientoIA.cpp
+
+${OBJECTDIR}/ObjetoPuntuacion.o: ObjetoPuntuacion.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ObjetoPuntuacion.o ObjetoPuntuacion.cpp
+
+${OBJECTDIR}/hud.o: hud.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hud.o hud.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

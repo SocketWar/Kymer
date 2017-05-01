@@ -11,7 +11,9 @@
       <itemPath>Jugador.h</itemPath>
       <itemPath>Menu.h</itemPath>
       <itemPath>MovimientoIA.h</itemPath>
+      <itemPath>ObjetoPuntuacion.h</itemPath>
       <itemPath>cabecera.hpp</itemPath>
+      <itemPath>hud.h</itemPath>
       <itemPath>mapaTmx.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -28,6 +30,8 @@
       <itemPath>Jugador.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
       <itemPath>MovimientoIA.cpp</itemPath>
+      <itemPath>ObjetoPuntuacion.cpp</itemPath>
+      <itemPath>hud.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mapaTmx.cpp</itemPath>
       <itemPath>tinyxml2.cpp</itemPath>
@@ -98,7 +102,15 @@
       </item>
       <item path="MovimientoIA.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjetoPuntuacion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjetoPuntuacion.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="hud.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -173,7 +185,15 @@
       </item>
       <item path="MovimientoIA.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjetoPuntuacion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjetoPuntuacion.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="hud.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -86,71 +86,64 @@ mapaTmx::mapaTmx(){
     }
     cout << "OK" << endl;
     
-    if(load("res/img/sheet.png", dimTiles, tilemap, dimEnTiles))
+    if(load("res/img/sheet.png"))
         cout<< "LOAD...OK" << endl;
     
     //Muestrainfo();
 }
 
-bool mapaTmx::load(const string &tileset, Vector2i tileSize, int ***tiles, Vector2i dimensiones) {
-    // load the tileset texture
+bool mapaTmx::load(const string &tileset) {
     if (!m_tileset.loadFromFile(tileset))
         return false;
 
     // resize the vertex array to fit the level size
     m_vertices.setPrimitiveType(Quads);
-    m_vertices.resize(dimensiones.x * dimensiones.y * 4);
+    m_vertices.resize(dimEnTiles.x * dimEnTiles.y * 4);
 
+    // 1 Quad por cada elemento del VertexArray
     for (int l = 0; l < numlayers; l++) {
-        // populate the vertex array, with one quad per tile
-        for (unsigned int y = 0; y < dimensiones.x; ++y) {
-            for (unsigned int x = 0; x < dimensiones.y; ++x) {
-                // get the current tile number
+        for (unsigned int y = 0; y < dimEnTiles.x; ++y) {
+            for (unsigned int x = 0; x < dimEnTiles.y; ++x) {
+                
                 int gid = tilemap[l][x][y];
                 
                 if (gid > 0) {
-                    // find its position in the tileset texture
-                    //int tu = gid % (m_tileset.getSize().x / tileSize.x);
-                    //int tv = gid / (m_tileset.getSize().x / tileSize.x);
-                    
-                    Vector2i pxCords = gidToPixel(gid);
-                    
                     // get a pointer to the current tile's quad
-                    Vertex *quad = &m_vertices[(y + x * dimensiones.x) * 4];
+                    Vertex *quad = &m_vertices[(y + x * dimEnTiles.x) * 4];
 
-                    // define its 4 corners
-                    Vector2f primero(y * tileSize.x, x * tileSize.y);
-                    Vector2f segundo((y + 1) * tileSize.x, x * tileSize.y);
-                    Vector2f tercero((y + 1) * tileSize.x, (x + 1) * tileSize.y);
-                    Vector2f cuarto(y * tileSize.x, (x + 1) * tileSize.y);
+                    // Posicion del cuadrado
+                    Vector2f primero(y * dimTiles.x, x * dimTiles.y);
+                    Vector2f segundo((y + 1) * dimTiles.x, x * dimTiles.y);
+                    Vector2f tercero((y + 1) * dimTiles.x, (x + 1) * dimTiles.y);
+                    Vector2f cuarto(y * dimTiles.x, (x + 1) * dimTiles.y);
                     
+                    /*
                     cout << endl << "GID: " << gid-1 << endl;
                     cout << "POSICION => [" << primero.x << ", " << primero.y << "] ";
                     cout << "[" << segundo.x << ", " << segundo.y << "] ";
                     cout << "[" << tercero.x << ", " << tercero.y << "] ";
                     cout << "[" << cuarto.x << ", " << cuarto.y << "] " << endl;
-                    
+                     */
                     
                     quad[0].position = primero;
                     quad[1].position = segundo;
                     quad[2].position = tercero;
                     quad[3].position = cuarto;
 
-                    // define its 4 texture coordinates
+                    // Textura para la pieza
+                    Vector2i pxCords = gidToPixel(gid);
                     
-                    //Vector2f recorte1((tu * tileSize.x + space)+1, (tv * tileSize.y + space)+1);
-                    //Vector2f recorte2(((tu + 1) * tileSize.x + space)+1, (tv * tileSize.y + space)+1);
-                    //Vector2f recorte3(((tu + 1) * tileSize.x + space)+1, ((tv + 1) * tileSize.y + space)+1);
-                    //Vector2f recorte4((tu * tileSize.x + space)+1, ((tv + 1) * tileSize.y + space)+1);
                     Vector2f recorte1(pxCords.x, pxCords.y);
                     Vector2f recorte2(pxCords.x + dimTiles.x, pxCords.y);
                     Vector2f recorte3(pxCords.x + dimTiles.x, pxCords.y + dimTiles.y);
                     Vector2f recorte4(pxCords.x, pxCords.y + dimTiles.y);
                     
+                    /*
                     cout << "RECORTE => [" << recorte1.x << ", " << recorte1.y << "] ";
                     cout << "[" << recorte2.x << ", " << recorte2.y << "] ";
                     cout << "[" << recorte3.x << ", " << recorte3.y << "] ";
                     cout << "[" << recorte4.x << ", " << recorte4.y << "] " << endl;
+                    */
                     
                     quad[0].texCoords = recorte1;
                     quad[1].texCoords = recorte2;
@@ -168,12 +161,12 @@ Vector2i mapaTmx::gidToPixel(int gid) {
     Vector2i res(0.00, 0.00);
     gid = gid - 1;
     res.x = gid % nElementos.x;
-    cout << endl << "SOBRANTE => " << res.x;
+    //cout << endl << "SOBRANTE => " << res.x;
     
     res.x = res.x * dimTiles.x + res.x * space;
     res.y = (gid / nElementos.x);
     
-    cout << ", " << res.y << endl;
+    //cout << ", " << res.y << endl;
     
     res.y = res.y * dimTiles.y  + res.y * space;
 

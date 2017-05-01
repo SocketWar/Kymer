@@ -242,7 +242,7 @@ float Jugador::getposY() {
 }
 
 Vector2f Jugador::getPos() {
-    return Vector2f(getposX(), getposY());
+    return getAnimacion().getSpriteE().getPosition();
 }
 
 

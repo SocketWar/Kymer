@@ -47,7 +47,7 @@ int main() {
     mapaTmx map;
 
     
-    View vista(jugador.getAnimacion().getSpriteE().getPosition(), Vector2f(anchura, altura));
+    View vista(jugador.getPos(), Vector2f(anchura, altura));
     cout << "CENTRO DE LA VISTA: " << vista.getCenter().x << ", " << vista.getCenter().y << endl;
     
     while (Window.isOpen()) {
@@ -83,7 +83,7 @@ int main() {
         movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
         jugador.getJugador().setPosition(movinterpoladox, movinterpoladoy);
         
-        vista.setCenter(jugador.getAnimacion().getSpriteE().getPosition());
+        vista.setCenter(jugador.getPos());
         Window.setView(vista);
 
         Window.clear(Color(150, 200, 200)); 

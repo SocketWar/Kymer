@@ -4,8 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Animacion.h</itemPath>
+      <itemPath>Bala.h</itemPath>
       <itemPath>Estado.h</itemPath>
+      <itemPath>Granada.h</itemPath>
+      <itemPath>Jugador.h</itemPath>
       <itemPath>Menu.h</itemPath>
+      <itemPath>MovimientoIA.h</itemPath>
       <itemPath>cabecera.hpp</itemPath>
       <itemPath>mapaTmx.h</itemPath>
     </logicalFolder>
@@ -16,8 +21,13 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Animacion.cpp</itemPath>
+      <itemPath>Bala.cpp</itemPath>
       <itemPath>Estado.cpp</itemPath>
+      <itemPath>Granada.cpp</itemPath>
+      <itemPath>Jugador.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
+      <itemPath>MovimientoIA.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mapaTmx.cpp</itemPath>
       <itemPath>tinyxml2.cpp</itemPath>
@@ -60,13 +70,33 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Animacion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Animacion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Bala.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Bala.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Estado.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Jugador.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Jugador.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MovimientoIA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MovimientoIA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -115,13 +145,33 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Animacion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Animacion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Bala.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Bala.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Estado.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Granada.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Granada.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Jugador.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Jugador.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MovimientoIA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MovimientoIA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
       </item>

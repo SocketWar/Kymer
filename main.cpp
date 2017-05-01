@@ -44,6 +44,7 @@ int main() {
     Estado nuevo(jugador.getposX(), jugador.getposY());
     Estado viejo(0, 0);
 
+
     mapaTmx map;
 
     View vista(jugador.getPos(), Vector2f(anchura, altura));

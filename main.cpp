@@ -28,9 +28,10 @@ int main() {
     //clock update y movimiento
     Clock clock1;
     Clock clocl2;
-    Time tiempo;
+    Clock relojBala;
     Time tiempoBala;
     float countBala=0;
+    Time tiempo;
     Time tiempoAnimacion;
     
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
@@ -43,23 +44,23 @@ int main() {
     Estado nuevo(jugador.getposX(), jugador.getposY());
     Estado viejo(0, 0);
 
-    // create the tilemap from the level definition
     mapaTmx map;
 
-    
     View vista(jugador.getPos(), Vector2f(anchura, altura));
     cout << "CENTRO DE LA VISTA: " << vista.getCenter().x << ", " << vista.getCenter().y << endl;
     
     while (Window.isOpen()) {
-        bucle = 0;
+         bucle = 0;
+        tiempoBala=relojBala.getElapsedTime();
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
+            tiempoAnimacion+=tiempo;
             tiempoupdate += update;
             bucle++;
+            
             viejo = nuevo;
-
+           
             Event evento;
-
             while (Window.pollEvent(evento)) {
 
                 if (evento.type == Event::Closed)
@@ -74,18 +75,19 @@ int main() {
             
             jugador.DispararGranada();
             
-
+            //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
+            //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);
             nuevo.actualizartiempo(jugador.getposX(), jugador.getposY());
         }
 
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
         movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
-        jugador.getJugador().setPosition(movinterpoladox, movinterpoladoy);
         
         vista.setCenter(jugador.getPos());
         Window.setView(vista);
 
+        jugador.getJugador().setPosition(movinterpoladox, movinterpoladoy);
         Window.clear(Color(150, 200, 200)); 
         Window.draw(map);
         Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(),jugador.getframeActual(tiempoAnimacion)));

@@ -27,6 +27,10 @@ Jugador::Jugador(int anchura, int altura, string enlace) {
         std::cerr<<"Error en textura bala";
         exit(0);
     }
+    if(!TEX2.loadFromFile("res/img/SpriteGranada.png")){
+        std::cerr<<"Error en textura Granada";
+        exit(0);
+    }
 }
 
 void Jugador::Movimiento(Time &time) {
@@ -161,9 +165,9 @@ void Jugador::DispararGranada(){
                GranadaX=animacion->getSpriteE().getPosition().x-100;
                GranadaY=animacion->getSpriteE().getPosition().y+200;
             }
-            Granada *granadaDisparo = new Granada(10,20,speedX, speedY,60);
+            Granada *granadaDisparo = new Granada(18,11,speedX, speedY,60);
             granadaDisparo->setPosition(GranadaX,GranadaY);
-            granadaDisparo->loadSprite(TEX,0,0);
+            granadaDisparo->loadSprite(TEX2,0,0);
             CARGADORGRANADA.push_back(granadaDisparo);
             RelojGranada.restart();
         }

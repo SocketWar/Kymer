@@ -42,6 +42,7 @@ private:
     std::vector<Bala*> CARGADOR;
     std::vector<Granada*> CARGADORGRANADA;
     sf::Texture TEX;
+    sf::Texture TEX2;
     float countBala;
     sf::Clock RelojBala;
     sf::Clock RelojGranada;

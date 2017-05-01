@@ -43,6 +43,7 @@ void Granada::setPosition(float xStart,float yStart){
 void Granada::loadSprite(Texture textura, int posX, int posY){
     *TEX= textura;
     *SPRITE=Sprite(*TEX);
+    SPRITE->scale(3,3);
     SPRITE->setOrigin(0,0);
     SPRITE->setTextureRect(IntRect(posX,posY,WIDTH,HEIGTH));
     if(SPEEDX<0)
@@ -66,6 +67,7 @@ int Granada::move(){
         HITBOX->top=Y;
         SPRITE->setPosition(X,Y);
         TIEMPO-=1;
+        SPRITE->rotate(20);
         return 1;
     }else{
         return 2;

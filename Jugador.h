@@ -3,6 +3,7 @@
 #include "cabecera.hpp"
 #include "Animacion.h"
 #include "Bala.h"
+#include "Granada.h"
 
 class Jugador {
 public:
@@ -19,6 +20,7 @@ public:
     int getActual();
     int gettotalSpritesAnimacion();
     int getframeActual(Time &tiempo);
+    void DispararGranada();
     
 private:
 
@@ -38,9 +40,11 @@ private:
     Vector2i posiciones;
     float velocidadanimacion;
     std::vector<Bala*> CARGADOR;
+    std::vector<Granada*> CARGADORGRANADA;
     sf::Texture TEX;
     float countBala;
     sf::Clock RelojBala;
+    sf::Clock RelojGranada;
     float velocidadAnimacion;
     
 };

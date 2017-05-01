@@ -2,6 +2,7 @@
 #include "Jugador.h"
 #include "Estado.h"
 #include "Bala.h"
+#include "Granada.h"
 
 Jugador::Jugador(int anchura, int altura, string enlace) {
     
@@ -101,7 +102,7 @@ void Jugador::Disparar(){
             speedX=0;
             balaX=animacion->getSpriteE().getPosition().x-20;
             balaY=animacion->getSpriteE().getPosition().y+50;
-            Bala *balaDisparo = new Bala(10,20,speedX, speedY,2000);
+            Bala *balaDisparo = new Bala(10,20,speedX, speedY,50);
             balaDisparo->setPosition(balaX,balaY);
             balaDisparo->loadSprite(TEX,0,0);
             CARGADOR.push_back(balaDisparo);
@@ -123,7 +124,7 @@ void Jugador::Disparar(){
                balaX=animacion->getSpriteE().getPosition().x-100;
                balaY=animacion->getSpriteE().getPosition().y+200;
             }
-            Bala *balaDisparo = new Bala(10,20,speedX, speedY,2000);
+            Bala *balaDisparo = new Bala(10,20,speedX, speedY,50);
             balaDisparo->setPosition(balaX,balaY);
             balaDisparo->loadSprite(TEX,0,0);
             CARGADOR.push_back(balaDisparo);
@@ -139,18 +140,56 @@ void Jugador::Disparar(){
     animacion->movimiento(movimiento);
 }
 
+void Jugador::DispararGranada(){
+    velocidadAnimacion=0.1;
+    int speedX=0;
+    int speedY=0;
+    float GranadaX = 0;    
+    float GranadaY = 0;
+    Vector2f movimiento(0.0f,0.0f);
+    if (Keyboard::isKeyPressed(Keyboard::G)) {
+        velocidadAnimacion=0.085;
+        if(RelojGranada.getElapsedTime().asMilliseconds()>500){
+            if(animacion->getOrientacion()!=0){
+               speedX=10;
+               speedY=15;
+               GranadaX=animacion->getSpriteE().getPosition().x+100;
+               GranadaY=animacion->getSpriteE().getPosition().y+200;
+            }else{
+                speedX=-10;
+                speedY=15;
+               GranadaX=animacion->getSpriteE().getPosition().x-100;
+               GranadaY=animacion->getSpriteE().getPosition().y+200;
+            }
+            Granada *granadaDisparo = new Granada(10,20,speedX, speedY,60);
+            granadaDisparo->setPosition(GranadaX,GranadaY);
+            granadaDisparo->loadSprite(TEX,0,0);
+            CARGADORGRANADA.push_back(granadaDisparo);
+            RelojGranada.restart();
+        }
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
+            actual = 5;
+            movimiento.x=0;
+    }
+   
+    posiciones.x=actual;
+    posiciones.y=totalSpritesAnimacion;
+    animacion->movimiento(movimiento);
+}
+
 void Jugador::UpdateDisparo(){
     int contador=0;
     int move;
+    std::vector<Bala*> CargadorAux;
+    std::vector<Granada*> CargadorAuxGranada;
     for(contador=0;contador<CARGADOR.size();contador++){
         move=CARGADOR[contador]->move();
         switch(move){
             case 1:
+                CargadorAux.push_back(CARGADOR[contador]);
                 break;
             case 2:
-                //Fin de recorrido
-                //Balas[contador].~Bala();
-                //Balas.erase(contador);
+                CARGADOR[contador]->~Bala();
                 break;
 
             case -1:
@@ -159,12 +198,33 @@ void Jugador::UpdateDisparo(){
 
         }
     }
+    CARGADOR=CargadorAux;
+    for(contador=0;contador<CARGADORGRANADA.size();contador++){
+        move=CARGADORGRANADA[contador]->move();
+        switch(move){
+            case 1:
+                CargadorAuxGranada.push_back(CARGADORGRANADA[contador]);
+                break;
+            case 2:
+                CARGADORGRANADA[contador]->~Granada();
+                break;
+
+            case -1:
+                std::cerr<<"Error"<<std::endl;
+                break;
+        }
+    }
+    CARGADORGRANADA=CargadorAuxGranada;
+    
     
 }
 void Jugador::RenderDisparo(RenderWindow &window){
     int contador=0;
     for(contador=0;contador<CARGADOR.size();contador++){
         window.draw(CARGADOR[contador]->getSprite());
+    }
+    for(contador=0;contador<CARGADORGRANADA.size();contador++){
+        window.draw(CARGADORGRANADA[contador]->getSprite());
     }
 }
 

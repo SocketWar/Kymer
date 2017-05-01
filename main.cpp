@@ -67,9 +67,11 @@ int main() {
             
             trol.Movimiento(tiempo);
             trol.Saltar();
-            trol.Disparar();
             
+            trol.Disparar();
             trol.UpdateDisparo();
+            
+            trol.DispararGranada();
             
             //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
             //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);

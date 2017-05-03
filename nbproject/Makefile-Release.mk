@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Animacion.o \
 	${OBJECTDIR}/Bala.o \
 	${OBJECTDIR}/Estado.o \
+	${OBJECTDIR}/GameState.o \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/Jugador.o \
 	${OBJECTDIR}/Menu.o \
@@ -93,6 +94,11 @@ ${OBJECTDIR}/Estado.o: Estado.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Estado.o Estado.cpp
+
+${OBJECTDIR}/GameState.o: GameState.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GameState.o GameState.cpp
 
 ${OBJECTDIR}/Granada.o: Granada.cpp
 	${MKDIR} -p ${OBJECTDIR}

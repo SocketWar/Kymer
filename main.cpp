@@ -5,6 +5,7 @@
 #include "Jugador.h"
 #include "hud.h"
 #include "ObjetoPuntuacion.h"
+#include "GameState.h"
 
 const int update = 1000 / 25;
 const int frameskip = 5;
@@ -23,10 +24,11 @@ float InterpolacionRendery(Estado& Anterior, Estado& Nuevo, float interpolacion)
     return movimientoy;
 }
 
+
 int main() {
     RenderWindow Window(VideoMode(anchura, altura), "Test");
     Window.setFramerateLimit(120);
-
+    GameState *g = new GameState();
     // ---------------------------------------
     // RELOJES Y TIEMPOS
     // ---------------------------------------
@@ -186,7 +188,7 @@ int main() {
         }
         if (item->getRecogido() == false)
             Window.draw(item->getSprite());
-
+        //if(gameState==STATE_MENU){
         //Window.draw(rectangulo);
         Window.draw(h->getTextVida());
         Window.draw(h->getArma());
@@ -196,6 +198,7 @@ int main() {
         Window.draw(h->getTextPunt());
         Window.draw(h->getTextTime());
         Window.draw(h->getTextGranada());
+        //}
         Window.display();
     }
     return 0;

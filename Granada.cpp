@@ -27,8 +27,8 @@ Granada::Granada(int h, int w, float spX,float spY, int dist)
     SPEEDX=spX;
     SPEEDY=spY;
     TIEMPO=dist;
-    X=300;
-    Y=100;
+    X=-500;
+    Y=-500;
     Reloj = new Clock();
 }
 

@@ -58,34 +58,16 @@ int main() {
     // ---------------------------------------
     // HUD
     // ---------------------------------------
-    Texture *texHUD = new Texture();
-    Texture *cuadradoPuntuacion = new Texture();
-    Font *fuente = new Font();
+    
 
-    if (!texHUD->loadFromFile("res/img/hud.png")) {
-        std::cerr << "Error cargando la imagen hud.png";
-        exit(0);
-    }
-
-    if (!cuadradoPuntuacion->loadFromFile("res/img/pru.png")) {
-        std::cerr << "Error cargando la imagen pru.png";
-        exit(0);
-    }
-
-
-    if (!fuente->loadFromFile("res/font/Sansation_Regular.ttf")) {
-        std::cerr << "Error cargando la fuente sansation.ttf";
-        exit(0);
-    }
-
-    hud *h = new hud(texHUD, fuente, vista);
-    ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
+    hud *h = new hud(vista);
+    //ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
     //RectangleShape rectangulo(Vector2f(50, 50));
-    Rect<float> boxR(300, 250, 50, 50);
+    //Rect<float> boxR(300, 250, 50, 50);
     //rectangulo.setPosition(300, 250);
-    int x = 300;
-    int y = 250;
+    //int x = 300;
+    //int y = 250;
 
     h->setarmas();
     h->setplayerHP();
@@ -160,11 +142,12 @@ int main() {
 
                 h->changeTime(0);
             }
-
+/*
             if (boxR.intersects(item->getHitbox())) {
                 item->recogerObjeto();
                 h->changePunt(item->getPuntos());
             }
+ * */
         }
         h->updateTime();
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
@@ -181,21 +164,10 @@ int main() {
         Window.draw(map);
         Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
         jugador.RenderDisparo(Window);
-        for (int n = 0; n < h->getContHP(); n++) {
-            Window.draw(h->getPlayerHP(n));
-        }
-        if (item->getRecogido() == false)
-            Window.draw(item->getSprite());
-
-        //Window.draw(rectangulo);
-        Window.draw(h->getTextVida());
-        Window.draw(h->getArma());
-        Window.draw(h->getGranada());
-        Window.draw(h->getTextArma());
-        Window.draw(h->getIcono());
-        Window.draw(h->getTextPunt());
-        Window.draw(h->getTextTime());
-        Window.draw(h->getTextGranada());
+        
+        //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
+        h->Update(Window, vista);
+        
         Window.display();
     }
     return 0;

@@ -34,7 +34,7 @@
 
 class hud {
 public:
-    hud(sf::Texture *hTex, sf::Font *f, sf::View &win);
+    hud(sf::View &win);
     void setplayerHP();
     void setarmas();
     void setPosArma();
@@ -56,6 +56,8 @@ public:
     sf::Text getTextGranada();
     sf::Text getTextTime();
     sf::Text getTextPunt();
+    
+    void Update(sf::RenderWindow &win, sf::View &vista);
 
     int getPunt();
     virtual ~hud();

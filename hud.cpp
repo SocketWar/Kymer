@@ -26,7 +26,20 @@
 
 #include "hud.h"
 
-hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
+hud::hud(sf::View &win) {
+    sf::Texture *hTex = new sf::Texture();
+    sf::Font *f = new sf::Font();
+
+    if (!hTex->loadFromFile("res/img/hud.png")) {
+        std::cerr << "Error cargando la imagen hud.png";
+        exit(0);
+    }
+
+    if (!f->loadFromFile("res/font/Sansation_Regular.ttf")) {
+        std::cerr << "Error cargando la fuente sansation.ttf";
+        exit(0);
+    }
+    
     resol = false;
     if (win.getSize().x < 1000)
         resol = true;
@@ -40,14 +53,14 @@ hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
         icono->scale(0.85, 0.85);
     }
     icono->setTextureRect(sf::IntRect(180, 12, 95, 95));
-    
+
     icono->setPosition(15, 10);
 
-    
-    
+
+
     granada = new sf::Sprite(*tex);
-    
-    
+
+
 
     granada->setOrigin(0, 0);
     granada->setTextureRect(sf::IntRect(280, 35, 70, 75));
@@ -70,7 +83,7 @@ hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
     time = 30;
     font = f;
     time_aux = 0;
-    
+
     s << "";
 
     if (!resol) {
@@ -304,5 +317,45 @@ hud::~hud() {
     timeText = NULL;
     puntText = NULL;
     c = NULL;
+}
+
+void hud::Update(sf::RenderWindow &win, sf::View &vista) {
+
+    for (int n = 0; n < getContHP(); n++) {
+        win.draw(getPlayerHP(contHP));
+    }
+    /*
+        if (item->getRecogido() == false)
+            win.draw(item->getSprite());
+     */
+
+
+
+    icono->setPosition(15, 10);
+    granada->setPosition(270, 110);
+    setText(HPText, 120, 1, 28);
+    setText(gunText, 20, 110, 22);
+    setText(grenadeText, 260, 110, 22);
+    setText(puntText, win.getSize().x / 1.35, 25, 34);
+    setText(timeText, (win.getSize().x / 2) - 50, 25, 34);
+    setplayerHP();
+    arma_actual->setPosition(20, 135);
+
+    int x = (vista.getSize().x / 2) - vista.getCenter().x;
+    int y = (vista.getSize().y / 2) - vista.getCenter().y;
+    std::cout << " VISTA => ANCHO => " << vista.getSize().x << ", " << vista.getSize().y;
+    std::cout << " CENTER => " << vista.getCenter().x << ", " << vista.getCenter().y;
+    std::cout << " HUD => " << x << ", " << y << std::endl;
+
+
+    //Window.draw(rectangulo);
+    win.draw(getTextVida());
+    win.draw(getArma());
+    win.draw(getGranada());
+    win.draw(getTextArma());
+    win.draw(getIcono());
+    win.draw(getTextPunt());
+    win.draw(getTextTime());
+    win.draw(getTextGranada());
 }
 

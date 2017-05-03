@@ -78,7 +78,7 @@ int main() {
         exit(0);
     }
 
-    hud *h = new hud(texHUD, fuente, Window);
+    hud *h = new hud(texHUD, fuente, vista);
     ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
     //RectangleShape rectangulo(Vector2f(50, 50));
@@ -102,7 +102,6 @@ int main() {
 
             Event evento;
             while (Window.pollEvent(evento)) {
-
                 if (evento.type == Event::Closed)
                     Window.close();
             }
@@ -122,6 +121,7 @@ int main() {
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
             int contg = h->getContGranada();
+            
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
                 lifePlayer = lifePlayer + 1;
                 h->changeContHP(lifePlayer);

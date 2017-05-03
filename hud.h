@@ -34,7 +34,7 @@
 
 class hud {
 public:
-    hud(sf::Texture *hTex, sf::Font *f, sf::RenderWindow &win);
+    hud(sf::Texture *hTex, sf::Font *f, sf::View &win);
     void setplayerHP();
     void setarmas();
     void setPosArma();

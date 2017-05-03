@@ -26,7 +26,7 @@
 
 #include "hud.h"
 
-hud::hud(sf::Texture *hTex, sf::Font *f, sf::RenderWindow &win) {
+hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
     resol = false;
     if (win.getSize().x < 1000)
         resol = true;
@@ -40,10 +40,14 @@ hud::hud(sf::Texture *hTex, sf::Font *f, sf::RenderWindow &win) {
         icono->scale(0.85, 0.85);
     }
     icono->setTextureRect(sf::IntRect(180, 12, 95, 95));
+    
     icono->setPosition(15, 10);
 
+    
+    
     granada = new sf::Sprite(*tex);
-
+    
+    
 
     granada->setOrigin(0, 0);
     granada->setTextureRect(sf::IntRect(280, 35, 70, 75));

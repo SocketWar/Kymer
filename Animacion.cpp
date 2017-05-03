@@ -21,7 +21,7 @@ void Animacion::spritePersonaje() {
     animacion[0] = 4; //parado
     animacion[1] = 6; //correr
     animacion[2] = 6; //agachado
-    animacion[3] = 5; //saltoquieto
+    animacion[3] = 1; //saltoquieto
     animacion[4] = 6; //salto movimiento
     animacion[5] = 4; //disparo
     animacion[6] = 3; //disparo agachado

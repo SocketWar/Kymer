@@ -172,8 +172,8 @@ void Jugador::DispararGranada(){
             CARGADORGRANADA.push_back(granadaDisparo);
             RelojGranada.restart();
         }
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
-            actual = 5;
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
+            actual = 11;
             movimiento.x=0;
     }
    

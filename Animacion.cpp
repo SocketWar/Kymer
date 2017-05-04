@@ -16,8 +16,8 @@ Animacion::Animacion(string texto) {
 void Animacion::spritePersonaje() {
 
 
-    totalFotogramas = 8;
-    animacion = new int [8];
+    totalFotogramas = 27;
+    animacion = new int [27];
     animacion[0] = 4; //parado
     animacion[1] = 6; //correr
     animacion[2] = 6; //agachado
@@ -26,6 +26,25 @@ void Animacion::spritePersonaje() {
     animacion[5] = 4; //disparo
     animacion[6] = 3; //disparo agachado
     animacion[7] = 4; //disparo arriba
+    animacion[8] = 6; //disparo correr
+    animacion[9] = 6; //cuchillo correr
+    animacion[10] = 4; //cuchillo agachado
+    animacion[11] = 3; //lanzar granada
+    animacion[12] = 6; //lanzar granada corriendo
+    animacion[13] = 4; //lanzar granada agachado
+    animacion[14] = 4; //escopeta quieto
+    animacion[15] = 6; //escopeta correr
+    animacion[16] = 4; //escopeta agachado
+    animacion[17] = 1; //escopeta salto
+    animacion[18] = 2; //escopeta disparo quieto
+    animacion[19] = 2; //escopeta disparo agachado
+    animacion[20] = 2; //escopeta disparo arriba
+    animacion[21] = 6; //escopeta disparo correr
+    animacion[22] = 3; //escopeta lanzar granada quieto
+    animacion[23] = 6; //escopeta lanzar granada corriendo
+    animacion[24] = 4; //escopeta lanzar granada agachado
+    animacion[25] = 6; //escopeta cuchillo correr
+    animacion[26] = 4; //escopeta cuchillo agachado
     sprites = new Sprite**[totalFotogramas];
 
     for (int l = 0; l < totalFotogramas; l++) {

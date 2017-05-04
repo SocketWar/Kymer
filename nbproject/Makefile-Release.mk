@@ -79,62 +79,62 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/kymer: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/kymer ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Animacion.o: Animacion.cpp 
+${OBJECTDIR}/Animacion.o: Animacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Animacion.o Animacion.cpp
 
-${OBJECTDIR}/Bala.o: Bala.cpp 
+${OBJECTDIR}/Bala.o: Bala.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bala.o Bala.cpp
 
-${OBJECTDIR}/Estado.o: Estado.cpp 
+${OBJECTDIR}/Estado.o: Estado.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Estado.o Estado.cpp
 
-${OBJECTDIR}/Granada.o: Granada.cpp 
+${OBJECTDIR}/Granada.o: Granada.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Granada.o Granada.cpp
 
-${OBJECTDIR}/Jugador.o: Jugador.cpp 
+${OBJECTDIR}/Jugador.o: Jugador.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Jugador.o Jugador.cpp
 
-${OBJECTDIR}/Menu.o: Menu.cpp 
+${OBJECTDIR}/Menu.o: Menu.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
 
-${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp 
+${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MovimientoIA.o MovimientoIA.cpp
 
-${OBJECTDIR}/ObjetoPuntuacion.o: ObjetoPuntuacion.cpp 
+${OBJECTDIR}/ObjetoPuntuacion.o: ObjetoPuntuacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ObjetoPuntuacion.o ObjetoPuntuacion.cpp
 
-${OBJECTDIR}/hud.o: hud.cpp 
+${OBJECTDIR}/hud.o: hud.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hud.o hud.cpp
 
-${OBJECTDIR}/main.o: main.cpp 
+${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/mapaTmx.o: mapaTmx.cpp 
+${OBJECTDIR}/mapaTmx.o: mapaTmx.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mapaTmx.o mapaTmx.cpp
 
-${OBJECTDIR}/tinyxml2.o: tinyxml2.cpp 
+${OBJECTDIR}/tinyxml2.o: tinyxml2.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tinyxml2.o tinyxml2.cpp
@@ -145,6 +145,7 @@ ${OBJECTDIR}/tinyxml2.o: tinyxml2.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsfml-window.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsfml-graphics.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsfml-system.so
 	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/kymer
 
 # Subprojects

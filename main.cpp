@@ -48,8 +48,8 @@ int main() {
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    Jugador jugador(anchura, altura, "res/img/Personajev1.png");
-    Estado nuevo(jugador.getposX(), jugador.getposY());
+    Jugador jugador(anchura, altura, "res/img/PersonajeFull.png");
+    Estado nuevo(jugador.getPos().x, jugador.getPos().y);
     Estado viejo(0, 0);
     View vista(jugador.getPos(), Vector2f(anchura, altura));
 
@@ -97,7 +97,7 @@ int main() {
             tiempoAnimacion += tiempo;
             tiempoupdate += update;
             bucle++;
-
+            //estados
             viejo = nuevo;
 
             Event evento;
@@ -105,18 +105,15 @@ int main() {
                 if (evento.type == Event::Closed)
                     Window.close();
             }
-
+            //llamadas a update
             jugador.Movimiento(tiempo);
             jugador.Saltar();
-
             jugador.Disparar();
             jugador.UpdateDisparo();
-
             jugador.DispararGranada();
 
-            //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
-            //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);
-            nuevo.actualizartiempo(jugador.getposX(), jugador.getposY());
+            //actualizar estados
+            nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
@@ -167,6 +164,7 @@ int main() {
             }
         }
         h->updateTime();
+        //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
         movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);

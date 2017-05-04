@@ -14,8 +14,6 @@ Jugador::Jugador(int anchura, int altura, string enlace) {
     
     velocidadanimacion=0.1;
     velocidadmovimiento = 800.0f;
-    posX = cuadrado.getPosition().x;
-    posY = cuadrado.getPosition().y;
 
 
     animacion = new Animacion(enlace);
@@ -56,9 +54,13 @@ void Jugador::Movimiento(Time &time) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
         actual = 2;
     }
+    if(Keyboard::isKeyPressed(Keyboard::F)){
+        
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
+        actual = 11;
+    }
    
-    posiciones.x=actual;
-    posiciones.y=totalSpritesAnimacion;
+    
     animacion->movimiento(movimiento);
 }
 
@@ -68,8 +70,7 @@ void Jugador::Saltar() {
      velocidadAnimacion=0.3;
     if (Keyboard::isKeyPressed(Keyboard::Space) && comprobacion.getPosition().y == distanciasuelo){
         velocidad.y = -velocidadsalto;
-        posiciones.x=actual;
-        posiciones.y=totalSpritesAnimacion;
+        
     }
 
      if(comprobacion.getPosition().y!=distanciasuelo){
@@ -139,8 +140,7 @@ void Jugador::Disparar(){
             movimiento.x=0;
     }
    
-    posiciones.x=actual;
-    posiciones.y=totalSpritesAnimacion;
+   
     animacion->movimiento(movimiento);
 }
 
@@ -176,8 +176,7 @@ void Jugador::DispararGranada(){
             movimiento.x=0;
     }
    
-    posiciones.x=actual;
-    posiciones.y=totalSpritesAnimacion;
+   
     animacion->movimiento(movimiento);
 }
 
@@ -232,28 +231,10 @@ void Jugador::RenderDisparo(RenderWindow &window){
     }
 }
 
-float Jugador::getposX() {
 
-    posX = cuadrado.getPosition().x;
-    return posX;
-
-}
-
-float Jugador::getposY() {
-    posY = cuadrado.getPosition().y;
-    return posY;
-
-}
 
 Vector2f Jugador::getPos() {
-    return getAnimacion().getSpriteE().getPosition();
-}
-
-
-RectangleShape Jugador::getJugador() {
-
-    return cuadrado;
-
+    return animacion->getSpriteE().getPosition();
 }
 
 Animacion Jugador::getAnimacion(){

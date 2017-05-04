@@ -14,8 +14,6 @@ public:
     void UpdateDisparo();
     void RenderDisparo(RenderWindow &window);
     RectangleShape getJugador();
-    float getposX();
-    float getposY();
     Vector2f getPos();
     Animacion getAnimacion();
     int getActual();
@@ -25,12 +23,8 @@ public:
     
 private:
 
-    RectangleShape cuadrado;
-    Vector2f tamanyo;
     Vector2f velocidad;//velocidad en las dos posiciones
     float velocidadmovimiento;
-    float posX;
-    float posY;
     float gravedad;
     int distanciasuelo;
     float velocidadsalto;
@@ -38,7 +32,6 @@ private:
     Animacion *animacion;
     int totalSpritesAnimacion;
     int actual;
-    Vector2i posiciones;
     float velocidadanimacion;
     std::vector<Bala*> CARGADOR;
     std::vector<Granada*> CARGADORGRANADA;

@@ -121,28 +121,35 @@ void hud::setText(sf::Text *&t, int x, int y, int size) {
 }
 
 void hud::setplayerHP() {
-    float cont = 115.0f;
+   
 
     for (int j = 0; j < 6; j++) {
         playerHP->at(j) = new sf::Sprite(*tex);
         playerHP->push_back(playerHP->at(j));
         playerHP->at(j)->setOrigin(0, 0);
         playerHP->at(j)->setTextureRect(sf::IntRect(40, 10, 85, 85));
-
-        playerHP->at(j)->setPosition(cont, 30);
-        if (resol == false) {
+         if (resol == false) {
             playerHP->at(j)->scale(0.65, 0.65);
-            cont = cont + 55.0f;
         } else {
             playerHP->at(j)->scale(0.50, 0.50);
-            cont = cont + 40.0f;
         }
-
     }
     s.str(std::string());
     s << "Vidas: ";
     HPText->setString(s.str());
 
+}
+
+void hud::setPosHP(float x0,float y0,float aux_x,float aux_y){
+    float cont = 115.0f;
+    for (int j = 0; j < 6; j++) {
+        playerHP->at(j)->setPosition(x0+aux_x+cont, y0+aux_y);
+        if (resol == false) {
+            cont = cont + 55.0f;
+        } else {
+            cont = cont + 40.0f;
+        }
+     }
 }
 
 void hud::setarmas() {
@@ -322,24 +329,52 @@ hud::~hud() {
 void hud::Update(sf::RenderWindow &win, sf::View &vista) {
 
     for (int n = 0; n < getContHP(); n++) {
-        win.draw(getPlayerHP(contHP));
+        win.draw(getPlayerHP(n));
     }
     /*
         if (item->getRecogido() == false)
             win.draw(item->getSprite());
      */
 
-
-
-    icono->setPosition(15, 10);
-    granada->setPosition(270, 110);
-    setText(HPText, 120, 1, 28);
-    setText(gunText, 20, 110, 22);
-    setText(grenadeText, 260, 110, 22);
-    setText(puntText, win.getSize().x / 1.35, 25, 34);
-    setText(timeText, (win.getSize().x / 2) - 50, 25, 34);
+    float x0=vista.getCenter().x-win.getDefaultView().getCenter().x; 
+    float y0=vista.getCenter().y-win.getDefaultView().getCenter().y;
+    float aux_x;
+    float aux_y;
+    
     setplayerHP();
-    arma_actual->setPosition(20, 135);
+    aux_x=win.getDefaultView().getCenter().x/500;
+    aux_y=win.getDefaultView().getCenter().y/12;
+    setPosHP(x0,y0,aux_x,aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/50;
+    aux_y=win.getDefaultView().getCenter().y/50;
+    icono->setPosition(x0+aux_x,y0+aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/2;
+    aux_y=win.getDefaultView().getCenter().y/3;
+    granada->setPosition(x0+aux_x, y0+aux_y);
+    
+    aux_y=win.getDefaultView().getCenter().y/2.5;
+    aux_x=win.getDefaultView().getCenter().x/50;
+    arma_actual->setPosition(icono->getPosition().x+aux_x, y0+aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/4;
+    HPText->setPosition(x0+aux_x,y0);
+    
+    aux_y=win.getDefaultView().getCenter().y/3;
+    gunText->setPosition(icono->getPosition().x,y0+aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/1.28;
+    aux_y=win.getDefaultView().getCenter().y/40;
+    timeText->setPosition(x0+aux_x,icono->getPosition().y-aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x*1.38;
+    puntText->setPosition(x0+aux_x,icono->getPosition().y-aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/100;
+    grenadeText->setPosition(granada->getPosition().x+aux_x,granada->getPosition().y);
+    
+    
 
     int x = (vista.getSize().x / 2) - vista.getCenter().x;
     int y = (vista.getSize().y / 2) - vista.getCenter().y;

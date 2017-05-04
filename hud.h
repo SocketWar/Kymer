@@ -37,6 +37,7 @@ public:
     hud(sf::View &win);
     void setplayerHP();
     void setarmas();
+    void setPosHP(float x0,float y0,float aux_x,float aux_y);
     void setPosArma();
     void setText(sf::Text *&t, int x, int y, int size);
     void changeContHP(int i);

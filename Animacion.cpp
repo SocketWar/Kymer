@@ -94,7 +94,7 @@ void Animacion::orientacion(int orientacion) {
     } else {
         escala = 4;
     }
-    for (int f = 0; f < 8; f++) {
+    for (int f = 0; f < totalFotogramas; f++) {
         for (int j = 0; j < animacion[f]; j++) {
             sprites[f][j]->setScale(escala, 4);
             //sprites[f][j]->setPosition(150,50);
@@ -102,13 +102,23 @@ void Animacion::orientacion(int orientacion) {
     }
 }
 
-void Animacion::movimiento(Vector2f vector) {
+void Animacion::Movimiento(Vector2f vector) {
 
-    for (int f = 0; f < 8; f++) {
+    for (int f = 0; f < totalFotogramas; f++) {
         for (int j = 0; j < animacion[f]; j++) {
             sprites[f][j]->move(vector);
         }
     }
+}
+
+void Animacion::MovimientoInterpolado(Vector2f vector){
+    
+    for (int f = 0; f < totalFotogramas; f++) {
+        for (int j = 0; j < animacion[f]; j++) {
+            sprites[f][j]->setPosition(vector.x,vector.y);
+        }
+    }
+    
 }
 
 

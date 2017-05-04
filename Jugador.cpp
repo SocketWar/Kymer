@@ -7,7 +7,7 @@
 Jugador::Jugador(int anchura, int altura, string enlace) {
     
     gravedad = 2.0f;
-    distanciasuelo = 322;
+    distanciasuelo = 318;
     velocidadsalto = 30.0f;
     velocidad.x = 0;
     velocidad.y = 0;
@@ -61,36 +61,37 @@ void Jugador::Movimiento(Time &time) {
     }
    
     
-    animacion->movimiento(movimiento);
+    animacion->Movimiento(movimiento);
 }
 
 void Jugador::Saltar() {
 
-     Sprite comprobacion = animacion->getSpriteE();
+    Vector2f posicion = getPos();
+    
      velocidadAnimacion=0.3;
-    if (Keyboard::isKeyPressed(Keyboard::Space) && comprobacion.getPosition().y == distanciasuelo){
+    if (Keyboard::isKeyPressed(Keyboard::Space) && (posicion.y+4) == distanciasuelo){
         velocidad.y = -velocidadsalto;
         
     }
 
-     if(comprobacion.getPosition().y!=distanciasuelo){
+     if((posicion.y+4)!=distanciasuelo){
          
          totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
             actual = 3;
      }
          
-    if (comprobacion.getPosition().y + comprobacion.getScale().y < distanciasuelo || velocidad.y < 0) {
+    if (posicion.y + animacion->getSpriteE().getScale().y < distanciasuelo || velocidad.y < 0) {
 
         velocidad.y += gravedad;
 
     } else {
 
-        comprobacion.setPosition(comprobacion.getPosition().x, distanciasuelo-comprobacion.getScale().y);
+        animacion->MovimientoInterpolado(Vector2f(posicion.x, distanciasuelo-animacion->getSpriteE().getScale().y));
         velocidad.y = 0;
 
     }
 
-        animacion->movimiento(velocidad);
+        animacion->Movimiento(velocidad);
 }
 
 void Jugador::Disparar(){
@@ -141,7 +142,7 @@ void Jugador::Disparar(){
     }
    
    
-    animacion->movimiento(movimiento);
+    animacion->Movimiento(movimiento);
 }
 
 void Jugador::DispararGranada(){
@@ -177,7 +178,7 @@ void Jugador::DispararGranada(){
     }
    
    
-    animacion->movimiento(movimiento);
+    animacion->Movimiento(movimiento);
 }
 
 void Jugador::UpdateDisparo(){

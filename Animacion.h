@@ -12,7 +12,8 @@ public:
     Sprite getSpriteE();
     int getOrientacion(){ return ORIENTACION;};
     
-    void movimiento(Vector2f vector);
+    void Movimiento(Vector2f vector);
+    void MovimientoInterpolado(Vector2f vector);
 private:
     Texture *tex;
     int *animacion;

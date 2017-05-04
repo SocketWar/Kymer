@@ -172,10 +172,11 @@ int main() {
         vista.setCenter(jugador.getPos());
         Window.setView(vista);
 
-        jugador.getJugador().setPosition(movinterpoladox, movinterpoladoy);
+        jugador.getAnimacion().MovimientoInterpolado(Vector2f(movinterpoladox, movinterpoladoy));
 
         Window.clear(Color(150, 200, 200));
-
+        
+        cout<< jugador.getPos().y << endl;
         Window.draw(map);
         Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
         jugador.RenderDisparo(Window);

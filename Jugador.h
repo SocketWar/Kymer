@@ -22,6 +22,8 @@ public:
     int gettotalSpritesAnimacion();
     int getframeActual(Time &tiempo);
     void DispararGranada();
+    void setVidas(int i);
+    int getVidas();
     
 private:
 
@@ -48,6 +50,7 @@ private:
     sf::Clock RelojBala;
     sf::Clock RelojGranada;
     float velocidadAnimacion;
+    int vidas;
     
 };
 

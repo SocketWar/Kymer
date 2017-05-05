@@ -167,7 +167,7 @@ int main() {
         
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(Window, vista);
-        
+        jugador.setVidas(h->getContHP());
         Window.display();
     }
     return 0;

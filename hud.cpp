@@ -55,7 +55,7 @@ hud::hud(sf::View &win) {
     icono->setTextureRect(sf::IntRect(180, 12, 95, 95));
 
     icono->setPosition(15, 10);
-
+    
 
 
     granada = new sf::Sprite(*tex);
@@ -105,7 +105,8 @@ hud::hud(sf::View &win) {
     s << "         (x" << contG << ")";
     grenadeText->setString(s.str());
     s << "";
-
+    
+    setplayerHP();
 
 
 }
@@ -328,9 +329,7 @@ hud::~hud() {
 
 void hud::Update(sf::RenderWindow &win, sf::View &vista) {
 
-    for (int n = 0; n < getContHP(); n++) {
-        win.draw(getPlayerHP(n));
-    }
+    
     /*
         if (item->getRecogido() == false)
             win.draw(item->getSprite());
@@ -341,7 +340,7 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista) {
     float aux_x;
     float aux_y;
     
-    setplayerHP();
+    
     aux_x=win.getDefaultView().getCenter().x/500;
     aux_y=win.getDefaultView().getCenter().y/12;
     setPosHP(x0,y0,aux_x,aux_y);
@@ -373,15 +372,6 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista) {
     
     aux_x=win.getDefaultView().getCenter().x/100;
     grenadeText->setPosition(granada->getPosition().x+aux_x,granada->getPosition().y);
-    
-    
-
-    int x = (vista.getSize().x / 2) - vista.getCenter().x;
-    int y = (vista.getSize().y / 2) - vista.getCenter().y;
-    std::cout << " VISTA => ANCHO => " << vista.getSize().x << ", " << vista.getSize().y;
-    std::cout << " CENTER => " << vista.getCenter().x << ", " << vista.getCenter().y;
-    std::cout << " HUD => " << x << ", " << y << std::endl;
-
 
     //Window.draw(rectangulo);
     win.draw(getTextVida());
@@ -392,5 +382,8 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista) {
     win.draw(getTextPunt());
     win.draw(getTextTime());
     win.draw(getTextGranada());
+    for (int n = 0; n < getContHP(); n++) {
+        win.draw(getPlayerHP(n));
+    }
 }
 

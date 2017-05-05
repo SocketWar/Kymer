@@ -31,6 +31,7 @@ Jugador::Jugador(int anchura, int altura, string enlace) {
         std::cerr<<"Error en textura Granada";
         exit(0);
     }
+    vidas=0;
 }
 
 void Jugador::Movimiento(Time &time) {
@@ -278,4 +279,12 @@ int Jugador::getframeActual(Time& tiempo){
     
     return frameActual;
     
+}
+
+void Jugador::setVidas(int i){
+    vidas=i;
+}
+
+int Jugador::getVidas(){
+    return vidas;
 }

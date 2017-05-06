@@ -44,6 +44,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/MovimientoIA.o \
 	${OBJECTDIR}/ObjetoPuntuacion.o \
+	${OBJECTDIR}/estadoPartida.o \
+	${OBJECTDIR}/estadoPausa.o \
 	${OBJECTDIR}/hud.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapaTmx.o \
@@ -124,6 +126,16 @@ ${OBJECTDIR}/ObjetoPuntuacion.o: ObjetoPuntuacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/SFML -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ObjetoPuntuacion.o ObjetoPuntuacion.cpp
+
+${OBJECTDIR}/estadoPartida.o: estadoPartida.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/SFML -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/estadoPartida.o estadoPartida.cpp
+
+${OBJECTDIR}/estadoPausa.o: estadoPausa.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/SFML -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/estadoPausa.o estadoPausa.cpp
 
 ${OBJECTDIR}/hud.o: hud.cpp
 	${MKDIR} -p ${OBJECTDIR}

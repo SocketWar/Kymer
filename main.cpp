@@ -6,6 +6,8 @@
 #include "hud.h"
 #include "ObjetoPuntuacion.h"
 #include "GameState.h"
+#include "estadoPartida.h"
+#include "estadoPausa.h"
 
 const int update = 1000 / 25;
 const int frameskip = 5;
@@ -28,7 +30,8 @@ float InterpolacionRendery(Estado& Anterior, Estado& Nuevo, float interpolacion)
 int main() {
     RenderWindow Window(VideoMode(anchura, altura), "Test");
     Window.setFramerateLimit(120);
-    GameState *g = new GameState();
+    GameState *g = new estadoPartida();
+    int estado = 1;
     // ---------------------------------------
     // RELOJES Y TIEMPOS
     // ---------------------------------------
@@ -88,6 +91,7 @@ int main() {
     //rectangulo.setPosition(300, 250);
     int x = 300;
     int y = 250;
+    
 
     h->setarmas();
     h->setplayerHP();
@@ -95,6 +99,13 @@ int main() {
     while (Window.isOpen()) {
         bucle = 0;
         tiempo = clocl2.restart();
+        Event evento;
+        while (Window.pollEvent(evento)) {
+
+            if (evento.type == Event::Closed)
+                    Window.close();
+        }
+
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
             tiempoAnimacion += tiempo;
             tiempoupdate += update;
@@ -102,12 +113,7 @@ int main() {
 
             viejo = nuevo;
 
-            Event evento;
-            while (Window.pollEvent(evento)) {
-
-                if (evento.type == Event::Closed)
-                    Window.close();
-            }
+            
 
             jugador.Movimiento(tiempo);
             jugador.Saltar();
@@ -177,8 +183,19 @@ int main() {
         Window.setView(vista);
 
         jugador.getJugador().setPosition(movinterpoladox, movinterpoladoy);
+        
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+
+            estado = 1;
+            }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+
+            estado = 2;
+            }
 
         Window.clear(Color(150, 200, 200));
+
 
         Window.draw(map);
         Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
@@ -191,14 +208,14 @@ int main() {
         //if(gameState==STATE_MENU){
         //Window.draw(rectangulo);
         Window.draw(h->getTextVida());
-        Window.draw(h->getArma());
-        Window.draw(h->getGranada());
         Window.draw(h->getTextArma());
         Window.draw(h->getIcono());
         Window.draw(h->getTextPunt());
         Window.draw(h->getTextTime());
         Window.draw(h->getTextGranada());
+        g->render(Window,h,estado);
         //}
+        
         Window.display();
     }
     return 0;

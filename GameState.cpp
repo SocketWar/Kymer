@@ -12,11 +12,32 @@
  */
 
 #include "GameState.h"
+#include "estadoPartida.h"
+#include "estadoPausa.h"
+#include <SFML/Graphics.hpp>
 
 GameState::GameState() {
 }
 
+void GameState::setEstado(GameState &est, int u){
+    if (u == 1){
+        //est = new estadoPartida();
+    }
+    if (u==2){
+        //est = new estadoPausa();
+    }
+}
 
+void GameState::render(sf::RenderWindow &window, hud *h, int u){
+    if (u == 1){
+        estadoPartida *e = new estadoPartida();
+        e->render(window,h);
+    }
+    if (u==2){
+        estadoPausa *e = new estadoPausa();
+        e->render(window,h);
+    }
+}
 
 GameState::~GameState() {
 }

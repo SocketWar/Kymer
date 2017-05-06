@@ -14,6 +14,8 @@
       <itemPath>MovimientoIA.h</itemPath>
       <itemPath>ObjetoPuntuacion.h</itemPath>
       <itemPath>cabecera.hpp</itemPath>
+      <itemPath>estadoPartida.h</itemPath>
+      <itemPath>estadoPausa.h</itemPath>
       <itemPath>hud.h</itemPath>
       <itemPath>mapaTmx.h</itemPath>
     </logicalFolder>
@@ -33,6 +35,8 @@
       <itemPath>Menu.cpp</itemPath>
       <itemPath>MovimientoIA.cpp</itemPath>
       <itemPath>ObjetoPuntuacion.cpp</itemPath>
+      <itemPath>estadoPartida.cpp</itemPath>
+      <itemPath>estadoPausa.cpp</itemPath>
       <itemPath>hud.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mapaTmx.cpp</itemPath>
@@ -113,6 +117,14 @@
       <item path="ObjetoPuntuacion.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="estadoPartida.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="estadoPartida.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="estadoPausa.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="estadoPausa.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="hud.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -200,6 +212,14 @@
       <item path="ObjetoPuntuacion.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="estadoPartida.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="estadoPartida.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="estadoPausa.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="estadoPausa.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="hud.cpp" ex="false" tool="1" flavor2="0">
       </item>

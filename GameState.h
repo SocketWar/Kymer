@@ -13,23 +13,17 @@
 
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
-
-enum class GameStates
-{
-    STATE_START = 1,
-    STATE_MENU = 2, // 2
-    STATE_OPTIONS = 3, 
-    STATE_LEVEL = 4
-};
+#include <SFML/Graphics.hpp>
+#include "hud.h"
 
 class GameState {
 public:
     GameState();
-GameStates getState(){ return mState;};
+    void setEstado(GameState &est,int u);
+    void render(sf::RenderWindow &window, hud *h,int u);
     virtual ~GameState();
 private:
 
-GameStates mState;
 };
 
 

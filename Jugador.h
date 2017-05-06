@@ -1,3 +1,5 @@
+#ifndef JUGADOR_H
+#define JUGADOR_H
 
 #include <iostream>
 #include "cabecera.hpp"
@@ -7,7 +9,7 @@
 
 class Jugador {
 public:
-    Jugador(int anchura,int altura,string enlace);
+    Jugador(int anchura,int altura);
     void Movimiento(Time &tiempo);
     void Saltar();
     void Disparar();
@@ -45,4 +47,4 @@ private:
 };
 
 
-
+#endif /* JUGADOR_H */

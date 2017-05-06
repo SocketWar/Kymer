@@ -5,6 +5,7 @@
 #include "Jugador.h"
 #include "hud.h"
 #include "ObjetoPuntuacion.h"
+#include "Enemigo.h"
 
 const int update = 1000 / 25;
 const int frameskip = 5;
@@ -48,7 +49,8 @@ int main() {
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    Jugador jugador(anchura, altura, "res/img/PersonajeFull.png");
+    Jugador jugador(anchura, altura);
+    Enemigo enemigo;
     Estado nuevo(jugador.getPos().x, jugador.getPos().y);
     Estado viejo(0, 0);
     View vista(jugador.getPos(), Vector2f(anchura, altura));
@@ -81,12 +83,10 @@ int main() {
     hud *h = new hud(texHUD, fuente, vista);
     ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
-    //RectangleShape rectangulo(Vector2f(50, 50));
+    
     Rect<float> boxR(300, 250, 50, 50);
-    //rectangulo.setPosition(300, 250);
-    int x = 300;
-    int y = 250;
-
+   
+    vista.zoom(2);
     h->setarmas();
     h->setplayerHP();
 
@@ -169,16 +169,20 @@ int main() {
         movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
         movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
 
-        vista.setCenter(jugador.getPos());
+        
+        
+        vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
         Window.setView(vista);
 
         jugador.getAnimacion().MovimientoInterpolado(Vector2f(movinterpoladox, movinterpoladoy));
 
         Window.clear(Color(150, 200, 200));
         
-        cout<< jugador.getPos().y << endl;
+        
         Window.draw(map);
         Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
+        Window.draw(enemigo.getAnimacion().getSprite(0,0));
+        
         jugador.RenderDisparo(Window);
         for (int n = 0; n < h->getContHP(); n++) {
             Window.draw(h->getPlayerHP(n));

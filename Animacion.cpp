@@ -11,13 +11,20 @@ Animacion::Animacion(string texto) {
     }
 
     tex->setSmooth(false);
+   
 }
 
-void Animacion::spritePersonaje() {
+//personaje 
+void Animacion::spritePersonaje(char l) {
 
-
+    int xi=0;
+    int yi=0;
+    
+    switch (l){
+        
+        case 'p':
     totalFotogramas = 27;
-    animacion = new int [27];
+    animacion = new int [totalFotogramas];
     animacion[0] = 4; //parado
     animacion[1] = 6; //correr
     animacion[2] = 6; //agachado
@@ -45,8 +52,38 @@ void Animacion::spritePersonaje() {
     animacion[24] = 4; //escopeta lanzar granada agachado
     animacion[25] = 6; //escopeta cuchillo correr
     animacion[26] = 4; //escopeta cuchillo agachado
+    xi = 54;
+    yi = 77;
+            break;
+        case 'e':
+    totalFotogramas=9;
+    animacion = new int [totalFotogramas]; 
+    
+    animacion[0]=4;//alerta
+    animacion[1]=12;//correr
+    animacion[2]=4;//reirse
+    animacion[3]=3;//morir
+    animacion[4]=14;//tio lanza granadas
+    animacion[5]=8;//carga escopeta
+    animacion[6]=3;//disparo escopeta
+    animacion[7]=7;//morir acuchillado
+    animacion[8]=18;//mortero
+    
+    xi = 62;
+    yi = 51;
+    
+            break;
+        case 'v':
+    totalFotogramas=2;
+    animacion = new int [2]; 
+    animacion[0]=16;//atacar
+    animacion[1]=8;//andar/correr 
+    xi = 123;
+    yi = 87;
+            break;
+    }
+    
     sprites = new Sprite**[totalFotogramas];
-
     for (int l = 0; l < totalFotogramas; l++) {
         sprites[l] = new Sprite*[totalFotogramas];
         //cout<<"he entrado "<<endl;
@@ -58,7 +95,7 @@ void Animacion::spritePersonaje() {
         for (int j = 0; j < animacion[f]; j++) {
             sprites[f][j] = new sf::Sprite(*tex);
             sprites[f][j]->setScale(4, 4);
-            sprites[f][j]->setTextureRect(IntRect(54 * j, 77 * f, 54, 77));
+            sprites[f][j]->setTextureRect(IntRect(xi * j, yi * f, xi, yi));
             sprites[f][j]->setPosition(150, 50);
             sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 2, sprites[f][j]->getLocalBounds().height / 2);
             sprites[f][j]->setOrigin(15, 0);
@@ -68,9 +105,10 @@ void Animacion::spritePersonaje() {
     if (!sprites) {
         cout << "no se ha podido reservar" << endl;
     }
-    speed = 0.5f;
-
+   
 }
+
+
 
 int* Animacion::getNumAnimaciones() {
     return animacion;

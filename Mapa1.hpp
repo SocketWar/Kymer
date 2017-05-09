@@ -37,8 +37,7 @@ private:
 public:
 	Mapa1(void);
 	virtual int Run(sf::RenderWindow &App);
-//        virtual float InterpolacionRenderx(Estado& Anterior, Estado& Nuevo, float interpolacion); 
-//        virtual float InterpolacionRendery(Estado& Anterior, Estado& Nuevo, float interpolacion);
+
 };
 
 Mapa1::Mapa1(void)
@@ -46,16 +45,21 @@ Mapa1::Mapa1(void)
 {      
         update = 1000 / 25;
         frameskip = 5;
-	anchura = 800;
-        altura = 600;
+       
 	
+        
+
 }
 
 
-int Mapa1::Run(sf::RenderWindow &App)
-{
+int Mapa1::Run(sf::RenderWindow &App){
+    
+    bool Running = true;//booleano que controla el bucle mientras la pantalla esta seleccionada
+    anchura = App.getView().getSize().x;
+    altura = App.getView().getSize().y;
+    App.setSize(Vector2u(App.getSize().x,App.getSize().y));
 	sf::Event event;
-	bool Running = true;
+    cout<<"el mapa se muestra en  :"<<anchura<<"x"<<altura<<endl;
         
     App.setFramerateLimit(120);
     // ---------------------------------------
@@ -73,8 +77,7 @@ int Mapa1::Run(sf::RenderWindow &App)
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    float movinterpoladox = 0;
-    float movinterpoladoy = 0;
+    Vector2f movInterpolado;
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
@@ -82,9 +85,9 @@ int Mapa1::Run(sf::RenderWindow &App)
     
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
-    Estado nuevo(jugador.getPos().x, jugador.getPos().y);
-    Estado viejo(0, 0);
+   
     View vista(jugador.getPos(), Vector2f(anchura, altura));
+    
 
     mapaTmx map;
 
@@ -112,7 +115,7 @@ int Mapa1::Run(sf::RenderWindow &App)
     }
 
     hud *h = new hud(texHUD, fuente, vista);
-    ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
+   // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
     
     Rect<float> boxR(300, 250, 50, 50);
@@ -128,7 +131,7 @@ int Mapa1::Run(sf::RenderWindow &App)
             tiempoupdate += update;
             bucle++;
             //estados
-            viejo = nuevo;
+            jugador.actualizarEstado();//actualiza el estado del jugador(estado viejo = estado nuevo)
             Event evento;
             while (App.pollEvent(evento)) {
                 if (evento.type == Event::Closed)
@@ -142,7 +145,8 @@ int Mapa1::Run(sf::RenderWindow &App)
             jugador.DispararGranada();
 
             //actualizar estados
-            nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
+          //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
+            jugador.setEstado();//despues de moverse el jugador, cambia el estado nuevo en x e y actuales
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
@@ -186,24 +190,26 @@ int Mapa1::Run(sf::RenderWindow &App)
 
                 h->changeTime(0);
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 
-            if (boxR.intersects(item->getHitbox())) {
-                item->recogerObjeto();
-                h->changePunt(item->getPuntos());
+              return (0);
             }
+
+//            if (boxR.intersects(item->getHitbox())) {
+//                item->recogerObjeto();
+//                h->changePunt(item->getPuntos());
+//            }
         }
         h->updateTime();
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
-//        movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
-//        movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
 
-        
+        movInterpolado = jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);//alamacena en un vector la interpolacion
         
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
         App.setView(vista);
 
-        jugador.getAnimacion().MovimientoInterpolado(Vector2f(movinterpoladox, movinterpoladoy));
+        jugador.getAnimacion().MovimientoInterpolado(movInterpolado);
 
         //limpiampos pantalla
         App.clear(Color(150, 200, 200));
@@ -217,8 +223,8 @@ int Mapa1::Run(sf::RenderWindow &App)
         for (int n = 0; n < h->getContHP(); n++) {
             App.draw(h->getPlayerHP(n));
         }
-        if (item->getRecogido() == false)
-            App.draw(item->getSprite());
+//        if (item->getRecogido() == false)
+//            App.draw(item->getSprite());
 
         //Window.draw(rectangulo);
         App.draw(h->getTextVida());

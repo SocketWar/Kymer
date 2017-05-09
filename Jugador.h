@@ -6,6 +6,7 @@
 #include "Animacion.h"
 #include "Bala.h"
 #include "Granada.h"
+#include "Estado.h"
 
 class Jugador {
 public:
@@ -22,6 +23,10 @@ public:
     int gettotalSpritesAnimacion();
     int getframeActual(Time &tiempo);
     void DispararGranada();
+    void actualizarEstado();
+    void setEstado();
+    Estado* getViejo();
+    Estado* getNuevo();
     
 private:
 
@@ -43,7 +48,9 @@ private:
     sf::Clock RelojBala;
     sf::Clock RelojGranada;
     float velocidadAnimacion;
-    
+    //interpolacion
+    Estado *viejo;
+    Estado *nuevo;
 };
 
 

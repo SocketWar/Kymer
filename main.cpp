@@ -1,7 +1,8 @@
 //#include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "screens.hpp"
-
+#include "cabecera.hpp"
 
 int main(int argc, char** argv)
 {
@@ -9,8 +10,8 @@ int main(int argc, char** argv)
 	std::vector<cScreen*> Screens;
 	int screen = 0;
 
-	//Window creation
-	sf::RenderWindow App(sf::VideoMode(1352, 888, 32), "SFML Demo 3");
+	//creacion de la pantalla
+	sf::RenderWindow App(sf::VideoMode(1352, 888), "Kymer");
 
 	//Mouse cursor no more visible
 	App.setMouseCursorVisible(false);
@@ -20,8 +21,8 @@ int main(int argc, char** argv)
 	Screens.push_back(&s0);
 	Mapa1 s1;
 	Screens.push_back(&s1);
-     
-        
+        //CARGA SONIDOS
+       
 
 
 	//Main loop

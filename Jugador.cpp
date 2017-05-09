@@ -15,12 +15,15 @@ Jugador::Jugador(int anchura, int altura) {
     velocidadanimacion=0.1;
     velocidadmovimiento = 1200.0f;
 
-
+    //Sprites
     animacion = new Animacion("res/img/PersonajeFull.png");
     animacion->spritePersonaje('p');
-
     velocidadAnimacion=0.1;
     countBala =0;
+    
+    //Estados
+    viejo= new Estado();
+    nuevo= new Estado();
     
     if(!TEX.loadFromFile("res/img/SpriteBala.png")){
         std::cerr<<"Error en textura bala";
@@ -288,4 +291,27 @@ int Jugador::getframeActual(Time& tiempo){
     
     return frameActual;
     
+}
+
+void Jugador::actualizarEstado(){
+    
+    viejo=nuevo;
+    
+}
+
+void Jugador::setEstado(){
+    
+    nuevo->actualizartiempo(getPos().x,getPos().y);
+    
+}
+
+Estado* Jugador::getViejo(){
+    
+    
+    return viejo;
+}
+
+Estado* Jugador::getNuevo(){
+    
+    return nuevo;
 }

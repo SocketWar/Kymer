@@ -34,7 +34,7 @@ public:
 
 screen_0::screen_0(void)
 {
-	alpha_max = 3 * 255;
+	alpha_max = 3 * 255;//atenuacion
 	alpha_div = 3;
 	playing = false;
 }
@@ -52,7 +52,7 @@ int screen_0::Run(sf::RenderWindow &App)
 	sf::Text Menu3;
 	int menu = 0;
 
-	if (!Texture.loadFromFile("resources/menu.png"))
+	if (!Texture.loadFromFile("res/img/menu.png"))
 	{
 		std::cerr << "Error loading presentation.gif" << std::endl;
 		return (-1);
@@ -78,7 +78,7 @@ int screen_0::Run(sf::RenderWindow &App)
 	Menu2.setPosition(Vector2f( 550.f, 400.f ));
 
 	Menu3.setFont(Font);
-	Menu3.setCharacterSize(900);
+	Menu3.setCharacterSize(90);
 	Menu3.setString("Continue");
 	Menu3.setPosition(Vector2f( 550.f, 300.f));
 
@@ -86,6 +86,25 @@ int screen_0::Run(sf::RenderWindow &App)
 	{
 		alpha = alpha_max;
 	}
+        //carga sonido menu
+        sf::SoundBuffer buffer;
+         if (!buffer.loadFromFile("res/audio/menu.ogg")){
+             cout<<" el archivo de audio Menu no esta disponible"<<endl;
+         }
+        sf::Sound sound;
+        sound.setBuffer(buffer);
+       
+        //sound.play();
+        //carga sonido seleccion
+        sf::SoundBuffer bufferSeleccion;
+         if (!bufferSeleccion.loadFromFile("res/audio/MenuSeleccion.wav")){
+             cout<<" el archivo de audio Menu no esta disponible"<<endl;
+         }
+        sf::Sound soundSeleccion;
+        soundSeleccion.setBuffer(bufferSeleccion);
+        soundSeleccion.stop();
+  
+
 
 	while (Running)
 	{
@@ -100,6 +119,7 @@ int screen_0::Run(sf::RenderWindow &App)
 			//Key pressed
 			if (Event.type == sf::Event::KeyPressed)
 			{
+                            soundSeleccion.play();
 				switch (Event.key.code)
 				{
 				case sf::Keyboard::Up:
@@ -129,6 +149,7 @@ int screen_0::Run(sf::RenderWindow &App)
 		//When getting at alpha_max, we stop modifying the sprite
 		if (alpha<alpha_max)
 		{
+        
 			alpha++;
 		}
 		Sprite.setColor(sf::Color(255, 255, 255, alpha / alpha_div));

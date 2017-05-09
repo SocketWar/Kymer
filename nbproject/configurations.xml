@@ -13,9 +13,13 @@
       <itemPath>Mapa1.hpp</itemPath>
       <itemPath>MovimientoIA.h</itemPath>
       <itemPath>ObjetoPuntuacion.h</itemPath>
+      <itemPath>cScreen.hpp</itemPath>
+      <itemPath>cabecera.hpp</itemPath>
       <itemPath>hud.h</itemPath>
       <itemPath>mapaTmx.h</itemPath>
-      <itemPath>resources/personaje.h</itemPath>
+      <itemPath>menu.hpp</itemPath>
+      <itemPath>screen_1.hpp</itemPath>
+      <itemPath>screens.hpp</itemPath>
       <itemPath>tinyxml2.h</itemPath>
     </logicalFolder>
     <logicalFolder name="resources" displayName="resources" projectFiles="true">
@@ -35,7 +39,6 @@
       <itemPath>hud.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mapaTmx.cpp</itemPath>
-      <itemPath>resources/personaje.cpp</itemPath>
       <itemPath>tinyxml2.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -51,7 +54,6 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../Desktop/resources</Elem>
     <Elem>resources</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
@@ -114,6 +116,10 @@
       </item>
       <item path="ObjetoPuntuacion.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="cScreen.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="hud.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="hud.h" ex="false" tool="3" flavor2="0">
@@ -124,11 +130,13 @@
       </item>
       <item path="mapaTmx.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="menu.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="resources/Personajev1.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="resources/personaje.cpp" ex="false" tool="1" flavor2="0">
+      <item path="screen_1.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="resources/personaje.h" ex="false" tool="3" flavor2="0">
+      <item path="screens.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tinyxml2.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -189,6 +197,10 @@
       </item>
       <item path="ObjetoPuntuacion.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="cScreen.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="cabecera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="hud.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="hud.h" ex="false" tool="3" flavor2="0">
@@ -199,11 +211,13 @@
       </item>
       <item path="mapaTmx.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="menu.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="resources/Personajev1.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="resources/personaje.cpp" ex="false" tool="1" flavor2="0">
+      <item path="screen_1.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="resources/personaje.h" ex="false" tool="3" flavor2="0">
+      <item path="screens.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tinyxml2.cpp" ex="false" tool="1" flavor2="0">
       </item>

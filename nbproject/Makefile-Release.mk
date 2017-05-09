@@ -46,7 +46,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/hud.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapaTmx.o \
-	${OBJECTDIR}/resources/personaje.o \
 	${OBJECTDIR}/tinyxml2.o
 
 
@@ -128,11 +127,6 @@ ${OBJECTDIR}/mapaTmx.o: mapaTmx.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mapaTmx.o mapaTmx.cpp
-
-${OBJECTDIR}/resources/personaje.o: resources/personaje.cpp 
-	${MKDIR} -p ${OBJECTDIR}/resources
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/resources/personaje.o resources/personaje.cpp
 
 ${OBJECTDIR}/tinyxml2.o: tinyxml2.cpp 
 	${MKDIR} -p ${OBJECTDIR}

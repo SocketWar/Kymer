@@ -10,7 +10,6 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../../Desktop/resources</sourceRootElem>
                 <sourceRootElem>resources</sourceRootElem>
             </sourceRootList>
             <confList>

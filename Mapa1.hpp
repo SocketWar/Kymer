@@ -46,7 +46,8 @@ Mapa1::Mapa1(void)
         update = 1000 / 25;
         frameskip = 5;
        
-	
+	anchura = 1352;
+        altura = 888;
         
 
 }
@@ -55,9 +56,8 @@ Mapa1::Mapa1(void)
 int Mapa1::Run(sf::RenderWindow &App){
     
     bool Running = true;//booleano que controla el bucle mientras la pantalla esta seleccionada
-    anchura = App.getView().getSize().x;
-    altura = App.getView().getSize().y;
-    App.setSize(Vector2u(App.getSize().x,App.getSize().y));
+
+    //App.setSize(Vector2u(App.getSize().x,App.getSize().y));
 	sf::Event event;
     cout<<"el mapa se muestra en  :"<<anchura<<"x"<<altura<<endl;
         
@@ -86,8 +86,8 @@ int Mapa1::Run(sf::RenderWindow &App){
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
    
-    View vista(jugador.getPos(), Vector2f(anchura, altura));
-    
+    View vista(jugador.getPos(), Vector2f(App.getSize().x,App.getSize().y));
+   vista.setCenter(Vector2f(App.getSize().x/2, App.getSize().y/2));
 
     mapaTmx map;
 
@@ -120,7 +120,7 @@ int Mapa1::Run(sf::RenderWindow &App){
     
     Rect<float> boxR(300, 250, 50, 50);
    
-    vista.zoom(2);
+    //vista.zoom(2);
     h->setarmas();
     h->setplayerHP();
 	while (Running)

@@ -27,6 +27,7 @@ private:
 	int alpha_max;
 	int alpha_div;
 	bool playing;
+       
 public:
 	screen_0(void);
 	virtual int Run(sf::RenderWindow &App);
@@ -40,7 +41,11 @@ screen_0::screen_0(void)
 }
 
 int screen_0::Run(sf::RenderWindow &App)
-{
+{      
+     View vista(Vector2f(App.getSize().x/2,App.getSize().y/2),
+           Vector2f(App.getSize().x,App.getSize().y)
+          );
+     App.setView(vista);
 	sf::Event Event;
 	bool Running = true;
 	sf::Texture Texture;
@@ -94,7 +99,7 @@ int screen_0::Run(sf::RenderWindow &App)
         sf::Sound sound;
         sound.setBuffer(buffer);
        
-        //sound.play();
+        sound.play();
         //carga sonido seleccion
         sf::SoundBuffer bufferSeleccion;
          if (!bufferSeleccion.loadFromFile("res/audio/MenuSeleccion.wav")){
@@ -123,6 +128,7 @@ int screen_0::Run(sf::RenderWindow &App)
 				switch (Event.key.code)
 				{
 				case sf::Keyboard::Up:
+                                    soundSeleccion.play();
 					menu = 0;
 					break;
 				case sf::Keyboard::Down:
@@ -185,7 +191,7 @@ int screen_0::Run(sf::RenderWindow &App)
 		App.display();
 	}
 
-	//Never reaching this point normally, but just in case, exit the application
+	//si da algun error, cierra 
 	return (-1);
 }
 

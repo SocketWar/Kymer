@@ -5,28 +5,19 @@
 #include "Jugador.h"
 #include "hud.h"
 #include "ObjetoPuntuacion.h"
+#include "Enemigo.h"
 
 const int update = 1000 / 25;
 const int frameskip = 5;
-int anchura = 800;
-int altura = 600;
+int anchura = 1270;
+int altura = 720;
 
-float InterpolacionRenderx(Estado& Anterior, Estado& Nuevo, float interpolacion) {
 
-    float movimientox = Anterior.getx()*(1 - interpolacion) + Nuevo.getx() * interpolacion;
-    return movimientox;
-}
-
-float InterpolacionRendery(Estado& Anterior, Estado& Nuevo, float interpolacion) {
-
-    float movimientoy = Anterior.gety()*(1 - interpolacion) + Nuevo.gety() * interpolacion;
-    return movimientoy;
-}
 
 int main() {
     RenderWindow Window(VideoMode(anchura, altura), "Test");
     Window.setFramerateLimit(120);
-
+    
     // ---------------------------------------
     // RELOJES Y TIEMPOS
     // ---------------------------------------
@@ -42,15 +33,13 @@ int main() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    float movinterpoladox = 0;
-    float movinterpoladoy = 0;
+    Vector2f interpolacionJugador;
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    Jugador jugador(anchura, altura, "res/img/Personajev1.png");
-    Estado nuevo(jugador.getposX(), jugador.getposY());
-    Estado viejo(0, 0);
+    Jugador jugador(anchura, altura);
+    Enemigo enemigo;
     View vista(jugador.getPos(), Vector2f(anchura, altura));
 
     mapaTmx map;
@@ -78,18 +67,19 @@ int main() {
         exit(0);
     }
 
-    hud *h = new hud(texHUD, fuente, vista);
+    hud *h = new hud(vista);
+    /*
     ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
-    //RectangleShape rectangulo(Vector2f(50, 50));
+    
     Rect<float> boxR(300, 250, 50, 50);
-    //rectangulo.setPosition(300, 250);
-    int x = 300;
-    int y = 250;
-
+   
+    vista.zoom(2);
+    
+*/
+    
     h->setarmas();
     h->setplayerHP();
-
     while (Window.isOpen()) {
         bucle = 0;
         tiempo = clocl2.restart();
@@ -97,26 +87,24 @@ int main() {
             tiempoAnimacion += tiempo;
             tiempoupdate += update;
             bucle++;
-
-            viejo = nuevo;
+            
+            //estados
+            jugador.actualizarEstado();
 
             Event evento;
             while (Window.pollEvent(evento)) {
                 if (evento.type == Event::Closed)
                     Window.close();
             }
-
+            //llamadas a update
             jugador.Movimiento(tiempo);
             jugador.Saltar();
-
             jugador.Disparar();
             jugador.UpdateDisparo();
-
             jugador.DispararGranada();
 
-            //movimiento.movimentoIA(tiempo, trol.getJugador(), cuadrado2);
-            //movimiento.esquivarIA(tiempo,trol.getJugador(),cuadrado2);
-            nuevo.actualizartiempo(jugador.getposX(), jugador.getposY());
+            //actualizar estados
+            jugador.setEstado();
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
@@ -160,42 +148,37 @@ int main() {
 
                 h->changeTime(0);
             }
-
+/*
             if (boxR.intersects(item->getHitbox())) {
                 item->recogerObjeto();
                 h->changePunt(item->getPuntos());
             }
+*/
         }
         h->updateTime();
+        //valor de interpolacion se actualiza cada render
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
-        movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
-        movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
-
+        //vector que contiene la interpolada en x e y
+        interpolacionJugador=jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);
+      
+        
         vista.setCenter(jugador.getPos());
         Window.setView(vista);
-
-        jugador.getJugador().setPosition(movinterpoladox, movinterpoladoy);
+        
+        //movimiento a la posicion interpolada
+        jugador.getAnimacion().MovimientoInterpolado(interpolacionJugador);
 
         Window.clear(Color(150, 200, 200));
-
+        
+        
         Window.draw(map);
         Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
+        Window.draw(enemigo.getAnimacion().getSprite(0,0));
+        
         jugador.RenderDisparo(Window);
-        for (int n = 0; n < h->getContHP(); n++) {
-            Window.draw(h->getPlayerHP(n));
-        }
-        if (item->getRecogido() == false)
-            Window.draw(item->getSprite());
-
-        //Window.draw(rectangulo);
-        Window.draw(h->getTextVida());
-        Window.draw(h->getArma());
-        Window.draw(h->getGranada());
-        Window.draw(h->getTextArma());
-        Window.draw(h->getIcono());
-        Window.draw(h->getTextPunt());
-        Window.draw(h->getTextTime());
-        Window.draw(h->getTextGranada());
+        //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
+        h->Update(Window, vista);
+        jugador.setVidas(h->getContHP());
         Window.display();
     }
     return 0;

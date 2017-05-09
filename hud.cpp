@@ -26,7 +26,20 @@
 
 #include "hud.h"
 
-hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
+hud::hud(sf::View &win) {
+    sf::Texture *hTex = new sf::Texture();
+    sf::Font *f = new sf::Font();
+
+    if (!hTex->loadFromFile("res/img/hud.png")) {
+        std::cerr << "Error cargando la imagen hud.png";
+        exit(0);
+    }
+
+    if (!f->loadFromFile("res/font/Sansation_Regular.ttf")) {
+        std::cerr << "Error cargando la fuente sansation.ttf";
+        exit(0);
+    }
+    
     resol = false;
     if (win.getSize().x < 1000)
         resol = true;
@@ -40,14 +53,14 @@ hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
         icono->scale(0.85, 0.85);
     }
     icono->setTextureRect(sf::IntRect(180, 12, 95, 95));
-    
-    icono->setPosition(15, 10);
 
+    icono->setPosition(15, 10);
     
-    
+
+
     granada = new sf::Sprite(*tex);
-    
-    
+
+
 
     granada->setOrigin(0, 0);
     granada->setTextureRect(sf::IntRect(280, 35, 70, 75));
@@ -70,7 +83,7 @@ hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
     time = 30;
     font = f;
     time_aux = 0;
-    
+
     s << "";
 
     if (!resol) {
@@ -92,7 +105,8 @@ hud::hud(sf::Texture *hTex, sf::Font *f, sf::View &win) {
     s << "         (x" << contG << ")";
     grenadeText->setString(s.str());
     s << "";
-
+    
+    setplayerHP();
 
 
 }
@@ -108,28 +122,35 @@ void hud::setText(sf::Text *&t, int x, int y, int size) {
 }
 
 void hud::setplayerHP() {
-    float cont = 115.0f;
+   
 
     for (int j = 0; j < 6; j++) {
         playerHP->at(j) = new sf::Sprite(*tex);
         playerHP->push_back(playerHP->at(j));
         playerHP->at(j)->setOrigin(0, 0);
         playerHP->at(j)->setTextureRect(sf::IntRect(40, 10, 85, 85));
-
-        playerHP->at(j)->setPosition(cont, 30);
-        if (resol == false) {
+         if (resol == false) {
             playerHP->at(j)->scale(0.65, 0.65);
-            cont = cont + 55.0f;
         } else {
             playerHP->at(j)->scale(0.50, 0.50);
-            cont = cont + 40.0f;
         }
-
     }
     s.str(std::string());
     s << "Vidas: ";
     HPText->setString(s.str());
 
+}
+
+void hud::setPosHP(float x0,float y0,float aux_x,float aux_y){
+    float cont = 115.0f;
+    for (int j = 0; j < 6; j++) {
+        playerHP->at(j)->setPosition(x0+aux_x+cont, y0+aux_y);
+        if (resol == false) {
+            cont = cont + 55.0f;
+        } else {
+            cont = cont + 40.0f;
+        }
+     }
 }
 
 void hud::setarmas() {
@@ -304,5 +325,65 @@ hud::~hud() {
     timeText = NULL;
     puntText = NULL;
     c = NULL;
+}
+
+void hud::Update(sf::RenderWindow &win, sf::View &vista) {
+
+    
+    /*
+        if (item->getRecogido() == false)
+            win.draw(item->getSprite());
+     */
+
+    float x0=vista.getCenter().x-win.getDefaultView().getCenter().x; 
+    float y0=vista.getCenter().y-win.getDefaultView().getCenter().y;
+    float aux_x;
+    float aux_y;
+    
+    
+    aux_x=win.getDefaultView().getCenter().x/500;
+    aux_y=win.getDefaultView().getCenter().y/12;
+    setPosHP(x0,y0,aux_x,aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/50;
+    aux_y=win.getDefaultView().getCenter().y/50;
+    icono->setPosition(x0+aux_x,y0+aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/2;
+    aux_y=win.getDefaultView().getCenter().y/3;
+    granada->setPosition(x0+aux_x, y0+aux_y);
+    
+    aux_y=win.getDefaultView().getCenter().y/2.5;
+    aux_x=win.getDefaultView().getCenter().x/50;
+    arma_actual->setPosition(icono->getPosition().x+aux_x, y0+aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/4;
+    HPText->setPosition(x0+aux_x,y0);
+    
+    aux_y=win.getDefaultView().getCenter().y/3;
+    gunText->setPosition(icono->getPosition().x,y0+aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/1.28;
+    aux_y=win.getDefaultView().getCenter().y/40;
+    timeText->setPosition(x0+aux_x,icono->getPosition().y-aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x*1.38;
+    puntText->setPosition(x0+aux_x,icono->getPosition().y-aux_y);
+    
+    aux_x=win.getDefaultView().getCenter().x/100;
+    grenadeText->setPosition(granada->getPosition().x+aux_x,granada->getPosition().y);
+
+    //Window.draw(rectangulo);
+    win.draw(getTextVida());
+    win.draw(getArma());
+    win.draw(getGranada());
+    win.draw(getTextArma());
+    win.draw(getIcono());
+    win.draw(getTextPunt());
+    win.draw(getTextTime());
+    win.draw(getTextGranada());
+    for (int n = 0; n < getContHP(); n++) {
+        win.draw(getPlayerHP(n));
+    }
 }
 

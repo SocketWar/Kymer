@@ -10,7 +10,7 @@
 
 class Jugador {
 public:
-    Jugador(int anchura,int altura);
+    Jugador(int anchura, int altura);
     void Movimiento(Time &tiempo);
     void Saltar();
     void Disparar();
@@ -27,10 +27,12 @@ public:
     void setEstado();
     Estado* getViejo();
     Estado* getNuevo();
-    
+    void setVidas(int i);
+    int getVidas();
+
 private:
 
-    Vector2f velocidad;//velocidad en las dos posiciones
+    Vector2f velocidad; //velocidad en las dos posiciones
     float velocidadmovimiento;
     float gravedad;
     int distanciasuelo;
@@ -48,6 +50,8 @@ private:
     sf::Clock RelojBala;
     sf::Clock RelojGranada;
     float velocidadAnimacion;
+    int vidas;
+    
     //interpolacion
     Estado *viejo;
     Estado *nuevo;

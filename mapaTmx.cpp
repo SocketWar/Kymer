@@ -1,11 +1,13 @@
 #include "mapaTmx.h"
 
-mapaTmx::mapaTmx(){
+mapaTmx::mapaTmx() {
     cout << "ENTRADO EN CONSTRUCTOR" << endl;
+
+    const string texStr = "res/img/tiles_2.png";
 
     cout << "CARGANDO LA TEXTURA...";
     tex = new Texture();
-    if (!tex->loadFromFile("res/img/tiles_2.png")) {
+    if (!tex->loadFromFile(texStr)) {
         cerr << "Error cargando la textura";
         exit(0);
     }
@@ -15,85 +17,73 @@ mapaTmx::mapaTmx(){
     doc = new XMLDocument();
     doc->LoadFile("res/tmx/s2.tmx");
     cout << "OK" << endl;
-    
+
     cout << "CREANDO EL XML DOCUMENT.....";
     map = doc->FirstChildElement("map");
     cout << "OK" << endl;
-    
+
     CargaPropiedades();
-    
-    nElementos.x = dimTileSheet.x / (dimTiles.x + space);
-    nElementos.y = dimTileSheet.y / (dimTiles.y + space);
-    
+
+    nElementos.x = dimTileSheet.x / (dimTiles.x + espaciado);
+    nElementos.y = dimTileSheet.y / (dimTiles.y + espaciado);
+
     cout << "CREANDO LAS CAPAS...";
     layer = map->FirstChildElement("layer");
-    numlayers = 0;
+    nCapas = 0;
     while (layer) {
-        numlayers++;
+        nCapas++;
         layer = layer->NextSiblingElement("layer");
     }
     cout << "OK" << endl;
-    
+
     cout << "CREANDO LOS SPRITES DE CAPAS...";
     sprites = new Sprite[tileCount];
     for (int c = 0; c < tileCount; c++) {
         sprites[c].setTexture(*tex);
-        sprites[c].setTextureRect(IntRect(c*dimTiles.x + space, 0, dimTiles.x, dimTiles.y));
+        sprites[c].setTextureRect(IntRect(c * dimTiles.x + espaciado, 0, dimTiles.x, dimTiles.y));
     }
     cout << "OK" << endl;
-    
-    cout << "CREANDO LOS SPRITES...";
-    tilemap = new int**[numlayers];
-    for (int i = 0; i < numlayers; i++) {
-        tilemap[i] = new int*[dimEnTiles.y];
-        for (int y = 0; y < dimEnTiles.y; y++) {
-            tilemap[i][y] = new int[dimEnTiles.x];
-        }
-    }
-    cout << "OK" << endl;
-    
-    cout << "INICIALIZANDO LOS TILEMAP 1...";
-    tilemapSprite = new Sprite***[numlayers];
 
-    for (int l = 0; l < numlayers; l++) {
-        tilemapSprite[l] = new Sprite**[dimEnTiles.y];
+    cout << "CARGANDO EL TILESHEET...";
+    tileSheet = new int**[nCapas];
+    for (int i = 0; i < nCapas; i++) {
+        tileSheet[i] = new int*[dimEnTiles.y];
         for (int y = 0; y < dimEnTiles.y; y++) {
-            tilemapSprite[l][y] = new Sprite*[dimEnTiles.x];
-            for (int x = 0; x < dimEnTiles.x; x++) {
-                tilemapSprite[l][y][x] = new Sprite(*tex);
-            }
+            tileSheet[i][y] = new int[dimEnTiles.x];
         }
     }
     cout << "OK" << endl;
-    
-    cout << "CREANDO LOS TILEMAP 2...";
+
+    cout << "COGIENDO LOS LAYER Y DATA DE TMX...";
     lay = map->FirstChildElement("layer");
     data = lay->FirstChildElement("data")->FirstChildElement("tile");
-    cout << "OK" << endl;
-    
-    cout << "COGIENDO LOS LAYER Y DATA DE TMX...";
-    for (int l = 0; l < numlayers; l++) {
+    for (int l = 0; l < nCapas; l++) {
         for (int y = 0; y < dimEnTiles.y; y++) {
             for (int x = 0; x < dimEnTiles.x; x++) {
-                data->QueryIntAttribute("gid", &tilemap[l][y][x]);
+                data->QueryIntAttribute("gid", &tileSheet[l][y][x]);
                 data = data->NextSiblingElement("tile");
             }
         }
-        if (l < numlayers - 1) {
+        if (l < nCapas - 1) {
             lay = lay->NextSiblingElement("layer");
             data = lay->FirstChildElement("data")->FirstChildElement("tile");
         }
     }
     cout << "OK" << endl;
+
+    CargaObjetos();
     
-    if(load("res/img/tiles_2.png"))
-        cout<< "LOAD...OK" << endl;
-    
+    if (load(texStr))
+        cout << "LOAD...OK" << endl;
+
     //Muestrainfo();
 }
 
+/*
+ * Carga de mapa.
+ */
 bool mapaTmx::load(const string &tileset) {
-    if (!m_tileset.loadFromFile(tileset))
+    if (!tex->loadFromFile(tileset))
         return false;
 
     // resize the vertex array to fit the level size
@@ -101,12 +91,13 @@ bool mapaTmx::load(const string &tileset) {
     m_vertices.resize(dimEnTiles.x * dimEnTiles.y * 4);
 
     // 1 Quad por cada elemento del VertexArray
-    for (int l = 0; l < numlayers; l++) {
+    cout << "INICIALIZANDO LOS TILEMAP...";
+    for (int l = 0; l < nCapas; l++) {
         for (unsigned int y = 0; y < dimEnTiles.x; ++y) {
             for (unsigned int x = 0; x < dimEnTiles.y; ++x) {
-                
-                int gid = tilemap[l][x][y];
-                
+
+                int gid = tileSheet[l][x][y];
+
                 if (gid > 0) {
                     // get a pointer to the current tile's quad
                     Vertex *quad = &m_vertices[(y + x * dimEnTiles.x) * 4];
@@ -116,7 +107,7 @@ bool mapaTmx::load(const string &tileset) {
                     Vector2f segundo((y + 1) * dimTiles.x, x * dimTiles.y);
                     Vector2f tercero((y + 1) * dimTiles.x, (x + 1) * dimTiles.y);
                     Vector2f cuarto(y * dimTiles.x, (x + 1) * dimTiles.y);
-                    
+
                     /*
                     cout << endl << "GID: " << gid-1 << endl;
                     cout << "POSICION => [" << primero.x << ", " << primero.y << "] ";
@@ -124,27 +115,27 @@ bool mapaTmx::load(const string &tileset) {
                     cout << "[" << tercero.x << ", " << tercero.y << "] ";
                     cout << "[" << cuarto.x << ", " << cuarto.y << "] " << endl;
                      */
-                    
-                    quad[0].position = primero;//fondo
-                    quad[1].position = segundo;//suelo
-                    quad[2].position = tercero;//objetos
-                    quad[3].position = cuarto;//enemigos
+
+                    quad[0].position = primero;
+                    quad[1].position = segundo;
+                    quad[2].position = tercero;
+                    quad[3].position = cuarto;
 
                     // Textura para la pieza
                     Vector2i pxCords = gidToPixel(gid);
-                    
+
                     Vector2f recorte1(pxCords.x, pxCords.y);
                     Vector2f recorte2(pxCords.x + dimTiles.x, pxCords.y);
                     Vector2f recorte3(pxCords.x + dimTiles.x, pxCords.y + dimTiles.y);
                     Vector2f recorte4(pxCords.x, pxCords.y + dimTiles.y);
-                    
+
                     /*
                     cout << "RECORTE => [" << recorte1.x << ", " << recorte1.y << "] ";
                     cout << "[" << recorte2.x << ", " << recorte2.y << "] ";
                     cout << "[" << recorte3.x << ", " << recorte3.y << "] ";
                     cout << "[" << recorte4.x << ", " << recorte4.y << "] " << endl;
-                    */
-                    
+                     */
+
                     quad[0].texCoords = recorte1;
                     quad[1].texCoords = recorte2;
                     quad[2].texCoords = recorte3;
@@ -154,196 +145,157 @@ bool mapaTmx::load(const string &tileset) {
         }
     }
 
+    cout << "OK" << endl;
     return true;
 }
 
+/*
+ * Conversor que transforma, a partir de un gid
+ *   del tileSheet a una posicion en pixeles de la 
+ *   imagen, para su posterior recortado y dibujado.
+ */
 Vector2i mapaTmx::gidToPixel(int gid) {
     Vector2i res(0.00, 0.00);
     gid = gid - 1;
     res.x = gid % nElementos.x;
     //cout << endl << "SOBRANTE => " << res.x;
-    
-    res.x = res.x * dimTiles.x + res.x * space;
+
+    res.x = res.x * dimTiles.x + res.x * espaciado;
     res.y = (gid / nElementos.x);
-    
+
     //cout << ", " << res.y << endl;
-    
-    res.y = res.y * dimTiles.y  + res.y * space;
+
+    res.y = res.y * dimTiles.y + res.y * espaciado;
 
     return res;
 }
 
-void mapaTmx::Muestrainfo(){
+/*
+ * Metodo para depuracion. Muestra infor de variables del mapa.
+ */
+void mapaTmx::Muestrainfo() {
     cout << "------- DATOS -------" << endl;
-    cout << "DIMENSIONES EN TILES: " << dimEnTiles.x << ", "<< dimEnTiles.y << endl;
-    cout << "DIMENSION DEL TILE: " << dimTiles.x << ", "<< dimTiles.y << endl;
+    cout << "DIMENSIONES EN TILES: " << dimEnTiles.x << ", " << dimEnTiles.y << endl;
+    cout << "DIMENSION DEL TILE: " << dimTiles.x << ", " << dimTiles.y << endl;
     cout << "DIMENSION DEL TILESHEET: " << dimTileSheet.x << ", " << dimTileSheet.y << endl;
     cout << "NUM ELEMENTOS TILESHEET: " << nElementos.x << ", " << nElementos.y << endl;
     cout << "NUM DE TILES: " << tileCount << endl;
-    cout << "ESPACIADO: " << space << endl;
-    cout << "NUM DE CAPAS: " << numlayers << endl;
+    cout << "ESPACIADO: " << espaciado << endl;
+    cout << "NUM DE CAPAS: " << nCapas << endl;
     cout << "------- DATOS -------" << endl;
 }
 
-
-
-void mapaTmx::CargaPropiedades(){
+/*
+ * Metodo que recorre el tmx cargando las variables
+ *   principales. Ancho, alto, numero de celdas,
+ *   ancho de celdas, alto de celdas, etc
+ */
+void mapaTmx::CargaPropiedades() {
     cout << "CREANDO LOS XML ELEMENT...";
     XMLError err;
     //-------------------------
     // MAP
     //-------------------------
     err = map->QueryIntAttribute("width", &dimEnTiles.x);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN WIDTH: " << XMLDocument::ErrorIDToName(err) << endl;
-    
+
     err = map->QueryIntAttribute("height", &dimEnTiles.y);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN HEIGHT: " << XMLDocument::ErrorIDToName(err) << endl;
-    
+
     err = map->QueryIntAttribute("tilewidth", &dimTiles.x);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN TILEWIDTH: " << XMLDocument::ErrorIDToName(err) << endl;
-    
+
     err = map->QueryIntAttribute("tileheight", &dimTiles.y);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN TILEHEIGHT: " << XMLDocument::ErrorIDToName(err) << endl;
-    
+
     //-------------------------
     // TILESET
     //-------------------------
-    
     tileset = map->FirstChildElement("tileset");
     err = tileset->QueryIntAttribute("tilecount", &tileCount);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN TILECOUNT: " << XMLDocument::ErrorIDToName(err) << endl;
-    
-    err = tileset->QueryIntAttribute("spacing", &space);
-    if(err != 0){
-        cout << "ERROR EN SPACING: " << XMLDocument::ErrorIDToName(err) << endl;
-        space= 0;
+
+    //SI HAY ERROR EN EL SPACING SE PONE A 0
+    if (tileset->QueryIntAttribute("spacing", &espaciado)) {
+        cout << "ERROR EN SPACING: ESTABLECIDO A 0 ....";
+        espaciado = 0;
     }
+
     //-------------------------
     // IMAGE
     //-------------------------
     image = tileset->FirstChildElement("image");
     err = image->QueryIntAttribute("width", &dimTileSheet.x);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN DIMENSION TILE SHEET WIDTH: " << XMLDocument::ErrorIDToName(err) << endl;
-    
+
     err = image->QueryIntAttribute("height", &dimTileSheet.y);
-    if(err != 0)
+    if (err != 0)
         cout << "ERROR EN ERROR EN DIMENSION TILE SHEET HEIGHT: " << XMLDocument::ErrorIDToName(err) << endl;
-    
-    if(err == 0)
+
+    if (err == 0)
         cout << "OK" << endl;
 }
 
 /*
-mapaTmx::mapaTmx() {
-    cout << "ENTRADO EN CONSTRUCTOR" << endl;
-
-    cout << "CARGANDO LA TEXTURA...";
-    tex = new Texture();
-    if (!tex->loadFromFile("res/img/sheet.png")) {
-        cerr << "Error cargando la textura";
-        exit(0);
-    }
-    cout << "OK" << endl;
-
-    cout << "CARGANDO EL MAPA...";
-    doc = new XMLDocument();
-    doc->LoadFile("res/tmx/gitaner.tmx");
-    cout << "OK" << endl;
-    
-    cout << "CREANDO EL XML DOCUMENT.....";
-    map = doc->FirstChildElement("map");
-    cout << "OK" << endl;
-    
-    CargaPropiedades();
-    
-    nElementos.x = dimTileSheet.x / (dimTiles.x + space);
-    nElementos.y = dimTileSheet.y / (dimTiles.y + space);
-    
-    cout << "CREANDO LAS CAPAS...";
-    layer = map->FirstChildElement("layer");
-    numlayers = 0;
-    while (layer) {
-        numlayers++;
-        layer = layer->NextSiblingElement("layer");
-    }
-    cout << "OK" << endl;
-
-    cout << "CREANDO LOS SPRITES DE CAPAS...";
-    sprites = new Sprite[tileCount];
-    for (int c = 0; c < tileCount; c++) {
-        sprites[c].setTexture(*tex);
-        sprites[c].setTextureRect(
-            IntRect(c*dimTiles.x + space, 0, dimTiles.x, dimTiles.y));
-    }
-    cout << "OK" << endl;
-    
-    cout << "CREANDO LOS SPRITES...";
-    tilemap = new int**[numlayers];
-    for (int i = 0; i < numlayers; i++) {
-        tilemap[i] = new int*[dimEnTiles.y];
-        for (int y = 0; y < dimEnTiles.y; y++) {
-            tilemap[l][y] = new int[dimEnTiles.x];
-        }
-    }
-    cout << "OK" << endl;
-    
-    cout << "INICIALIZANDO LOS TILEMAP 1...";
-    tilemapSprite = new Sprite***[numlayers];
-
-    for (int l = 0; l < numlayers; l++) {
-        tilemapSprite[l] = new Sprite**[dimEnTiles.y];
-        for (int y = 0; y < dimEnTiles.y; y++) {
-            tilemapSprite[l][y] = new Sprite*[dimEnTiles.x];
-            for (int x = 0; x < dimEnTiles.x; x++) {
-                tilemapSprite[l][y][x] = new Sprite(*tex);
-            }
-        }
-    }
-    cout << "OK" << endl;
-    
-    cout << "CREANDO LOS TILEMAP 2...";
-    lay = map->FirstChildElement("layer");
-    data = lay->FirstChildElement("data")->FirstChildElement("tile");
-    cout << "OK" << endl;
-    
-    cout << "COGIENDO LOS LAYER Y DATA DE TMX...";
-    for (int l = 0; l < numlayers; l++) {
-        for (int y = 0; y < dimEnTiles.y; y++) {
-            for (int x = 0; x < dimEnTiles.x; x++) {
-                data->QueryIntAttribute("gid", &tilemap[l][y][x]);
-                data = data->NextSiblingElement("tile");
-            }
-        }
-        if (l < numlayers - 1) {
-            lay = lay->NextSiblingElement("layer");
-            data = lay->FirstChildElement("data")->FirstChildElement("tile");
-        }
-    }
-    cout << "OK" << endl;
-    //Muestrainfo();
-} 
-
-void mapaTmx::MuestraMapa(RenderWindow &window) {
-    for (int l = 0; l < numlayers; l++) {
-        for (int y = 0; y < dimEnTiles.y; y++) {
-            for (int x = 0; x < dimEnTiles.x; x++) {
-                int gid = tilemap[l][y][x] - 1;
-                if (gid >= 0) {
-                    tilemapSprite[l][y][x]->setTextureRect(sprites[gid].getTextureRect());
-                    tilemapSprite[l][y][x]->setPosition(
-                    x * dimTiles.x, y * dimTiles.y);                    
-                    window.draw(*tilemapSprite[l][y][x]);
-                } else {
-                    tilemapSprite[l][y][x] = NULL;
-                }
-            }
-        }
-    }
-}
+ * Metodo para la carga de objetos para las colisiones.
+ * Carga la primera capa de archivo de .tmx de tipo object
+ * TODO: Recorrer todas las capas y diferenciar entre 
+ *   colisiones y spawn de enemigos y trofeos
+ * 
  */
+void mapaTmx::CargaObjetos() {
+    cout << "CARGANDO OBJETOS...";
+    layer = map->FirstChildElement("objectgroup")->FirstChildElement("object");
+    int count = 0;
+    while (layer) {
+        count++;
+        layer = layer->NextSiblingElement("object");
+    }
+    nObjetos = count;
+    cout << " ENCONTRADOS " << count << " OBJETOS DE COLISIONES" << endl;
+    
+    cout << "CREANDO OBJETOS DE COLISIONES...";
+    colisiones = new Rect<float>*[count];
+    layer = map->FirstChildElement("objectgroup")->FirstChildElement("object");
+    
+    string nombreCapa = map->FirstChildElement("objectgroup")->Attribute("name");
+    
+    count = 0;
+    float x, y, ancho, alto;
+    x = y = ancho = alto = 0;
+    while (layer) {
+        layer->QueryFloatAttribute("x", &x);
+        layer->QueryFloatAttribute("y", &y);
+        layer->QueryFloatAttribute("width", &ancho);
+        layer->QueryFloatAttribute("height", &alto);
+        colisiones[count] = new Rect<float>(x, y, ancho, alto);
+        count++;
+        layer = layer->NextSiblingElement("object");
+    }
+    cout << "OK" << endl;
+}
+
+Rect<float>** mapaTmx::getColisiones(){
+    return colisiones;
+}
+
+void mapaTmx::draw(RenderTarget &target, RenderStates states) const {
+    //Aplicamos transformaciones
+    states.transform *= getTransform();
+
+    //Se aplica las texturas
+    states.texture = tex;
+
+    //Dibujamos el array de vertices (quads)
+    target.draw(m_vertices, states);
+}
+
+int mapaTmx::getnObjetos(){
+    return nObjetos;
+}

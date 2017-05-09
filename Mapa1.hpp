@@ -39,8 +39,7 @@ public:
 
 };
 
-Mapa1::Mapa1(void)
- {
+Mapa1::Mapa1(void) {
     update = 1000 / 25;
     frameskip = 5;
 
@@ -82,7 +81,7 @@ int Mapa1::Run(sf::RenderWindow &App) {
 
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
-    
+
     View vista(jugador.getPos(), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
@@ -111,15 +110,17 @@ int Mapa1::Run(sf::RenderWindow &App) {
         exit(0);
     }
 
-    hud *h = new hud(texHUD, fuente, vista);
+    hud *h = new hud(vista);
     // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
 
     Rect<float> boxR(300, 250, 50, 50);
 
     //vista.zoom(2);
+
     h->setarmas();
     h->setplayerHP();
+
     while (Running) {
         bucle = 0;
         tiempo = clocl2.restart();
@@ -145,7 +146,6 @@ int Mapa1::Run(sf::RenderWindow &App) {
             //actualizar estados
             //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
             jugador.setEstado(); //despues de moverse el jugador, cambia el estado nuevo en x e y actuales
-
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
             int contg = h->getContGranada();
@@ -188,15 +188,12 @@ int Mapa1::Run(sf::RenderWindow &App) {
 
                 h->changeTime(0);
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-
-                return (0);
-            }
-
-            //            if (boxR.intersects(item->getHitbox())) {
-            //                item->recogerObjeto();
-            //                h->changePunt(item->getPuntos());
-            //            }
+            /*
+                        if (boxR.intersects(item->getHitbox())) {
+                            item->recogerObjeto();
+                            h->changePunt(item->getPuntos());
+                        }
+             */
         }
         h->updateTime();
         //interpolacion de movimiento
@@ -218,21 +215,9 @@ int Mapa1::Run(sf::RenderWindow &App) {
         App.draw(enemigo.getAnimacion().getSprite(enemigo.getActual(), enemigo.getframeActual(tiempoAnimacion)));
 
         jugador.RenderDisparo(App);
-        for (int n = 0; n < h->getContHP(); n++) {
-            App.draw(h->getPlayerHP(n));
-        }
-        //        if (item->getRecogido() == false)
-        //            App.draw(item->getSprite());
-
-        //Window.draw(rectangulo);
-        App.draw(h->getTextVida());
-        App.draw(h->getArma());
-        App.draw(h->getGranada());
-        App.draw(h->getTextArma());
-        App.draw(h->getIcono());
-        App.draw(h->getTextPunt());
-        App.draw(h->getTextTime());
-        App.draw(h->getTextGranada());
+        //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
+        h->Update(App, vista);
+        jugador.setVidas(h->getContHP());
         App.display();
 
     }

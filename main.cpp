@@ -7,7 +7,7 @@
 #include "ObjetoPuntuacion.h"
 #include "Enemigo.h"
 
-const int update = 1000 / 1;
+const int update = 1000 / 25;
 const int frameskip = 5;
 int anchura = 1270;
 int altura = 720;
@@ -33,6 +33,7 @@ int main() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
+    Vector2f interpolacionJugador;
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
@@ -154,7 +155,7 @@ int main() {
         //valor de interpolacion se actualiza cada render
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
         //vector que contiene la interpolada en x e y
-        Vector2f interpolacionJugador=jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);
+        interpolacionJugador=jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);
       
         
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));

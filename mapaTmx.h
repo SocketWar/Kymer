@@ -13,55 +13,44 @@ using namespace tinyxml2;
 class mapaTmx : public Drawable, public Transformable {
 public:
     mapaTmx();
-    //void MuestraMapa(RenderWindow &window);
-    
-     bool load(const std::string& tileset);
-    
+    bool load(const string& tileset);
+    IntRect** getColisiones();
 private:
     void CargaPropiedades();
     Vector2i gidToPixel(int gid);
     void Muestrainfo();
+    void CargaObjetos();
 
     Vector2i dimEnTiles;
     Vector2i dimTiles;
     Vector2i dimTileSheet;
     Vector2i nElementos;
-    
+
     int tileCount;
-    int space;
-    int numlayers;
-    
+    int espaciado;
+    int nCapas;
+    int nObjetos;
+
     Texture *tex;
     XMLDocument *doc;
     XMLElement *map;
     XMLElement *tileset;
     XMLElement *image;
-    
-    Sprite ****tilemapSprite;
-    int ***tilemap;
-    
-    XMLElement *layer;
+
+    int ***tileSheet; //Valor gid de capa tile
+
     Sprite *sprites;
-    
+
+    XMLElement *layer;
     XMLElement *lay;
     XMLElement *data;
-    
-    
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
-    {
-        // apply the transform
-        states.transform *= getTransform();
+    IntRect **colisiones; //Array de colisiones
+    VertexArray m_vertices; //Lo que se dibuja
 
-        // apply the tileset texture
-        states.texture = &m_tileset;
 
-        // draw the vertex array
-        target.draw(m_vertices, states);
-    }
+    virtual void draw(RenderTarget& target, RenderStates states) const;
 
-    sf::VertexArray m_vertices;
-    sf::Texture m_tileset;
-    
+
 
 };
 

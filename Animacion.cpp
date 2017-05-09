@@ -19,7 +19,9 @@ void Animacion::spritePersonaje(char l) {
 
     int xi=0;
     int yi=0;
-    
+    int posX = 0 ;
+    int posY = 0 ;
+
     switch (l){
         
         case 'p':
@@ -54,6 +56,9 @@ void Animacion::spritePersonaje(char l) {
     animacion[26] = 4; //escopeta cuchillo agachado
     xi = 54;
     yi = 77;
+    posX = 150;
+    posY = 50;
+    escala = 2.f;
             break;
         case 'e':
     totalFotogramas=27;
@@ -86,9 +91,12 @@ void Animacion::spritePersonaje(char l) {
     animacion[24] = 4; //escopeta lanzar granada agachado
     animacion[25] = 6; //escopeta cuchillo correr
     animacion[26] = 4; //escopeta cuchillo agachado
+    posX = 275;
+    posY = 505;
+    escala = 2.2f;
     
-    xi = 62;
-    yi = 51;
+    xi = 60;
+    yi = 50;
     
             break;
         case 'v':
@@ -98,6 +106,8 @@ void Animacion::spritePersonaje(char l) {
     animacion[1]=8;//andar/correr 
     xi = 123;
     yi = 87;
+      posX = 275;
+    posY = 10;
             break;
     }
     
@@ -112,9 +122,9 @@ void Animacion::spritePersonaje(char l) {
 
         for (int j = 0; j < animacion[f]; j++) {
             sprites[f][j] = new sf::Sprite(*tex);
-            sprites[f][j]->setScale(4, 4);
+            sprites[f][j]->setScale(escala, escala);
             sprites[f][j]->setTextureRect(IntRect(xi * j, yi * f, xi, yi));
-            sprites[f][j]->setPosition(150, 50);
+            sprites[f][j]->setPosition(posX, posY);
             sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 2, sprites[f][j]->getLocalBounds().height / 2);
             sprites[f][j]->setOrigin(15, 0);
 
@@ -143,16 +153,16 @@ Sprite Animacion::getSpriteE() {
 }
 
 void Animacion::orientacion(int orientacion) {
-    int escala = 0;
+    int escalado = 0;
     ORIENTACION = orientacion;
     if (orientacion == 0) {//miramos a la izq
-        escala = -4;
+        escalado = -escala;
     } else {
-        escala = 4;
+        escalado = escala;
     }
     for (int f = 0; f < totalFotogramas; f++) {
         for (int j = 0; j < animacion[f]; j++) {
-            sprites[f][j]->setScale(escala, 4);
+            sprites[f][j]->setScale(escalado,escala);
             //sprites[f][j]->setPosition(150,50);
         }
     }

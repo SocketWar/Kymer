@@ -7,13 +7,13 @@
 Jugador::Jugador(int anchura, int altura) {
     
     gravedad = 2.0f;
-    distanciasuelo = 318;
-    velocidadsalto = 30.0f;
+    distanciasuelo = 458;
+    velocidadsalto = 20.0f;
     velocidad.x = 0;
     velocidad.y = 0;
     
     velocidadanimacion=0.1;
-    velocidadmovimiento = 1200.0f;
+    velocidadmovimiento = 900.0f;
 
     //Sprites
     animacion = new Animacion("res/img/PersonajeFull.png");
@@ -25,11 +25,11 @@ Jugador::Jugador(int anchura, int altura) {
     viejo= new Estado();
     nuevo= new Estado();
     
-    if(!TEX.loadFromFile("res/img/SpriteBala.png")){
+    if(!TEX.loadFromFile("res/img/balada2.png")){
         std::cerr<<"Error en textura bala";
         exit(0);
     }
-    if(!TEX2.loadFromFile("res/img/SpriteGranada.png")){
+    if(!TEX2.loadFromFile("res/img/balada2.png")){
         std::cerr<<"Error en textura Granada";
         exit(0);
     }
@@ -66,13 +66,13 @@ void Jugador::Movimiento(Time &time) {
 void Jugador::Saltar() {
 
     Vector2f posicion = getPos();
-    
+    //cout<<posicion.y<<endl;
      velocidadAnimacion=0.3;
-    if (Keyboard::isKeyPressed(Keyboard::Space) && (posicion.y+4) == distanciasuelo){
+    if (Keyboard::isKeyPressed(Keyboard::Space) && (posicion.y+2) == distanciasuelo){
         velocidad.y = -velocidadsalto;
         
     }
-     if((posicion.y+4)!=distanciasuelo){
+     if((posicion.y+2)!=distanciasuelo){
          
          totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
             actual = 3;
@@ -102,11 +102,11 @@ void Jugador::Disparar(){
     if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion=0.085;
         if(RelojBala.getElapsedTime().asMilliseconds()>500){
-            speedY=-30;
+            speedY=-25;
             speedX=0;
             balaX=animacion->getSpriteE().getPosition().x-20;
-            balaY=animacion->getSpriteE().getPosition().y+50;
-            Bala *balaDisparo = new Bala(10,20,speedX, speedY,50);
+            balaY=animacion->getSpriteE().getPosition().y+10;
+            Bala *balaDisparo = new Bala(9,23,speedX, speedY,50);
             balaDisparo->setPosition(balaX,balaY);
             balaDisparo->loadSprite(TEX,0,0);
             CARGADOR.push_back(balaDisparo);
@@ -116,17 +116,17 @@ void Jugador::Disparar(){
         actual = 7;
     }else if (Keyboard::isKeyPressed(Keyboard::A)) {
        velocidadAnimacion=0.085;
-        if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo==(getPos().y+4)){
+        if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo==(getPos().y+2)){
             
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
             
             
-        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo==(getPos().y+4)){
+        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo==(getPos().y+2)){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
            
-        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo==(getPos().y+4)){
+        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo==(getPos().y+2)){
             
             totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
             actual = 6;
@@ -137,17 +137,17 @@ void Jugador::Disparar(){
         }
         if(RelojBala.getElapsedTime().asMilliseconds()>500){
             if(animacion->getOrientacion()!=0){
-               speedX=30;
+               speedX=25;
                speedY=0;
-               balaX=animacion->getSpriteE().getPosition().x+100;
-               balaY=animacion->getSpriteE().getPosition().y+200;
+               balaX=animacion->getSpriteE().getPosition().x+50;
+               balaY=animacion->getSpriteE().getPosition().y+100;
             }else{
-                speedX=-30;
+                speedX=-25;
                 speedY=0;
-               balaX=animacion->getSpriteE().getPosition().x-100;
-               balaY=animacion->getSpriteE().getPosition().y+200;
+               balaX=animacion->getSpriteE().getPosition().x-50;
+               balaY=animacion->getSpriteE().getPosition().y+100;
             }
-            Bala *balaDisparo = new Bala(10,20,speedX, speedY,50);
+            Bala *balaDisparo = new Bala(9,23,speedX, speedY,50);
             balaDisparo->setPosition(balaX,balaY);
             balaDisparo->loadSprite(TEX,0,0);
             CARGADOR.push_back(balaDisparo);

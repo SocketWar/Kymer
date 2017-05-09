@@ -25,7 +25,7 @@ private:
     int numFotograma;
     int totalFotogramas;
     int fotogramaActivo;
-    
+    float escala;
     int ORIENTACION;
 };
 

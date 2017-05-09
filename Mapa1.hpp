@@ -27,40 +27,37 @@
 using namespace std;
 using namespace sf;
 
-class Mapa1 : public cScreen
-{
+class Mapa1 : public cScreen {
 private:
     int update;
     int frameskip;
     int anchura;
     int altura;
 public:
-	Mapa1(void);
-	virtual int Run(sf::RenderWindow &App);
+    Mapa1(void);
+    virtual int Run(sf::RenderWindow &App);
 
 };
 
 Mapa1::Mapa1(void)
+ {
+    update = 1000 / 25;
+    frameskip = 5;
 
-{      
-        update = 1000 / 25;
-        frameskip = 5;
-       
-	anchura = 1352;
-        altura = 888;
-        
+    anchura = 1352;
+    altura = 888;
+
 
 }
 
+int Mapa1::Run(sf::RenderWindow &App) {
 
-int Mapa1::Run(sf::RenderWindow &App){
-    
-    bool Running = true;//booleano que controla el bucle mientras la pantalla esta seleccionada
+    bool Running = true; //booleano que controla el bucle mientras la pantalla esta seleccionada
 
     //App.setSize(Vector2u(App.getSize().x,App.getSize().y));
-	sf::Event event;
-    cout<<"el mapa se muestra en  :"<<anchura<<"x"<<altura<<endl;
-        
+    sf::Event event;
+    cout << "el mapa se muestra en  :" << anchura << "x" << altura << endl;
+
     App.setFramerateLimit(120);
     // ---------------------------------------
     // RELOJES Y TIEMPOS
@@ -82,12 +79,12 @@ int Mapa1::Run(sf::RenderWindow &App){
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    
+
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
-   
-    View vista(jugador.getPos(), Vector2f(App.getSize().x,App.getSize().y));
-   vista.setCenter(Vector2f(App.getSize().x/2, App.getSize().y/2));
+    
+    View vista(jugador.getPos(), Vector2f(App.getSize().x, App.getSize().y));
+    vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
     mapaTmx map;
 
@@ -115,23 +112,23 @@ int Mapa1::Run(sf::RenderWindow &App){
     }
 
     hud *h = new hud(texHUD, fuente, vista);
-   // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
+    // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
-    
+
     Rect<float> boxR(300, 250, 50, 50);
-   
+
     //vista.zoom(2);
     h->setarmas();
     h->setplayerHP();
-	while (Running)
-	{        bucle = 0;
+    while (Running) {
+        bucle = 0;
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
             tiempoAnimacion += tiempo;
             tiempoupdate += update;
             bucle++;
             //estados
-            jugador.actualizarEstado();//actualiza el estado del jugador(estado viejo = estado nuevo)
+            jugador.actualizarEstado(); //actualiza el estado del jugador(estado viejo = estado nuevo)
             Event evento;
             while (App.pollEvent(evento)) {
                 if (evento.type == Event::Closed)
@@ -139,19 +136,20 @@ int Mapa1::Run(sf::RenderWindow &App){
             }
             //llamadas a update
             jugador.Movimiento(tiempo);
+            enemigo.Movimiento(tiempo);
             jugador.Saltar();
             jugador.Disparar();
             jugador.UpdateDisparo();
             jugador.DispararGranada();
 
             //actualizar estados
-          //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
-            jugador.setEstado();//despues de moverse el jugador, cambia el estado nuevo en x e y actuales
+            //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
+            jugador.setEstado(); //despues de moverse el jugador, cambia el estado nuevo en x e y actuales
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
             int contg = h->getContGranada();
-            
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
                 lifePlayer = lifePlayer + 1;
                 h->changeContHP(lifePlayer);
@@ -192,20 +190,20 @@ int Mapa1::Run(sf::RenderWindow &App){
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 
-              return (0);
+                return (0);
             }
 
-//            if (boxR.intersects(item->getHitbox())) {
-//                item->recogerObjeto();
-//                h->changePunt(item->getPuntos());
-//            }
+            //            if (boxR.intersects(item->getHitbox())) {
+            //                item->recogerObjeto();
+            //                h->changePunt(item->getPuntos());
+            //            }
         }
         h->updateTime();
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
 
-        movInterpolado = jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);//alamacena en un vector la interpolacion
-        
+        movInterpolado = jugador.getViejo()->getInterpolacion(jugador.getViejo(), jugador.getNuevo(), interpolacion); //alamacena en un vector la interpolacion
+
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
         App.setView(vista);
 
@@ -213,18 +211,18 @@ int Mapa1::Run(sf::RenderWindow &App){
 
         //limpiampos pantalla
         App.clear(Color(150, 200, 200));
-        
+
         //dibujamos 
         App.draw(map);
         App.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
-        App.draw(enemigo.getAnimacion().getSprite(0,0));
-        
+        App.draw(enemigo.getAnimacion().getSprite(enemigo.getActual(), enemigo.getframeActual(tiempoAnimacion)));
+
         jugador.RenderDisparo(App);
         for (int n = 0; n < h->getContHP(); n++) {
             App.draw(h->getPlayerHP(n));
         }
-//        if (item->getRecogido() == false)
-//            App.draw(item->getSprite());
+        //        if (item->getRecogido() == false)
+        //            App.draw(item->getSprite());
 
         //Window.draw(rectangulo);
         App.draw(h->getTextVida());
@@ -236,11 +234,11 @@ int Mapa1::Run(sf::RenderWindow &App){
         App.draw(h->getTextTime());
         App.draw(h->getTextGranada());
         App.display();
-		
-	}
 
-	//Never reaching this point normally, but just in case, exit the application
-	return -1;
+    }
+
+    //Never reaching this point normally, but just in case, exit the application
+    return -1;
 }
 
 

@@ -56,7 +56,7 @@ void Animacion::spritePersonaje(char l) {
     yi = 77;
             break;
         case 'e':
-    totalFotogramas=9;
+    totalFotogramas=27;
     animacion = new int [totalFotogramas]; 
     
     animacion[0]=4;//alerta
@@ -68,13 +68,30 @@ void Animacion::spritePersonaje(char l) {
     animacion[6]=3;//disparo escopeta
     animacion[7]=7;//morir acuchillado
     animacion[8]=18;//mortero
-    
+    animacion[9] = 6; //cuchillo correr
+    animacion[10] = 4; //cuchillo agachado
+    animacion[11] = 3; //lanzar granada
+    animacion[12] = 6; //lanzar granada corriendo
+    animacion[13] = 4; //lanzar granada agachado
+    animacion[14] = 4; //escopeta quieto
+    animacion[15] = 6; //escopeta correr
+    animacion[16] = 4; //escopeta agachado
+    animacion[17] = 1; //escopeta salto
+    animacion[18] = 2; //escopeta disparo quieto
+    animacion[19] = 2; //escopeta disparo agachado
+    animacion[20] = 2; //escopeta disparo arriba
+    animacion[21] = 6; //escopeta disparo correr
+    animacion[22] = 3; //escopeta lanzar granada quieto
+    animacion[23] = 6; //escopeta lanzar granada corriendo
+    animacion[24] = 4; //escopeta lanzar granada agachado
+    animacion[25] = 6; //escopeta cuchillo correr
+    animacion[26] = 4; //escopeta cuchillo agachado
     xi = 62;
     yi = 51;
     
             break;
         case 'v':
-    totalFotogramas=2;
+    totalFotogramas=27;
     animacion = new int [2]; 
     animacion[0]=16;//atacar
     animacion[1]=8;//andar/correr 

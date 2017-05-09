@@ -5,7 +5,7 @@
 Enemigo::Enemigo() {
     
     
-    animacion = new Animacion("res/img/PersonajeFull.png");
+    animacion = new Animacion("res/img/vacas1.png");
     animacion->spritePersonaje('e');
     cout<<"hola"<<endl;
 }

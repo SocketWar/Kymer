@@ -9,8 +9,8 @@
 
 const int update = 1000 / 25;
 const int frameskip = 5;
-int anchura = 800;
-int altura = 600;
+int anchura = 1270;
+int altura = 720;
 
 float InterpolacionRenderx(Estado& Anterior, Estado& Nuevo, float interpolacion) {
 

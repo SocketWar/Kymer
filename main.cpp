@@ -7,22 +7,12 @@
 #include "ObjetoPuntuacion.h"
 #include "Enemigo.h"
 
-const int update = 1000 / 25;
+const int update = 1000 / 1;
 const int frameskip = 5;
 int anchura = 1270;
 int altura = 720;
 
-float InterpolacionRenderx(Estado& Anterior, Estado& Nuevo, float interpolacion) {
 
-    float movimientox = Anterior.getx()*(1 - interpolacion) + Nuevo.getx() * interpolacion;
-    return movimientox;
-}
-
-float InterpolacionRendery(Estado& Anterior, Estado& Nuevo, float interpolacion) {
-
-    float movimientoy = Anterior.gety()*(1 - interpolacion) + Nuevo.gety() * interpolacion;
-    return movimientoy;
-}
 
 int main() {
     RenderWindow Window(VideoMode(anchura, altura), "Test");
@@ -43,16 +33,12 @@ int main() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    float movinterpoladox = 0;
-    float movinterpoladoy = 0;
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
-    Estado nuevo(jugador.getPos().x, jugador.getPos().y);
-    Estado viejo(0, 0);
     View vista(jugador.getPos(), Vector2f(anchura, altura));
 
     mapaTmx map;
@@ -97,8 +83,9 @@ int main() {
             tiempoAnimacion += tiempo;
             tiempoupdate += update;
             bucle++;
+            
             //estados
-            viejo = nuevo;
+            jugador.actualizarEstado();
 
             Event evento;
             while (Window.pollEvent(evento)) {
@@ -113,7 +100,7 @@ int main() {
             jugador.DispararGranada();
 
             //actualizar estados
-            nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
+            jugador.setEstado();
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
@@ -164,17 +151,17 @@ int main() {
             }
         }
         h->updateTime();
-        //interpolacion de movimiento
+        //valor de interpolacion se actualiza cada render
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
-        movinterpoladox = InterpolacionRenderx(viejo, nuevo, interpolacion);
-        movinterpoladoy = InterpolacionRendery(viejo, nuevo, interpolacion);
-
-        
+        //vector que contiene la interpolada en x e y
+        Vector2f interpolacionJugador=jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);
+      
         
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
         Window.setView(vista);
-
-        jugador.getAnimacion().MovimientoInterpolado(Vector2f(movinterpoladox, movinterpoladoy));
+        
+        //movimiento a la posicion interpolada
+        jugador.getAnimacion().MovimientoInterpolado(interpolacionJugador);
 
         Window.clear(Color(150, 200, 200));
         

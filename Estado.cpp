@@ -2,10 +2,10 @@
 
 #include "Estado.h"
 
-Estado::Estado(float x,float y) {
+Estado::Estado() {
     
-    posx=x;
-    posy=y;
+    posx=0;
+    posy=0;
     
 }
 
@@ -24,6 +24,18 @@ float Estado::getx(){
 float Estado::gety(){
     
     return posy;
+}
+
+Vector2f Estado::getInterpolacion(Estado* viejo, Estado* nuevo, float interpolacion){
+    
+    
+    float movimientox = viejo->getx()*(1 - interpolacion) + nuevo->getx() * interpolacion;
+    
+    float movimientoy = viejo->gety()*(1 - interpolacion) + nuevo->gety() * interpolacion;
+    
+    Vector2f interpol(movimientox,movimientoy);
+    
+    return interpol;
 }
 
 

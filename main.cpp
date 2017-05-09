@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 	Screens.push_back(&s0);
 	Mapa1 s1;
 	Screens.push_back(&s1);
-        //CARGA SONIDOS
+        //CARGA SONIDO
        
 
 

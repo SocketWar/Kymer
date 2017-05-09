@@ -17,7 +17,7 @@ int altura = 720;
 int main() {
     RenderWindow Window(VideoMode(anchura, altura), "Test");
     Window.setFramerateLimit(120);
-
+    
     // ---------------------------------------
     // RELOJES Y TIEMPOS
     // ---------------------------------------
@@ -67,16 +67,19 @@ int main() {
         exit(0);
     }
 
-    hud *h = new hud(texHUD, fuente, vista);
+    hud *h = new hud(vista);
+    /*
     ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
 
     
     Rect<float> boxR(300, 250, 50, 50);
    
     vista.zoom(2);
+    
+*/
+    
     h->setarmas();
     h->setplayerHP();
-
     while (Window.isOpen()) {
         bucle = 0;
         tiempo = clocl2.restart();
@@ -145,11 +148,12 @@ int main() {
 
                 h->changeTime(0);
             }
-
+/*
             if (boxR.intersects(item->getHitbox())) {
                 item->recogerObjeto();
                 h->changePunt(item->getPuntos());
             }
+*/
         }
         h->updateTime();
         //valor de interpolacion se actualiza cada render
@@ -158,7 +162,7 @@ int main() {
         interpolacionJugador=jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);
       
         
-        vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
+        vista.setCenter(jugador.getPos());
         Window.setView(vista);
         
         //movimiento a la posicion interpolada
@@ -172,21 +176,9 @@ int main() {
         Window.draw(enemigo.getAnimacion().getSprite(0,0));
         
         jugador.RenderDisparo(Window);
-        for (int n = 0; n < h->getContHP(); n++) {
-            Window.draw(h->getPlayerHP(n));
-        }
-        if (item->getRecogido() == false)
-            Window.draw(item->getSprite());
-
-        //Window.draw(rectangulo);
-        Window.draw(h->getTextVida());
-        Window.draw(h->getArma());
-        Window.draw(h->getGranada());
-        Window.draw(h->getTextArma());
-        Window.draw(h->getIcono());
-        Window.draw(h->getTextPunt());
-        Window.draw(h->getTextTime());
-        Window.draw(h->getTextGranada());
+        //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
+        h->Update(Window, vista);
+        jugador.setVidas(h->getContHP());
         Window.display();
     }
     return 0;

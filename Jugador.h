@@ -27,6 +27,8 @@ public:
     void setEstado();
     Estado* getViejo();
     Estado* getNuevo();
+    void setVidas(int i);
+    int getVidas();
     
 private:
 
@@ -48,6 +50,7 @@ private:
     sf::Clock RelojBala;
     sf::Clock RelojGranada;
     float velocidadAnimacion;
+    int vidas;
     //interpolacion
     Estado *viejo;
     Estado *nuevo;

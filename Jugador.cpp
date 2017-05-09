@@ -315,3 +315,12 @@ Estado* Jugador::getNuevo(){
     
     return nuevo;
 }
+
+
+void Jugador::setVidas(int i){
+    vidas=i;
+}
+
+int Jugador::getVidas(){
+    return vidas;
+}

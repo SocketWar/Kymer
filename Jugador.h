@@ -56,6 +56,7 @@ private:
     Estado *viejo;
     Estado *nuevo;
     bool suelo;
+    bool colision;
     //colisiones
     RectangleShape hitBox;
 };

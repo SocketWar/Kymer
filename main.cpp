@@ -103,6 +103,7 @@ int main() {
                     Window.close();
             }
             //llamadas a update
+            jugador.calcularColision(map.getColisiones(),map.getnObjetos());
             jugador.Movimiento(tiempo);
             jugador.Saltar();
             jugador.Disparar();
@@ -111,7 +112,7 @@ int main() {
             
             
             
-            jugador.calcularColision(map.getColisiones(),map.getnObjetos());
+          
             
 
             //actualizar estados

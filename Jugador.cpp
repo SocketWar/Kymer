@@ -78,9 +78,14 @@ void Jugador::Saltar() {
     //cout<<"posicion de los pies"<<posicion<<endl;
      velocidadAnimacion=0.3;
      
+     if(!colision){
+         suelo=false;
+     }
+     
     if (Keyboard::isKeyPressed(Keyboard::Space) && suelo){
         velocidad.y = -velocidadsalto;
-        suelo=false;
+        
+        
     }else if (!suelo) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
         actual = 3;
@@ -337,11 +342,14 @@ void Jugador::calcularColision(FloatRect** arrayColisiones,int nobjetos){
     for(int i=0;i<nobjetos-2;i++){
         FloatRect* a = arrayColisiones[i];
         if(a->intersects(hitBox.getGlobalBounds())){
+            
             cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().height + hitBox.getGlobalBounds().top << endl;
            
-                
+                colision=true;
                 suelo=true;
             
+        }else{
+                colision=false;
         }
         
         cout<<"el suelo es:"<<suelo<<endl;

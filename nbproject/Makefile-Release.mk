@@ -41,11 +41,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/Estado.o \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/Jugador.o \
+	${OBJECTDIR}/Mapa1.o \
 	${OBJECTDIR}/MovimientoIA.o \
 	${OBJECTDIR}/ObjetoPuntuacion.o \
 	${OBJECTDIR}/hud.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapaTmx.o \
+	${OBJECTDIR}/menu.o \
+	${OBJECTDIR}/screen_1.o \
 	${OBJECTDIR}/tinyxml2.o
 
 
@@ -67,11 +70,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/balanueva
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/menuysonido
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/balanueva: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/menuysonido: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/balanueva ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/menuysonido ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/Animacion.o: Animacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -103,6 +106,11 @@ ${OBJECTDIR}/Jugador.o: Jugador.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Jugador.o Jugador.cpp
 
+${OBJECTDIR}/Mapa1.o: Mapa1.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Mapa1.o Mapa1.cpp
+
 ${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -127,6 +135,16 @@ ${OBJECTDIR}/mapaTmx.o: mapaTmx.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mapaTmx.o mapaTmx.cpp
+
+${OBJECTDIR}/menu.o: menu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/menu.o menu.cpp
+
+${OBJECTDIR}/screen_1.o: screen_1.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/screen_1.o screen_1.cpp
 
 ${OBJECTDIR}/tinyxml2.o: tinyxml2.cpp
 	${MKDIR} -p ${OBJECTDIR}

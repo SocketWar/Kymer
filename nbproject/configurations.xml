@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -34,11 +34,14 @@
       <itemPath>Estado.cpp</itemPath>
       <itemPath>Granada.cpp</itemPath>
       <itemPath>Jugador.cpp</itemPath>
+      <itemPath>Mapa1.cpp</itemPath>
       <itemPath>MovimientoIA.cpp</itemPath>
       <itemPath>ObjetoPuntuacion.cpp</itemPath>
       <itemPath>hud.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mapaTmx.cpp</itemPath>
+      <itemPath>menu.cpp</itemPath>
+      <itemPath>screen_1.cpp</itemPath>
       <itemPath>tinyxml2.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -106,6 +109,8 @@
       </item>
       <item path="Jugador.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Mapa1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="Mapa1.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="MovimientoIA.cpp" ex="false" tool="1" flavor2="0">
@@ -130,9 +135,13 @@
       </item>
       <item path="mapaTmx.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="menu.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="resources/Personajev1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="screen_1.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="screen_1.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -187,6 +196,8 @@
       </item>
       <item path="Jugador.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Mapa1.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="Mapa1.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="MovimientoIA.cpp" ex="false" tool="1" flavor2="0">
@@ -211,9 +222,13 @@
       </item>
       <item path="mapaTmx.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="menu.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="resources/Personajev1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="screen_1.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="screen_1.hpp" ex="false" tool="3" flavor2="0">
       </item>

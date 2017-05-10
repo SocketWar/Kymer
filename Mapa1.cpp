@@ -45,11 +45,11 @@ int Mapa1::Run(RenderWindow &App) {
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-
+    int desplazamientoCamara = 500;
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
 
-    View vista(jugador.getPos(), Vector2f(App.getSize().x, App.getSize().y));
+    View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
     mapaTmx map;
@@ -79,16 +79,23 @@ int Mapa1::Run(RenderWindow &App) {
 
     hud *h = new hud(vista);
     // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
-
-
     //Rect<float> boxR(300, 250, 50, 50);
-
-    //vista.zoom(2);
-
     h->setarmas();
     h->setplayerHP();
 
+    // ---------------------------------------
+    // PAUSA
+    // ---------------------------------------
+    bool pausa = false;
+    Text textoPausa;
+    textoPausa.setFont(*fuente);
+    textoPausa.setCharacterSize(100);
+    textoPausa.setString("PAUSA");
+    Vector2f centro(vista.getCenter().x - desplazamientoCamara, vista.getSize().y / 4);
+
+
     while (Running) {
+        if(!pausa){
         bucle = 0;
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
@@ -152,9 +159,15 @@ int Mapa1::Run(RenderWindow &App) {
                 h->changeGranada(contg);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
-
                 h->changeTime(0);
             }
+            
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+                return 0;
+            
+            if (Keyboard::isKeyPressed(Keyboard::P))
+                pausa = true;
+            
             /*
             if (boxR.intersects(item->getHitbox())) {
                 item->recogerObjeto();
@@ -169,7 +182,7 @@ int Mapa1::Run(RenderWindow &App) {
 
         movInterpolado = jugador.getViejo()->getInterpolacion(jugador.getViejo(), jugador.getNuevo(), interpolacion); //alamacena en un vector la interpolacion
 
-        vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
+        vista.setCenter(Vector2f(jugador.getPos().x + desplazamientoCamara, vista.getCenter().y));
         App.setView(vista);
 
         jugador.getAnimacion().MovimientoInterpolado(movInterpolado);
@@ -187,7 +200,23 @@ int Mapa1::Run(RenderWindow &App) {
         h->Update(App, vista);
         jugador.setVidas(h->getContHP());
         App.display();
-
+        }
+        else{
+            centro.x = vista.getCenter().x;
+            centro.y =  vista.getSize().y / 6;
+            
+            textoPausa.setPosition(centro);
+            
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+                return 0;
+            
+            if (Keyboard::isKeyPressed(Keyboard::O))
+                pausa = false;
+            
+            
+            App.draw(textoPausa);
+            App.display();
+        }
     }
 
     //Never reaching this point normally, but just in case, exit the application

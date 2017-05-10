@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 	App.setMouseCursorVisible(false);
 
 	//Screens preparations
-	screen_0 s0;
+	menu s0;
 	Screens.push_back(&s0);
 	Mapa1 s1;
 	Screens.push_back(&s1);

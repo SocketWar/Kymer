@@ -5,7 +5,7 @@
  */
 
 /* 
- * File:   screen_0.hpp
+ * File:   menu.hpp
  * Author: darktom
  *
  * Created on May 7, 2017, 3:23 PM
@@ -21,7 +21,7 @@
 using namespace std;
 using namespace sf;
 
-class screen_0 : public cScreen
+class menu : public cScreen
 {
 private:
 	int alpha_max;
@@ -29,18 +29,18 @@ private:
 	bool playing;
        
 public:
-	screen_0(void);
+	menu(void);
 	virtual int Run(sf::RenderWindow &App);
 };
 
-screen_0::screen_0(void)
+menu::menu(void)
 {
 	alpha_max = 3 * 255;//atenuacion
 	alpha_div = 3;
 	playing = false;
 }
 
-int screen_0::Run(sf::RenderWindow &App)
+int menu::Run(sf::RenderWindow &App)
 {      
      View vista(Vector2f(App.getSize().x/2,App.getSize().y/2),
            Vector2f(App.getSize().x,App.getSize().y)

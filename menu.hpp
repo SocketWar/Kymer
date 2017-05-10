@@ -27,6 +27,9 @@ private:
     int alpha_max;
     int alpha_div;
     bool playing;
+    bool options;
+    bool versus;
+    bool comoJugar;
 
 public:
     menu(void);

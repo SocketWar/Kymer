@@ -7,7 +7,7 @@
 Jugador::Jugador(int anchura, int altura) {
     
     gravedad = 2.0f;
-    distanciasuelo = 318;
+    distanciasuelo = 700;
     velocidadsalto = 30.0f;
     velocidad.x = 0;
     velocidad.y = 0;
@@ -24,6 +24,10 @@ Jugador::Jugador(int anchura, int altura) {
     //Estados
     viejo= new Estado();
     nuevo= new Estado();
+    //Colisiones
+    hitBox.setScale(1.5, 2.2);
+    hitBox.setSize(Vector2f(32, 32));
+    hitBox.setFillColor(Color::Blue);
     
     if(!TEX.loadFromFile("res/img/SpriteBala.png")){
         std::cerr<<"Error en textura bala";
@@ -41,6 +45,8 @@ void Jugador::Movimiento(Time &time) {
     Vector2f movimiento(0.0f,0.0f);
     actual = 0;
     totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+    hitBox.setScale(1.5,2.2);
+    hitBox.setPosition(getPos().x-25,getPos().y-70);
     
     if (Keyboard::isKeyPressed(Keyboard::Right)) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -56,8 +62,11 @@ void Jugador::Movimiento(Time &time) {
         movimiento.x= -tiempo*velocidadmovimiento;
     }
     if (Keyboard::isKeyPressed(Keyboard::Down)) {
+        hitBox.setScale(1.5,1.5);
+        hitBox.setPosition(getPos().x-25,getPos().y-48);
         totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
         actual = 2;
+        
     }
      
     animacion->Movimiento(movimiento);
@@ -65,28 +74,21 @@ void Jugador::Movimiento(Time &time) {
 
 void Jugador::Saltar() {
 
-    Vector2f posicion = getPos();
-    
+    float posicion = animacion->getSpriteE().getGlobalBounds().top+animacion->getSpriteE().getGlobalBounds().height;
+    //cout<<"posicion de los pies"<<posicion<<endl;
      velocidadAnimacion=0.3;
-    if (Keyboard::isKeyPressed(Keyboard::Space) && (posicion.y+4) == distanciasuelo){
+     
+    if (Keyboard::isKeyPressed(Keyboard::Space) && suelo){
         velocidad.y = -velocidadsalto;
-        
-    }
-     if((posicion.y+4)!=distanciasuelo){
-         
-         totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
-            actual = 3;
-     }
-         
-    if (posicion.y + animacion->getSpriteE().getScale().y < distanciasuelo || velocidad.y < 0) {
-
+        suelo=false;
+    }else if (!suelo) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+        actual = 3;
         velocidad.y += gravedad;
-
     } else {
-
-        animacion->MovimientoInterpolado(Vector2f(posicion.x, distanciasuelo-animacion->getSpriteE().getScale().y));
+       //animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo-animacion->getSpriteE().getScale().y));
         velocidad.y = 0;
-
+        
     }
 
         animacion->Movimiento(velocidad);
@@ -116,17 +118,17 @@ void Jugador::Disparar(){
         actual = 7;
     }else if (Keyboard::isKeyPressed(Keyboard::A)) {
        velocidadAnimacion=0.085;
-        if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo==(getPos().y+4)){
+        if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo==(getPos().y+2)){
             
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
             
             
-        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo==(getPos().y+4)){
+        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo==(getPos().y+2)){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
            
-        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo==(getPos().y+4)){
+        }else if(Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo==(getPos().y+2)){
             
             totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
             actual = 6;
@@ -170,15 +172,15 @@ void Jugador::DispararGranada(){
     if (Keyboard::isKeyPressed(Keyboard::G)) {
         velocidadAnimacion=0.1;
         
-        if(Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo==(getPos().y+4)){
+        if(Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo==(getPos().y+2)){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
             actual = 12;
             
-        }else if(Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo==(getPos().y+4)){
+        }else if(Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo==(getPos().y+2)){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
             actual = 12;
            
-        }else if(Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo==(getPos().y+4)){
+        }else if(Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo==(getPos().y+2)){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
             actual = 13;
         }else{
@@ -263,8 +265,6 @@ void Jugador::RenderDisparo(RenderWindow &window){
     }
 }
 
-
-
 Vector2f Jugador::getPos() {
     return animacion->getSpriteE().getPosition();
 }
@@ -323,4 +323,29 @@ void Jugador::setVidas(int i){
 
 int Jugador::getVidas(){
     return vidas;
+}
+
+RectangleShape Jugador::gethitBox(){
+    
+    return hitBox;
+}
+
+void Jugador::calcularColision(FloatRect** arrayColisiones,int nobjetos){
+    // ALTO = 40PX
+    // ANCHO = 35PX
+    float posicion = animacion->getSpriteE().getGlobalBounds().top+animacion->getSpriteE().getGlobalBounds().height;
+    for(int i=0;i<nobjetos-2;i++){
+        FloatRect* a = arrayColisiones[i];
+        if(a->intersects(hitBox.getGlobalBounds())){
+            cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().height + hitBox.getGlobalBounds().top << endl;
+           
+                
+                suelo=true;
+            
+        }
+        
+        cout<<"el suelo es:"<<suelo<<endl;
+            //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
+    }
+    //cout << endl;
 }

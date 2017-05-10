@@ -10,13 +10,12 @@
 
 class Jugador {
 public:
-    Jugador(int anchura,int altura);
+    Jugador(int anchura, int altura);
     void Movimiento(Time &tiempo);
     void Saltar();
     void Disparar();
     void UpdateDisparo();
     void RenderDisparo(RenderWindow &window);
-    RectangleShape getJugador();
     Vector2f getPos();
     Animacion getAnimacion();
     int getActual();
@@ -29,10 +28,12 @@ public:
     Estado* getNuevo();
     void setVidas(int i);
     int getVidas();
+    void calcularColision(FloatRect** arrayColisiones,int nobjetos);
+    RectangleShape gethitBox();
     
 private:
 
-    Vector2f velocidad;//velocidad en las dos posiciones
+    Vector2f velocidad; //velocidad en las dos posiciones
     float velocidadmovimiento;
     float gravedad;
     int distanciasuelo;
@@ -54,6 +55,9 @@ private:
     //interpolacion
     Estado *viejo;
     Estado *nuevo;
+    bool suelo;
+    //colisiones
+    RectangleShape hitBox;
 };
 
 

@@ -252,20 +252,21 @@ void mapaTmx::CargaPropiedades() {
 void mapaTmx::CargaObjetos() {
     cout << "CARGANDO OBJETOS...";
     layer = map->FirstChildElement("objectgroup")->FirstChildElement("object");
-    int nObjetos = 0;
+    int count = 0;
     while (layer) {
-        nObjetos++;
+        count++;
         layer = layer->NextSiblingElement("object");
     }
-    cout << " ENCONTRADOS " << nObjetos << " OBJETOS DE COLISIONES" << endl;
+    nObjetos = count;
+    cout << " ENCONTRADOS " << count << " OBJETOS DE COLISIONES" << endl;
     
     cout << "CREANDO OBJETOS DE COLISIONES...";
-    colisiones = new IntRect*[nObjetos];
+    colisiones = new Rect<float>*[count];
     layer = map->FirstChildElement("objectgroup")->FirstChildElement("object");
     
     string nombreCapa = map->FirstChildElement("objectgroup")->Attribute("name");
     
-    nObjetos = 0;
+    count = 0;
     float x, y, ancho, alto;
     x = y = ancho = alto = 0;
     while (layer) {
@@ -273,14 +274,14 @@ void mapaTmx::CargaObjetos() {
         layer->QueryFloatAttribute("y", &y);
         layer->QueryFloatAttribute("width", &ancho);
         layer->QueryFloatAttribute("height", &alto);
-        colisiones[nObjetos] = new IntRect(x, y, ancho, alto);
-        nObjetos++;
+        colisiones[count] = new Rect<float>(x, y, ancho, alto);
+        count++;
         layer = layer->NextSiblingElement("object");
     }
     cout << "OK" << endl;
 }
 
-IntRect** mapaTmx::getColisiones(){
+Rect<float>** mapaTmx::getColisiones(){
     return colisiones;
 }
 
@@ -293,4 +294,8 @@ void mapaTmx::draw(RenderTarget &target, RenderStates states) const {
 
     //Dibujamos el array de vertices (quads)
     target.draw(m_vertices, states);
+}
+
+int mapaTmx::getnObjetos(){
+    return nObjetos;
 }

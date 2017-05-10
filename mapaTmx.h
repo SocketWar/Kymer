@@ -14,7 +14,8 @@ class mapaTmx : public Drawable, public Transformable {
 public:
     mapaTmx();
     bool load(const string& tileset);
-    IntRect** getColisiones();
+    FloatRect** getColisiones();
+    int getnObjetos();
 private:
     void CargaPropiedades();
     Vector2i gidToPixel(int gid);
@@ -44,7 +45,7 @@ private:
     XMLElement *layer;
     XMLElement *lay;
     XMLElement *data;
-    IntRect **colisiones; //Array de colisiones
+    FloatRect **colisiones; //Array de colisiones
     VertexArray m_vertices; //Lo que se dibuja
 
 

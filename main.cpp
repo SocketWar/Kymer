@@ -15,7 +15,8 @@ int altura = 720;
 
 
 int main() {
-    RenderWindow Window(VideoMode(anchura, altura), "Test");
+    
+    RenderWindow Window(VideoMode(anchura, altura), "Kymer");
     Window.setFramerateLimit(120);
     
     // ---------------------------------------
@@ -39,6 +40,7 @@ int main() {
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
     Jugador jugador(anchura, altura);
+    //jugador.getAnimacion().MovimientoInterpolado(Vector2f(1,1));
     Enemigo enemigo;
     View vista(jugador.getPos(), Vector2f(anchura, altura));
 
@@ -78,9 +80,13 @@ int main() {
     
 */
     
+    
     h->setarmas();
     h->setplayerHP();
-    while (Window.isOpen()) {
+    
+        
+    while (Window.isOpen()) {   
+                  
         bucle = 0;
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
@@ -102,6 +108,11 @@ int main() {
             jugador.Disparar();
             jugador.UpdateDisparo();
             jugador.DispararGranada();
+            
+            
+            
+            jugador.calcularColision(map.getColisiones(),map.getnObjetos());
+            
 
             //actualizar estados
             jugador.setEstado();
@@ -179,6 +190,8 @@ int main() {
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(Window, vista);
         jugador.setVidas(h->getContHP());
+        
+        Window.draw(jugador.gethitBox());
         Window.display();
     }
     return 0;

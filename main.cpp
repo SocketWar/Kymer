@@ -103,6 +103,7 @@ int main() {
                     Window.close();
             }
             //llamadas a update
+            
             jugador.calcularColision(map.getColisiones(),map.getnObjetos());
             jugador.Movimiento(tiempo);
             jugador.Saltar();
@@ -178,8 +179,9 @@ int main() {
         Window.setView(vista);
         
         //movimiento a la posicion interpolada
+        //jugador.gethitBox().setPosition(interpolacionJugador.x-25,interpolacionJugador.y-70);
         jugador.getAnimacion().MovimientoInterpolado(interpolacionJugador);
-
+        jugador.actualizarHeatbox();
         Window.clear(Color(150, 200, 200));
         
         
@@ -192,7 +194,7 @@ int main() {
         h->Update(Window, vista);
         jugador.setVidas(h->getContHP());
         
-        Window.draw(jugador.gethitBox());
+        //Window.draw(jugador.gethitBox());
         Window.display();
     }
     return 0;

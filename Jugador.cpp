@@ -45,8 +45,7 @@ void Jugador::Movimiento(Time &time) {
     Vector2f movimiento(0.0f, 0.0f);
     actual = 0;
     totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-    hitBox.setScale(1.5, 2.2);
-    hitBox.setPosition(getPos().x - 25, getPos().y - 70);
+    
 
     if (Keyboard::isKeyPressed(Keyboard::Right)) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -62,8 +61,7 @@ void Jugador::Movimiento(Time &time) {
         movimiento.x = -tiempo*velocidadmovimiento;
     }
     if (Keyboard::isKeyPressed(Keyboard::Down)) {
-        hitBox.setScale(1.5, 1.5);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 48);
+        
         totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
         actual = 2;
 
@@ -84,16 +82,16 @@ void Jugador::Saltar() {
 
     if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
         velocidad.y = -velocidadsalto;
-
+     
 
     } else if (!suelo) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
         actual = 3;
         velocidad.y += gravedad;
     } else {
-        //animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo-animacion->getSpriteE().getScale().y));
+        animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
         velocidad.y = 0;
-
+        
     }
 
     animacion->Movimiento(velocidad);
@@ -335,30 +333,46 @@ RectangleShape Jugador::gethitBox() {
     return hitBox;
 }
 
+void Jugador::actualizarHeatbox(){
+    
+    
+    if(Keyboard::isKeyPressed(Keyboard::Down)){
+        
+        hitBox.setScale(1.5, 1.5);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 48);
+        
+    }else{
+        
+        hitBox.setScale(1.5, 2.2);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 70);
+        
+    }
+}
+
 void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     // ALTO = 40PX
     // ANCHO = 35PX
-    float pies = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
+    //float pies = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
     
-    bool colSuelo = false;
-    
+    bool colSuelo = false;  
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
         if (a->intersects(hitBox.getGlobalBounds())) {
 
-            cout << "posicion a " << a->top << " PJ " << pies << endl;
+            cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
             colision = true;
             
-            if(a->top < pies){
+            if(a->top < hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height){
                 colSuelo = true;
                 suelo = true;
+                distanciasuelo=a->top+2;
             }
         }
 
         cout << "el suelo es:" << suelo << endl;
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
     }
-    
+
     if(!colSuelo){
         suelo = false;
     }

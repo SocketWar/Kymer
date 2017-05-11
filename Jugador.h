@@ -24,6 +24,7 @@ public:
     void DispararGranada();
     void actualizarEstado();
     void setEstado();
+    void actualizarHeatbox();
     Estado* getViejo();
     Estado* getNuevo();
     void setVidas(int i);
@@ -36,7 +37,7 @@ private:
     Vector2f velocidad; //velocidad en las dos posiciones
     float velocidadmovimiento;
     float gravedad;
-    int distanciasuelo;
+    float distanciasuelo;
     float velocidadsalto;
     //Animacion
     Animacion *animacion;
@@ -57,6 +58,7 @@ private:
     Estado *nuevo;
     bool suelo;
     bool colision;
+    bool estadocolision;
     //colisiones
     RectangleShape hitBox;
 };

@@ -5,8 +5,8 @@
 Enemigo::Enemigo() {
     
     velocidadAnimacion=0.1;
-    animacion = new Animacion("res/img/enemigocomun1.png");
-    animacion->spritePersonaje('e');
+    animacion = new Animacion("res/img/VacaBurra.png");
+    animacion->spritePersonaje('v');
     cout<<"hola"<<endl;
 }
 
@@ -27,8 +27,8 @@ void Enemigo::Movimiento(Time &time) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f,0.0f);
-    actual = 2;
-    totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
+    actual = 0;
+    totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
 
     
 //    if (Keyboard::isKeyPressed(Keyboard::Right)) {

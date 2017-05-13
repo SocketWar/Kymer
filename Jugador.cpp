@@ -16,7 +16,7 @@ Jugador::Jugador(int anchura, int altura) {
     velocidadmovimiento = 900.0f;
 
     //Sprites
-    animacion = new Animacion("res/img/PersonajeFull.png");
+    animacion = new Animacion("res/img/Personaje13052017.png");
     animacion->spritePersonaje('p');
     velocidadAnimacion = 0.1;
     countBala = 0;
@@ -336,9 +336,17 @@ void Jugador::RenderDisparo(RenderWindow &window) {
 }
 
 void Jugador::Morir(){
-    /*velocidadAnimacion = 0.1;
-    totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
-    actual = 3;*/
+    //para probar la animacio0n se pone en un boton por defecto "M"
+    velocidadAnimacion = 0.2f;
+    if (Keyboard::isKeyPressed(Keyboard::M)) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[27];
+        actual = 27;
+    }
+    //aunque no forme parte de aqui, ponemos tambien la animacion de victoria "V"
+    if (Keyboard::isKeyPressed(Keyboard::V)) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[28];
+        actual = 28;
+    }
 }
 
 Vector2f Jugador::getPos() {

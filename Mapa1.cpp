@@ -48,7 +48,8 @@ int Mapa1::Run(RenderWindow &App) {
     int desplazamientoCamara = 500;
     Jugador jugador(anchura, altura);
     Enemigo enemigo;
-
+    cout<<"donde coño esta la puta vaca : "<<enemigo.getAnimacion().getSpriteE().getPosition().x<<","<<enemigo.getAnimacion().getSpriteE().getPosition().y
+<<endl;
     View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
@@ -104,6 +105,7 @@ int Mapa1::Run(RenderWindow &App) {
             jugador.Disparar();
             jugador.UpdateDisparo();
             jugador.DispararGranada();
+            jugador.Morir();
 
             //actualizar estados
             //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);

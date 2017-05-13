@@ -26,7 +26,7 @@ int menu::Run(RenderWindow &App) {
     Texture Texture;
     Sprite Sprite;
     
-    int alpha = 0;
+    int alpha = alpha_max;
     
     Font Font;
     Text Menu1;

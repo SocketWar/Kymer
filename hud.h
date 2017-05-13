@@ -29,12 +29,12 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-
+#include "Jugador.h"
 #include <SFML/Graphics.hpp>
 
 class hud {
 public:
-    hud(sf::View &win);
+    hud(sf::View &win,Jugador &j);
     void setplayerHP();
     void setarmas();
     void setPosHP(float x0,float y0,float aux_x,float aux_y);
@@ -43,7 +43,7 @@ public:
     void changeContHP(int i);
     void changePunt(int i);
     void changeArma(int i);
-    void changeGranada(int i);
+    void changeGranada(int i,Jugador &j);
     void changeTime(int i);
     int getContHP();
     int getContGranada();
@@ -58,7 +58,7 @@ public:
     sf::Text getTextTime();
     sf::Text getTextPunt();
     
-    void Update(sf::RenderWindow &win, sf::View &vista);
+    bool Update(sf::RenderWindow &win, sf::View &vista,Jugador &j);
 
     int getPunt();
     virtual ~hud();
@@ -83,6 +83,7 @@ private:
     int contG;
     int contPunt;
     bool resol;
+    int num_arma;
 };
 
 #endif /* HUD_H */

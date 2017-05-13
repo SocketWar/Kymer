@@ -57,31 +57,19 @@ int Mapa1::Run(RenderWindow &App) {
     // ---------------------------------------
     // HUD
     // ---------------------------------------
-    Texture *texHUD = new Texture();
-    Texture *cuadradoPuntuacion = new Texture();
+   
     Font *fuente = new Font();
-
-    if (!texHUD->loadFromFile("res/img/hud.png")) {
-        cerr << "Error cargando la imagen hud.png";
-        exit(0);
-    }
+    /*Texture *cuadradoPuntuacion = new Texture();
 
     if (!cuadradoPuntuacion->loadFromFile("res/img/pru.png")) {
         cerr << "Error cargando la imagen pru.png";
         exit(0);
-    }
+    }*/
 
-
-    if (!fuente->loadFromFile("res/font/Sansation_Regular.ttf")) {
-        cerr << "Error cargando la fuente sansation.ttf";
-        exit(0);
-    }
-
-    hud *h = new hud(vista);
+    hud *h = new hud(vista,jugador);
     // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
     //Rect<float> boxR(300, 250, 50, 50);
-    h->setarmas();
-    h->setplayerHP();
+  
 
     // ---------------------------------------
     // PAUSA
@@ -152,11 +140,11 @@ int Mapa1::Run(RenderWindow &App) {
             }
             if (Keyboard::isKeyPressed(Keyboard::Num3)) {
                 contg++;
-                h->changeGranada(contg);
+                h->changeGranada(contg,jugador);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num4)) {
                 contg--;
-                h->changeGranada(contg);
+                h->changeGranada(contg,jugador);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
@@ -175,7 +163,7 @@ int Mapa1::Run(RenderWindow &App) {
             }
              */
         }
-        h->updateTime();
+        
         
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
@@ -197,8 +185,10 @@ int Mapa1::Run(RenderWindow &App) {
 
         jugador.RenderDisparo(App);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
-        h->Update(App, vista);
-        jugador.setVidas(h->getContHP());
+        if(h->Update(App, vista,jugador)){
+            //pausa=true;
+        }
+        
         App.display();
         }
         else{

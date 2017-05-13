@@ -39,27 +39,46 @@ void Jugador::Movimiento(Time &time) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
-    actual = 0;
-    totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-
-    if (Keyboard::isKeyPressed(Keyboard::Right)) {
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
-        actual = 1;
-        animacion->orientacion(1);
-        movimiento.x = tiempo*velocidadmovimiento;
+    if (arma==0){
+        actual = 0;
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+    }else if (arma==1){
+        actual = 14;
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[14];
     }
+        if (Keyboard::isKeyPressed(Keyboard::Right)) {
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                actual = 1;
+            }else if (arma==1){
+               totalSpritesAnimacion = animacion->getNumAnimaciones()[15];
+                actual = 15; 
+            }
+            animacion->orientacion(1);
+            movimiento.x = tiempo*velocidadmovimiento;
+        }
 
-    if (Keyboard::isKeyPressed(Keyboard::Left)) {
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
-        actual = 1;
-        animacion->orientacion(0);
-        movimiento.x = -tiempo*velocidadmovimiento;
-    }
-    if (Keyboard::isKeyPressed(Keyboard::Down)) {
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
-        actual = 2;
-    }
-
+        if (Keyboard::isKeyPressed(Keyboard::Left)) {
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                actual = 1;
+            }else if (arma==1){
+               totalSpritesAnimacion = animacion->getNumAnimaciones()[15];
+                actual = 15; 
+            }
+            animacion->orientacion(0);
+            movimiento.x = -tiempo*velocidadmovimiento;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Down)) {
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
+                actual = 2;
+            }else if (arma==1){
+               totalSpritesAnimacion = animacion->getNumAnimaciones()[16];
+                actual = 16; 
+            }
+        }
+    
     animacion->Movimiento(movimiento);
 }
 
@@ -73,9 +92,13 @@ void Jugador::Saltar() {
 
     }
     if ((posicion.y + 2) != distanciasuelo) {
-
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
-        actual = 3;
+        if (arma==0){
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+            actual = 3;
+        }else if (arma==1){
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[17];
+            actual = 17;
+        }
     }
 
     if (posicion.y + animacion->getSpriteE().getScale().y < distanciasuelo || velocidad.y < 0) {
@@ -112,28 +135,54 @@ void Jugador::Disparar() {
             CARGADOR.push_back(balaDisparo);
             RelojBala.restart();
         }
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[7];
-        actual = 7;
+        if (arma==0){
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[7];
+            actual = 7;
+        }else if (arma==1){
+           totalSpritesAnimacion = animacion->getNumAnimaciones()[20];
+            actual = 20; 
+        }
+       
     } else if (Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion = 0.085;
         if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 2)) {
 
+        if (arma==0){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
+        }else if (arma==1){
+           totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
+            actual = 21; 
+        }
 
 
         } else if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 2)) {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
-            actual = 8;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
+                actual = 8;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
+                actual = 21; 
+            }
 
         } else if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 2)) {
 
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
-            actual = 6;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
+                actual = 6;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[19];
+                actual = 19; 
+            }
 
         } else {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
-            actual = 5;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
+                actual = 5;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[18];
+                actual = 18; 
+            }
         }
         if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
             if (animacion->getOrientacion() != 0) {
@@ -166,27 +215,49 @@ void Jugador::DispararGranada() {
     int speedY = 0;
     float GranadaX = 0;
     float GranadaY = 0;
-
-    if (Keyboard::isKeyPressed(Keyboard::G)) {
+    
+    if (Keyboard::isKeyPressed(Keyboard::G) && granadas>0) {
         velocidadAnimacion = 0.1;
 
         if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 4)) {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
-            actual = 12;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
+                actual = 12;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
+                actual = 23; 
+            }
 
         } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 4)) {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
-            actual = 12;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
+                actual = 12;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
+                actual = 23; 
+            }
 
         } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 4)) {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
-            actual = 13;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
+                actual = 13;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[24];
+                actual = 24; 
+            }
         } else {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
-            actual = 11;
+            if (arma==0){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
+                actual = 11;
+            }else if (arma==1){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[22];
+                actual = 22; 
+            }
         }
 
         if (RelojGranada.getElapsedTime().asMilliseconds() > 600) {
+            granadas--;
+            
             if (animacion->getOrientacion() != 0) {
                 speedX = 10;
                 speedY = 15;
@@ -264,6 +335,12 @@ void Jugador::RenderDisparo(RenderWindow &window) {
     }
 }
 
+void Jugador::Morir(){
+    /*velocidadAnimacion = 0.1;
+    totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+    actual = 3;*/
+}
+
 Vector2f Jugador::getPos() {
     return animacion->getSpriteE().getPosition();
 }
@@ -299,7 +376,19 @@ void Jugador::setVidas(int i) {
 int Jugador::getVidas() {
     return vidas;
 }
+void Jugador::setGranadas(int i) {
+    granadas = i;
+}
 
+int Jugador::getGranadas() {
+    return granadas;
+}
+void Jugador::setArma(int i){
+    arma=i;
+}
+int Jugador::getArma(){
+    return arma;
+}
 void Jugador::actualizarEstado() {
 
     viejo = nuevo;

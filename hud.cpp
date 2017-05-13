@@ -26,7 +26,7 @@
 
 #include "hud.h"
 
-hud::hud(sf::View &win) {
+hud::hud(sf::View &win,Jugador &j) {
     sf::Texture *hTex = new sf::Texture();
     sf::Font *f = new sf::Font();
 
@@ -78,11 +78,16 @@ hud::hud(sf::View &win) {
 
     c = new sf::Clock();
     contPunt = 0;
-    contG = 0;
+    contG = 5;
     contHP = 3;
     time = 30;
     font = f;
     time_aux = 0;
+    num_arma=0;
+    
+    j.setVidas(contHP);
+    j.setGranadas(contG);
+    j.setArma(num_arma);
 
     s << "";
 
@@ -106,6 +111,7 @@ hud::hud(sf::View &win) {
     grenadeText->setString(s.str());
     s << "";
     
+    setarmas();
     setplayerHP();
 
 
@@ -165,7 +171,7 @@ void hud::setarmas() {
     armas->at(0)->setTextureRect(sf::IntRect(30, 100, 100, 100));
     arma_actual = armas->at(0);
     setPosArma();
-
+    
     s.str(std::string());
     s << "Arma: Pistola";
     gunText->setString(s.str());
@@ -194,6 +200,7 @@ void hud::changeContHP(int i) {
         s.str(std::string());
         s << "Vidas: ";
         HPText->setString(s.str());
+        
     }
 }
 
@@ -208,25 +215,29 @@ void hud::changePunt(int i) {
 
 void hud::changeArma(int i) {
     if (i == 0 || i == 1) {
+        num_arma=i;
         arma_actual = armas->at(i);
         setPosArma();
         s.str(std::string());
         if (i == 0) {
             s << "Arma: Pistola";
         } else {
-            s << "Arma: Metralleta";
+            s << "Arma: Escopeta";
         }
         gunText->setString(s.str());
 
     }
 }
 
-void hud::changeGranada(int i) {
+void hud::changeGranada(int i,Jugador &j) {
     if (i >= 0) {
         contG = i;
         s.str(std::string());
         s << "         (x" << contG << ")";
         grenadeText->setString(s.str());
+        if (contG!=j.getGranadas()){
+            j.setGranadas(contG);     
+        }
     }
 }
 
@@ -327,7 +338,7 @@ hud::~hud() {
     c = NULL;
 }
 
-void hud::Update(sf::RenderWindow &win, sf::View &vista) {
+bool hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
 
     
     /*
@@ -339,7 +350,7 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista) {
     float y0=vista.getCenter().y-win.getDefaultView().getCenter().y;
     float aux_x;
     float aux_y;
-    
+    bool b=false;
     
     aux_x=win.getDefaultView().getCenter().x/500;
     aux_y=win.getDefaultView().getCenter().y/12;
@@ -372,7 +383,22 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista) {
     
     aux_x=win.getDefaultView().getCenter().x/100;
     grenadeText->setPosition(granada->getPosition().x+aux_x,granada->getPosition().y);
-
+    
+    updateTime();
+    if (contHP != j.getVidas()){
+        j.setVidas(contHP);
+        if (contHP<=0){
+            j.Morir();
+            b=true; 
+        }
+    }
+    if (contG!=j.getGranadas()){
+        changeGranada(j.getGranadas(),j);     
+    }
+    if (j.getArma()!=num_arma){
+        j.setArma(num_arma);
+    }
+    
     //Window.draw(rectangulo);
     win.draw(getTextVida());
     win.draw(getArma());
@@ -385,5 +411,6 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista) {
     for (int n = 0; n < getContHP(); n++) {
         win.draw(getPlayerHP(n));
     }
+    return b;
 }
 

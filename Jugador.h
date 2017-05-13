@@ -8,6 +8,7 @@
 #include "Granada.h"
 #include "Estado.h"
 
+
 class Jugador {
 public:
     Jugador(int anchura, int altura);
@@ -25,11 +26,15 @@ public:
     void DispararGranada();
     void actualizarEstado();
     void setEstado();
+    void Morir();
     Estado* getViejo();
     Estado* getNuevo();
     void setVidas(int i);
     int getVidas();
-
+    void setGranadas(int i);
+    int getGranadas();
+    void setArma(int i);
+    int getArma();
 private:
 
     Vector2f velocidad; //velocidad en las dos posiciones
@@ -51,6 +56,8 @@ private:
     sf::Clock RelojGranada;
     float velocidadAnimacion;
     int vidas;
+    int granadas;
+    int arma;
     
     //interpolacion
     Estado *viejo;

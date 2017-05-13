@@ -7,7 +7,7 @@
 #include "Bala.h"
 #include "Granada.h"
 #include "Estado.h"
-
+#include "sonido.h"
 
 class Jugador {
 public:
@@ -35,6 +35,7 @@ public:
     int getGranadas();
     void setArma(int i);
     int getArma();
+    sonido getSonido();
 private:
 
     Vector2f velocidad; //velocidad en las dos posiciones
@@ -58,6 +59,7 @@ private:
     int vidas;
     int granadas;
     int arma;
+    sonido *soundEffect;
     
     //interpolacion
     Estado *viejo;

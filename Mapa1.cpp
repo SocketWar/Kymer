@@ -5,6 +5,7 @@
  */
 
 #include "Mapa1.hpp"
+#include "sonido.h"
 
 Mapa1::Mapa1(void) {
     update = 1000 / 25;
@@ -33,6 +34,30 @@ int Mapa1::Run(RenderWindow &App) {
     Time tiempo;
     Time tiempoAnimacion;
 
+    
+    //----------------------------------------
+    // SONIDOS
+    //----------------------------------------
+//    sonido disparo;
+//    disparo.setSonido("res/audio/shot.wav");
+    
+     SoundBuffer buffer;
+    if (!buffer.loadFromFile("res/audio/menu.ogg")) {
+        cout << " el archivo de audio Menu no esta disponible" << endl;
+    }
+    Sound sound;
+    sound.setBuffer(buffer);
+
+    sound.play();
+    sound.setLoop(true);
+    
+         SoundBuffer bufferd;
+    if (!bufferd.loadFromFile("res/audio/shot.wav")) {
+        cout << " el archivo de audio Menu no esta disponible" << endl;
+    }
+    Sound sound2;
+    sound2.setBuffer(bufferd);
+   
 
     // ---------------------------------------
     // INTERPOLACION
@@ -47,7 +72,9 @@ int Mapa1::Run(RenderWindow &App) {
     // ---------------------------------------
     int desplazamientoCamara = 500;
     Jugador jugador(anchura, altura);
-    Enemigo enemigo;
+    Enemigo enemigo('e');
+    Enemigo vaca('v');
+    
     cout<<"donde coño esta la puta vaca : "<<enemigo.getAnimacion().getSpriteE().getPosition().x<<","<<enemigo.getAnimacion().getSpriteE().getPosition().y
 <<endl;
     View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
@@ -101,6 +128,7 @@ int Mapa1::Run(RenderWindow &App) {
             //llamadas a update
             jugador.Movimiento(tiempo);
             enemigo.Movimiento(tiempo);
+            vaca.Movimiento(tiempo);
             jugador.Saltar();
             jugador.Disparar();
             jugador.UpdateDisparo();
@@ -157,6 +185,12 @@ int Mapa1::Run(RenderWindow &App) {
             
             if (Keyboard::isKeyPressed(Keyboard::P))
                 pausa = true;
+             
+            if (Keyboard::isKeyPressed(Keyboard::A)){
+               // sound.setVolume(1);
+//                disparo.getSonido().play();
+                sound2.play();
+            }
             
             /*
             if (boxR.intersects(item->getHitbox())) {
@@ -184,6 +218,7 @@ int Mapa1::Run(RenderWindow &App) {
         App.draw(map);
         App.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
         App.draw(enemigo.getAnimacion().getSprite(enemigo.getActual(), enemigo.getframeActual(tiempoAnimacion)));
+        App.draw(vaca.getAnimacion().getSprite(vaca.getActual(), vaca.getframeActual(tiempoAnimacion)));
 
         jugador.RenderDisparo(App);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;

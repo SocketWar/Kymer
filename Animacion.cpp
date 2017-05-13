@@ -103,7 +103,7 @@ void Animacion::spritePersonaje(char l) {
 
             break;
         case 'v':
-
+                tex->setSmooth(true);
             totalFotogramas = 27;
             animacion = new int [totalFotogramas];
 
@@ -134,10 +134,10 @@ void Animacion::spritePersonaje(char l) {
             animacion[24] = 4; //escopeta lanzar granada agachado
             animacion[25] = 6; //escopeta cuchillo correr
             animacion[26] = 4; //escopeta cuchillo agachado
-            posX = 275;
-            posY = 505;
+            posX = 550;
+            posY = 425;
             escala = 2.2f;
-
+                
             xi = 123;
             yi = 87;
             break;

@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/mapaTmx.o \
 	${OBJECTDIR}/menu.o \
 	${OBJECTDIR}/screen_1.o \
+	${OBJECTDIR}/sonido.o \
 	${OBJECTDIR}/tinyxml2.o
 
 
@@ -153,6 +154,11 @@ ${OBJECTDIR}/screen_1.o: screen_1.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/SFML -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/screen_1.o screen_1.cpp
+
+${OBJECTDIR}/sonido.o: sonido.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/SFML -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sonido.o sonido.cpp
 
 ${OBJECTDIR}/tinyxml2.o: tinyxml2.cpp 
 	${MKDIR} -p ${OBJECTDIR}

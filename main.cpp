@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
     //Screens preparations
     menu s0;
-    //Screens.push_back(&s0);
+    Screens.push_back(&s0);
     Mapa1 s1;
     Screens.push_back(&s1);
     //CARGA SONIDO

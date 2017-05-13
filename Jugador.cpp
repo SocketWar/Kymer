@@ -3,9 +3,13 @@
 #include "Estado.h"
 #include "Bala.h"
 #include "Granada.h"
+#include "sonido.h"
 
 Jugador::Jugador(int anchura, int altura) {
-
+   soundEffect = new sonido(); 
+   soundEffect->setSonido("res/audio/shot.wav");
+ 
+    
     gravedad = 2.0f;
     distanciasuelo = 458;
     velocidadsalto = 20.0f;
@@ -33,7 +37,10 @@ Jugador::Jugador(int anchura, int altura) {
         std::cerr << "Error en textura Granada";
         exit(0);
     }
+    
+
 }
+
 
 void Jugador::Movimiento(Time &time) {
 
@@ -41,6 +48,8 @@ void Jugador::Movimiento(Time &time) {
     Vector2f movimiento(0.0f, 0.0f);
     if (arma==0){
         actual = 0;
+
+    
         totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
     }else if (arma==1){
         actual = 14;
@@ -121,7 +130,7 @@ void Jugador::Disparar() {
     int speedY = 0;
     float balaX = 0;
     float balaY = 0;
-
+    
     if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion = 0.085;
         if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
@@ -150,6 +159,10 @@ void Jugador::Disparar() {
         if (arma==0){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
+//            soundEffect->getSonido().play();
+           
+
+
         }else if (arma==1){
            totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
             actual = 21; 
@@ -418,4 +431,8 @@ Estado* Jugador::getViejo() {
 Estado* Jugador::getNuevo() {
 
     return nuevo;
+}
+
+sonido Jugador::getSonido(){
+    return *soundEffect;
 }

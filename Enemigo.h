@@ -7,7 +7,7 @@
 
 class Enemigo {
 public:
-    Enemigo();
+    Enemigo(char t);
     Animacion getAnimacion();
     Enemigo(const Enemigo& orig);
     virtual ~Enemigo();

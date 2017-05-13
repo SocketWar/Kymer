@@ -2,12 +2,21 @@
 
 #include "Enemigo.h"
 
-Enemigo::Enemigo() {
+Enemigo::Enemigo(char t) {
     
     velocidadAnimacion=0.1;
-    animacion = new Animacion("res/img/VacaBurra.png");
-    animacion->spritePersonaje('v');
-    cout<<"hola"<<endl;
+    switch(t){
+        case 'e':
+             animacion = new Animacion("res/img/enemigocomun1.png");
+            animacion->spritePersonaje('e');
+            break;
+        case 'v':
+             animacion = new Animacion("res/img/VacaBurra.png");
+            animacion->spritePersonaje('v');
+            break;
+    }
+   
+   
 }
 
 Enemigo::Enemigo(const Enemigo& orig) {

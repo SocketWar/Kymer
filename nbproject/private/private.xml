@@ -6,6 +6,16 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/sonido.h</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/menu.cpp</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/sonido.cpp</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/Animacion.cpp</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/Jugador.cpp</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/main.cpp</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/Mapa1.cpp</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/Animacion.h</file>
+            <file>file:/home/darktom/NetBeansProjects/Kymer20170513/KymerM&amp;S/Jugador.h</file>
+        </group>
     </open-files>
 </project-private>

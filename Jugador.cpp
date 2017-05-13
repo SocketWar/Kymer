@@ -333,7 +333,7 @@ RectangleShape Jugador::gethitBox() {
     return hitBox;
 }
 
-void Jugador::actualizarHeatbox(){
+void Jugador::actualizarHitbox(){
     
     
     if(Keyboard::isKeyPressed(Keyboard::Down)){
@@ -350,23 +350,22 @@ void Jugador::actualizarHeatbox(){
 }
 
 void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
-    // ALTO = 40PX
-    // ANCHO = 35PX
-    //float pies = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
-    
+   
     bool colSuelo = false;  
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
+                
         if (a->intersects(hitBox.getGlobalBounds())) {
 
             cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
             colision = true;
             
-            if(a->top < hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height){
+            if(a->top <= hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height){
                 colSuelo = true;
                 suelo = true;
                 distanciasuelo=a->top+2;
             }
+            
         }
 
         cout << "el suelo es:" << suelo << endl;
@@ -376,5 +375,32 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     if(!colSuelo){
         suelo = false;
     }
-    //cout << endl;
+   
+}
+
+
+void Jugador::update(Time &tiempo){
+    
+    
+            viejo=nuevo;
+            Movimiento(tiempo);
+            Saltar();
+            Disparar();
+            UpdateDisparo();
+            DispararGranada();
+            nuevo->actualizartiempo(getPos().x,getPos().y);
+            
+}
+
+
+
+void Jugador::render(float interpolacion,Time &tiempo){
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& Window= motor->getWindow();
+    
+    actualizarHitbox();
+    animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo,nuevo,interpolacion));
+    Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    //Window.draw(hitBox);
+    
 }

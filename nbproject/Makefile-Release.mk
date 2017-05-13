@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/Jugador.o \
 	${OBJECTDIR}/Menu.o \
+	${OBJECTDIR}/Motor2D.o \
 	${OBJECTDIR}/MovimientoIA.o \
 	${OBJECTDIR}/ObjetoPuntuacion.o \
 	${OBJECTDIR}/hud.o \
@@ -114,6 +115,11 @@ ${OBJECTDIR}/Menu.o: Menu.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
+
+${OBJECTDIR}/Motor2D.o: Motor2D.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/include/SFML -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor2D.o Motor2D.cpp
 
 ${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp
 	${MKDIR} -p ${OBJECTDIR}

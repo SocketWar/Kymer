@@ -7,10 +7,13 @@
 #include "Bala.h"
 #include "Granada.h"
 #include "Estado.h"
+#include "Motor2D.h"
 
 class Jugador {
 public:
     Jugador(int anchura, int altura);
+    void update(Time &tiempo);
+    void render(float interpolacion,Time &tiempo);
     void Movimiento(Time &tiempo);
     void Saltar();
     void Disparar();
@@ -24,7 +27,7 @@ public:
     void DispararGranada();
     void actualizarEstado();
     void setEstado();
-    void actualizarHeatbox();
+    void actualizarHitbox();
     Estado* getViejo();
     Estado* getNuevo();
     void setVidas(int i);
@@ -44,13 +47,13 @@ private:
     int totalSpritesAnimacion;
     int actual;
     float velocidadanimacion;
-    std::vector<Bala*> CARGADOR;
-    std::vector<Granada*> CARGADORGRANADA;
-    sf::Texture TEX;
-    sf::Texture TEX2;
+    vector<Bala*> CARGADOR;
+    vector<Granada*> CARGADORGRANADA;
+    Texture TEX;
+    Texture TEX2;
     float countBala;
-    sf::Clock RelojBala;
-    sf::Clock RelojGranada;
+    Clock RelojBala;
+    Clock RelojGranada;
     float velocidadAnimacion;
     int vidas;
     //interpolacion

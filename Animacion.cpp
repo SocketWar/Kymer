@@ -58,9 +58,10 @@ void Animacion::spritePersonaje(char l) {
     posX = 200;
     posY = 200;
     escala = 2.f;
+    
             break;
         case 'e':
-    totalFotogramas=27;
+     totalFotogramas=27;
     animacion = new int [totalFotogramas]; 
     
     animacion[0]=4;//alerta
@@ -92,21 +93,47 @@ void Animacion::spritePersonaje(char l) {
     animacion[26] = 4; //escopeta cuchillo agachado
     posX = 275;
     posY = 505;
-    escala = 2.2f;
+    escala = 2.f;
     
     xi = 60;
     yi = 50;
-    
             break;
         case 'v':
-    totalFotogramas=2;
-    animacion = new int [2]; 
+    totalFotogramas=27;
+    animacion = new int [27]; 
     animacion[0]=16;//atacar
     animacion[1]=8;//andar/correr 
-    xi = 123;
-    yi = 87;
+    animacion[2]=4;//reirse
+    animacion[3]=3;//morir
+    animacion[4]=14;//tio lanza granadas
+    animacion[5]=8;//carga escopeta
+    animacion[6]=3;//disparo escopeta
+    animacion[7]=7;//morir acuchillado
+    animacion[8]=18;//mortero
+    animacion[9] = 6; //cuchillo correr
+    animacion[10] = 4; //cuchillo agachado
+    animacion[11] = 3; //lanzar granada
+    animacion[12] = 6; //lanzar granada corriendo
+    animacion[13] = 4; //lanzar granada agachado
+    animacion[14] = 4; //escopeta quieto
+    animacion[15] = 6; //escopeta correr
+    animacion[16] = 4; //escopeta agachado
+    animacion[17] = 1; //escopeta salto
+    animacion[18] = 2; //escopeta disparo quieto
+    animacion[19] = 2; //escopeta disparo agachado
+    animacion[20] = 2; //escopeta disparo arriba
+    animacion[21] = 6; //escopeta disparo correr
+    animacion[22] = 3; //escopeta lanzar granada quieto
+    animacion[23] = 6; //escopeta lanzar granada corriendo
+    animacion[24] = 4; //escopeta lanzar granada agachado
+    animacion[25] = 6; //escopeta cuchillo correr
+    animacion[26] = 4; //escopeta cuchillo agachado
+    xi = 60;
+    yi = 50;
       posX = 275;
-        posY = 10;
+        posY = 505;
+        escala = 4.f;
+        tex->setSmooth(true);
             break;
     }
     
@@ -132,7 +159,7 @@ void Animacion::spritePersonaje(char l) {
     if (!sprites) {
         cout << "no se ha podido reservar" << endl;
     }
-   
+    cout<<"hola"<<endl;
 }
 
 

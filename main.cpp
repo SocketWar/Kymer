@@ -6,6 +6,7 @@
 #include "hud.h"
 #include "ObjetoPuntuacion.h"
 #include "Enemigo.h"
+#include "Motor2D.h"
 
 const int update = 1000 / 25;
 const int frameskip = 5;
@@ -16,7 +17,11 @@ int altura = 720;
 
 int main() {
     
-    RenderWindow Window(VideoMode(anchura, altura), "Kymer");
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& Window= motor->getWindow();
+   //RenderWindow Window(VideoMode(anchura, altura), "Kymer");
+   //cout<<motor->getchar()<<endl;
+
     Window.setFramerateLimit(120);
     
     // ---------------------------------------
@@ -34,14 +39,14 @@ int main() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    Vector2f interpolacionJugador;
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
     Jugador jugador(anchura, altura);
     //jugador.getAnimacion().MovimientoInterpolado(Vector2f(1,1));
-    Enemigo enemigo;
+    Enemigo *enemigo;
+    enemigo = new Enemigo();
     View vista(jugador.getPos(), Vector2f(anchura, altura));
 
     mapaTmx map;
@@ -94,31 +99,19 @@ int main() {
             tiempoupdate += update;
             bucle++;
             
-            //estados
-            jugador.actualizarEstado();
-
+           
             Event evento;
             while (Window.pollEvent(evento)) {
                 if (evento.type == Event::Closed)
                     Window.close();
             }
             //llamadas a update
-            
+            //jugador
             jugador.calcularColision(map.getColisiones(),map.getnObjetos());
-            jugador.Movimiento(tiempo);
-            jugador.Saltar();
-            jugador.Disparar();
-            jugador.UpdateDisparo();
-            jugador.DispararGranada();
+            jugador.update(tiempo);
+            //enemigo
+            enemigo->Movimiento(tiempo);
             
-            
-            
-          
-            
-
-            //actualizar estados
-            jugador.setEstado();
-
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
             int contg = h->getContGranada();
@@ -171,30 +164,24 @@ int main() {
         h->updateTime();
         //valor de interpolacion se actualiza cada render
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
-        //vector que contiene la interpolada en x e y
-        interpolacionJugador=jugador.getViejo()->getInterpolacion(jugador.getViejo(),jugador.getNuevo(),interpolacion);
-      
+       
         
         vista.setCenter(jugador.getPos());
         Window.setView(vista);
+       
         
-        //movimiento a la posicion interpolada
-        //jugador.gethitBox().setPosition(interpolacionJugador.x-25,interpolacionJugador.y-70);
-        jugador.getAnimacion().MovimientoInterpolado(interpolacionJugador);
-        jugador.actualizarHeatbox();
         Window.clear(Color(150, 200, 200));
-        
-        
         Window.draw(map);
-        Window.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
-        Window.draw(enemigo.getAnimacion().getSprite(0,0));
+        
+        jugador.render(interpolacion,tiempoAnimacion);
+        Window.draw(enemigo->getAnimacion().getSprite(enemigo->getActual(),enemigo->getframeActual(tiempoAnimacion)));
         
         jugador.RenderDisparo(Window);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(Window, vista);
         jugador.setVidas(h->getContHP());
         
-        //Window.draw(jugador.gethitBox());
+        
         Window.display();
     }
     return 0;

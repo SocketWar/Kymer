@@ -43,7 +43,7 @@ void Granada::setPosition(float xStart,float yStart){
 void Granada::loadSprite(Texture textura, int posX, int posY){
     *TEX= textura;
     *SPRITE=Sprite(*TEX);
-    SPRITE->scale(3,3);
+    SPRITE->scale(1.5,1.5);
     SPRITE->setOrigin(0,0);
     SPRITE->setTextureRect(IntRect(posX,posY,WIDTH,HEIGTH));
     if(SPEEDX<0)

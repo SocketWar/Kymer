@@ -1,5 +1,7 @@
 
-
+#include <stdlib.h> 
+#include <cmath>
+#include <valarray> 
 #include "Enemigo.h"
 
 Enemigo::Enemigo() {
@@ -8,12 +10,15 @@ Enemigo::Enemigo() {
     animacion = new Animacion("res/img/enemigocomun1.png");
     animacion->spritePersonaje('e');
     
-    velocidadmovimiento = 1200.0f;
+    
+    velocidadmovimiento = 900.0f;
     
      //Colisiones
     hitBox.setScale(1.5, 2.2);
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
+    random=rand()%2;
+    sorpresa=false;
 }
 
 Enemigo::Enemigo(const Enemigo& orig) {
@@ -29,27 +34,71 @@ Animacion Enemigo::getAnimacion() {
 
 }
 
-void Enemigo::Movimiento(Time &time) {
+void Enemigo::Movimiento(Time &time, Jugador jugador) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
+    Vector2f posJugador=jugador.getPos();
+    Vector2f posEnemigo = animacion->getSpriteE().getPosition();
+    float dif = posJugador.x-posEnemigo.x;
     actual = 0;
     totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-
-
-        if (Keyboard::isKeyPressed(Keyboard::L)) {
+    std::cout<<"mov: "<<dif<< std::endl;
+    if(abs(dif)>300){
+        if(abs(dif)>350){
+        random = rand()%3;
+        if (random==1) {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
            actual = 1;
             animacion->orientacion(0);
            movimiento.x= tiempo*velocidadmovimiento;
        }
       
-        if (Keyboard::isKeyPressed(Keyboard::K)) {
+        if (random==0) {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
             actual = 1;
            animacion->orientacion(1);
             movimiento.x= -tiempo*velocidadmovimiento;
        }
+        }else{
+            if(posJugador.x<posEnemigo.x){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+                actual = 3;
+                animacion->orientacion(1);
+            }else{
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+                actual = 3;
+                animacion->orientacion(0);
+            }
+        }
+    }else{
+        if(abs(dif)>150){
+            if(!sorpresa){
+                sorpresa=true;
+                if(posJugador.x<posEnemigo.x){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+                    actual = 3;
+                    animacion->orientacion(1);
+                }else{
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+                    actual = 3;
+                    animacion->orientacion(0);
+                }
+            }else{
+                if(posJugador.x<posEnemigo.x){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                    actual = 1;
+                   animacion->orientacion(1);
+                    movimiento.x= -tiempo*velocidadmovimiento;
+                }else{
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                   actual = 1;
+                    animacion->orientacion(0);
+                   movimiento.x= tiempo*velocidadmovimiento;
+                }
+            }
+        }
+    }
     //    if (Keyboard::isKeyPressed(Keyboard::Down)) {
     //        totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
     //        actual = 2;

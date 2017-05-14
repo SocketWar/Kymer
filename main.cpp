@@ -110,7 +110,7 @@ int main() {
             jugador.calcularColision(map.getColisiones(),map.getnObjetos());
             jugador.update(tiempo);
             //enemigo
-            enemigo->Movimiento(tiempo);
+            enemigo->Movimiento(tiempo,jugador);
             
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();

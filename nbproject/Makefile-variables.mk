@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=master
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/master
+CND_ARTIFACT_NAME_Debug=enemigo
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/enemigo
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=master.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/master.tar
+CND_PACKAGE_NAME_Debug=enemigo.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/enemigo.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=master
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/master
+CND_ARTIFACT_NAME_Release=enemigo
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/enemigo
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=master.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/master.tar
+CND_PACKAGE_NAME_Release=enemigo.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/enemigo.tar
 #
 # include compiler specific variables
 #

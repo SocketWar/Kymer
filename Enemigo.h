@@ -3,6 +3,7 @@
 #define ENEMIGO_H
 
 #include "Animacion.h"
+#include "Jugador.h"
 
 class Enemigo {
 public:
@@ -10,7 +11,7 @@ public:
     Animacion getAnimacion();
     Enemigo(const Enemigo& orig);
     virtual ~Enemigo();
-     void Movimiento(Time &tiempo);
+     void Movimiento(Time &tiempo, Jugador jugador);
       int getActual();
       int getframeActual(Time &tiempo);
       RectangleShape gethitBox();
@@ -21,6 +22,8 @@ private:
     Animacion *animacion;
     float velocidadmovimiento;
     RectangleShape hitBox;
+    int random;
+    bool sorpresa;
 };
 
 #endif /* ENEMIGO_H */

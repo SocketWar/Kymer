@@ -133,7 +133,7 @@ int Mapa1::Run(RenderWindow &App) {
             jugador.Disparar();
             jugador.UpdateDisparo();
             jugador.DispararGranada();
-            jugador.Morir();
+            
 
             //actualizar estados
             //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
@@ -222,9 +222,7 @@ int Mapa1::Run(RenderWindow &App) {
 
         jugador.RenderDisparo(App);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
-        if(h->Update(App, vista,jugador)){
-            //pausa=true;
-        }
+        h->Update(App, vista,jugador);
         
         App.display();
         }

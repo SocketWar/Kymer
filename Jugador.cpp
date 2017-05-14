@@ -46,6 +46,15 @@ void Jugador::Movimiento(Time &time) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
+    
+    if (vidas<=0){
+        Morir();
+      
+    }else if (Keyboard::isKeyPressed(Keyboard::V)) {
+        velocidadAnimacion = 0.1f;
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[28];
+        actual = 28;
+    }else{
     if (arma==0){
         actual = 0;
 
@@ -89,6 +98,7 @@ void Jugador::Movimiento(Time &time) {
         }
     
     animacion->Movimiento(movimiento);
+    }
 }
 
 void Jugador::Saltar() {
@@ -351,15 +361,9 @@ void Jugador::RenderDisparo(RenderWindow &window) {
 void Jugador::Morir(){
     //para probar la animacio0n se pone en un boton por defecto "M"
     velocidadAnimacion = 0.2f;
-    if (Keyboard::isKeyPressed(Keyboard::M)) {
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[27];
-        actual = 27;
-    }
-    //aunque no forme parte de aqui, ponemos tambien la animacion de victoria "V"
-    if (Keyboard::isKeyPressed(Keyboard::V)) {
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[28];
-        actual = 28;
-    }
+    totalSpritesAnimacion = animacion->getNumAnimaciones()[27];
+    actual = 27;
+    //animacion->getSprite(27,4);
 }
 
 Vector2f Jugador::getPos() {

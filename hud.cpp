@@ -338,7 +338,7 @@ hud::~hud() {
     c = NULL;
 }
 
-bool hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
+void hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
 
     
     /*
@@ -387,10 +387,7 @@ bool hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
     updateTime();
     if (contHP != j.getVidas()){
         j.setVidas(contHP);
-        if (contHP<=0){
-            j.Morir();
-            b=true; 
-        }
+        
     }
     if (contG!=j.getGranadas()){
         changeGranada(j.getGranadas(),j);     
@@ -411,6 +408,6 @@ bool hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
     for (int n = 0; n < getContHP(); n++) {
         win.draw(getPlayerHP(n));
     }
-    return b;
+    
 }
 

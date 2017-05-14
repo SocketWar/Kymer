@@ -58,7 +58,7 @@ public:
     sf::Text getTextTime();
     sf::Text getTextPunt();
     
-    bool Update(sf::RenderWindow &win, sf::View &vista,Jugador &j);
+    void Update(sf::RenderWindow &win, sf::View &vista,Jugador &j);
 
     int getPunt();
     virtual ~hud();

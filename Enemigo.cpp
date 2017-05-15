@@ -56,7 +56,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     velocidadmovimiento = 600.0f;
     //Enemigo granada
     if(tipo==1 || tipo==3){
-        if(abs(dif)>500){
+        if(abs(dif)>480){
             //Movimiento random
             sorpresa=false;
             if (time_aux==-1 || time1==time_aux){
@@ -98,9 +98,9 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     }
                 }else{
                     //Movimiento a jugador
-                    //time_aux=time1;
+                    time_aux=time1;
                       velocidadAnimacion = 0.1;
-                         velocidadmovimiento = 1000.0f;
+                      velocidadmovimiento = 850.0f;
                     if(posJugador.x<posEnemigo.x){
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -115,6 +115,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                 }
             }else{
                 if(abs(dif)>250){
+                    time_aux=time1;
                     if(tipo!=3){
                         //Lanzar Granada a jugador
                         int speedX = 0;
@@ -195,9 +196,10 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         }
                     }
                 }else{
+                    time_aux=time1;
                     //Movimiento a jugador
                       velocidadAnimacion = 0.1;
-                         velocidadmovimiento = 850.0f;
+                         velocidadmovimiento = 1000.0f;
                     if(posJugador.x>posEnemigo.x){
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -262,7 +264,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         //Movimiento a jugador
                         time_aux=time1;
                           velocidadAnimacion = 0.1;
-                             velocidadmovimiento = 1000.0f;
+                             velocidadmovimiento = 900.0f;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                             actual = 1;

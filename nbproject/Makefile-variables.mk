@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=enemigo
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/enemigo
+CND_ARTIFACT_NAME_Debug=kyme2
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kyme2
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=enemigo.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/enemigo.tar
+CND_PACKAGE_NAME_Debug=kyme2.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kyme2.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=enemigo
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/enemigo
+CND_ARTIFACT_NAME_Release=kyme2
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kyme2
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=enemigo.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/enemigo.tar
+CND_PACKAGE_NAME_Release=kyme2.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kyme2.tar
 #
 # include compiler specific variables
 #

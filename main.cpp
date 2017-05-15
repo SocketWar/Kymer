@@ -46,7 +46,8 @@ int main() {
     Jugador jugador(anchura, altura);
     //jugador.getAnimacion().MovimientoInterpolado(Vector2f(1,1));
     Enemigo *enemigo;
-    enemigo = new Enemigo();
+    int tipoE=3;
+    enemigo = new Enemigo(tipoE);
     View vista(jugador.getPos(), Vector2f(anchura, altura));
 
     mapaTmx map;
@@ -109,6 +110,7 @@ int main() {
             //jugador
             jugador.calcularColision(map.getColisiones(),map.getnObjetos());
             jugador.update(tiempo);
+            enemigo->UpdateGranada();
             //enemigo
             enemigo->Movimiento(tiempo,jugador);
             
@@ -175,7 +177,7 @@ int main() {
         
         jugador.render(interpolacion,tiempoAnimacion);
         Window.draw(enemigo->getAnimacion().getSprite(enemigo->getActual(),enemigo->getframeActual(tiempoAnimacion)));
-        
+        enemigo->RenderGranada(Window);
         jugador.RenderDisparo(Window);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(Window, vista);

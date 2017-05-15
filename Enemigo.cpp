@@ -9,15 +9,16 @@ Enemigo::Enemigo() {
     velocidadAnimacion = 0.1;
     animacion = new Animacion("res/img/enemigocomun1.png");
     animacion->spritePersonaje('e');
-    
-    
-    velocidadmovimiento = 900.0f;
+    c = new sf::Clock();
+    time1=0;
+    time_aux=-1;
+    velocidadmovimiento = 600.0f;
     
      //Colisiones
     hitBox.setScale(1.5, 2.2);
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
-    random=rand()%2;
+    random=3;
     sorpresa=false;
 }
 
@@ -42,39 +43,37 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     Vector2f posEnemigo = animacion->getSpriteE().getPosition();
     float dif = posJugador.x-posEnemigo.x;
     actual = 0;
+    
+    time1 = c->getElapsedTime().asSeconds();
     totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-    std::cout<<"mov: "<<dif<< std::endl;
-    if(abs(dif)>300){
-        if(abs(dif)>350){
-        random = rand()%3;
+    velocidadmovimiento = 600.0f;
+    if(abs(dif)>320){
+         
+        if (time_aux==-1 || time1==time_aux){
+            random = rand()%3;
+            time_aux=time1+1;
+        }
         if (random==1) {
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+           totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
            actual = 1;
-            animacion->orientacion(0);
+           animacion->orientacion(0);
            movimiento.x= tiempo*velocidadmovimiento;
-       }
+        }
       
-        if (random==0) {
+        if (random==0) {          
             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
             actual = 1;
-           animacion->orientacion(1);
+            animacion->orientacion(1);
             movimiento.x= -tiempo*velocidadmovimiento;
-       }
-        }else{
-            if(posJugador.x<posEnemigo.x){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
-                actual = 3;
-                animacion->orientacion(1);
-            }else{
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
-                actual = 3;
-                animacion->orientacion(0);
-            }
         }
+    
     }else{
-        if(abs(dif)>150){
+        time_aux=time1;
+        if(abs(dif)>140){
             if(!sorpresa){
                 sorpresa=true;
+              
+                  velocidadAnimacion = 0.5;
                 if(posJugador.x<posEnemigo.x){
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
                     actual = 3;
@@ -85,6 +84,8 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     animacion->orientacion(0);
                 }
             }else{
+                  velocidadAnimacion = 0.1;
+                     velocidadmovimiento = 1000.0f;
                 if(posJugador.x<posEnemigo.x){
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                     actual = 1;
@@ -96,6 +97,18 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     animacion->orientacion(0);
                    movimiento.x= tiempo*velocidadmovimiento;
                 }
+            }
+        }else{
+            if(posJugador.x<posEnemigo.x){
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
+                actual = 4;
+                animacion->orientacion(1);
+                
+            }else{
+               totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
+               actual = 4;
+               animacion->orientacion(0);
+
             }
         }
     }

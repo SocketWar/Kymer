@@ -24,6 +24,9 @@ private:
     RectangleShape hitBox;
     int random;
     bool sorpresa;
+    int time1;
+    int time_aux;
+    sf::Clock *c;
 };
 
 #endif /* ENEMIGO_H */

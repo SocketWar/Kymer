@@ -91,7 +91,7 @@ void Animacion::spritePersonaje(char l) {
     animacion[24] = 4; //escopeta lanzar granada agachado
     animacion[25] = 6; //escopeta cuchillo correr
     animacion[26] = 4; //escopeta cuchillo agachado
-    posX = 275;
+    posX = 560;
     posY = 505;
     escala = 2.f;
     

@@ -16,14 +16,14 @@ Animacion::Animacion(string texto) {
 
 //personaje 
 
-void Animacion::spritePersonaje(char l) {
+void Animacion::spritePersonaje(char le) {
 
     int xi = 0;
     int yi = 0;
     int posX = 0;
     int posY = 0;
 
-    switch (l) {
+    switch (le) {
 
         case 'p':
             totalFotogramas = 29;
@@ -157,8 +157,12 @@ void Animacion::spritePersonaje(char l) {
             sprites[f][j]->setScale(escala, escala);
             sprites[f][j]->setTextureRect(IntRect(xi * j, yi * f, xi, yi));
             sprites[f][j]->setPosition(posX, posY);
+            if(le=='p')
             sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
-
+            else if(le=='e')
+            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
+            else if(le=='v')
+            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width /2 , sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);  
         }
     }
     if (!sprites) {

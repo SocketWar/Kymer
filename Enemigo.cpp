@@ -18,7 +18,7 @@ Enemigo::Enemigo(int tipoE) {
     c = new sf::Clock();
     time1=0;
     time_aux=-1;
-    velocidadmovimiento = 600.0f;
+    velocidadmovimiento = 200.0f;
     gravedad = 2.0f;
     distanciasuelo = 700;
     velocidadsalto = 20.0f;
@@ -28,10 +28,12 @@ Enemigo::Enemigo(int tipoE) {
     //Estados
     viejo = new Estado();
     nuevo = new Estado();
+    
      //Colisiones
-    hitBox.setScale(1.5, 2.2);
+    hitBox.setScale(3, 2.2);
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
+    muro=false;
     random=3;
     sorpresa=false;
     tipo=tipoE;
@@ -70,7 +72,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     time1 = c->getElapsedTime().asSeconds();
     actual = 0;
     totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-    velocidadmovimiento = 600.0f;
+    //velocidadmovimiento = 600.0f;
     //Enemigo granada
     if(tipo==1 || tipo==3){
         if(abs(dif)>480){
@@ -346,14 +348,22 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                actual = 1;
                animacion->orientacion(0);
+               if(!muro){
                movimiento.x= tiempo*velocidadmovimiento;
+               }else{
+               movimiento.x=0;    
+               }
             }
 
             if (random==0) {          
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                 actual = 1;
                 animacion->orientacion(1);
-                movimiento.x= -tiempo*velocidadmovimiento;
+                if(!muro){
+               movimiento.x= -tiempo*velocidadmovimiento;
+               }else{
+               movimiento.x=0;    
+               }
             }
 
             }else{
@@ -363,17 +373,25 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                    //Movimiento a jugador
                         time_aux=time1;
                         velocidadAnimacion = 0.1;
-                        velocidadmovimiento = 750.0f;
+                        velocidadmovimiento = 600.0f;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                             actual = 1;
                            animacion->orientacion(1);
+                            if(!muro){
                             movimiento.x= -tiempo*velocidadmovimiento;
+                             }else{
+                            movimiento.x=0;    
+                             }
                         }else{
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                            actual = 1;
                             animacion->orientacion(0);
-                           movimiento.x= tiempo*velocidadmovimiento;
+                           if(!muro){
+                             movimiento.x= tiempo*velocidadmovimiento;
+                             }else{
+                             movimiento.x=0;    
+                                }
                         }
                     
                 }else{
@@ -411,14 +429,19 @@ void Enemigo::Saltar() {
     if (!colision) {
         suelo = false;
     }
-
-    if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
+    
+   /* cout<<"vaca->>>>>>>>"<<hitBox.getPosition().y<<endl;
+    float distancia=hitBox.getGlobalBounds().top;
+    if (muro) {
         velocidad.y = -velocidadsalto;
-     
-
-    } else if (!suelo) {
+        if(distancia < distancia-200){
+            suelo=false;
+            muro=false;
+        }
+    }*/ if (!suelo) {
         
         velocidad.y += gravedad;
+        
     } else {
         animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
         velocidad.y = 0;
@@ -511,7 +534,7 @@ int Enemigo::getframeActual(Time& tiempo) {
     
             viejo=nuevo;
             Movimiento(tiempo,jugador);
-            //Saltar();
+            Saltar();
             //Disparar();
             UpdateGranada();
             //DispararGranada();
@@ -525,7 +548,7 @@ void Enemigo::render(float interpolacion,Time &tiempo){
     Motor2D *motor = Motor2D::GetInstance();
     RenderWindow& Window= motor->getWindow();
     
-    //actualizarHitbox();
+    actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo,nuevo,interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
     //Window.draw(hitBox);
@@ -536,17 +559,10 @@ void Enemigo::render(float interpolacion,Time &tiempo){
 void Enemigo::actualizarHitbox(){
     
     
-    if(Keyboard::isKeyPressed(Keyboard::Down)){
+  
+        hitBox.setScale(1.5, 3.7);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 115);
         
-        hitBox.setScale(1.5, 1.5);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 48);
-        
-    }else{
-        
-        hitBox.setScale(1.5, 2.2);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 70);
-        
-    }
 }
 
 
@@ -583,7 +599,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                //cout<<"no pasas"<<endl;
                //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
                muro=true;
-               if(Keyboard::isKeyPressed(Keyboard::Left) || a->top+8>hitBox.getGlobalBounds().top){
+               if(random==0){
                    muro=false;
                    cout<<"murito---->"<<muro<<endl;
                }
@@ -591,7 +607,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
            }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<=hitBox.getGlobalBounds().top){
                cout<<"no pasas"<<endl;
                muro=true;
-               if(Keyboard::isKeyPressed(Keyboard::Right) || a->top+8>hitBox.getGlobalBounds().top){
+               if(random==1){
                    muro=false;
                    cout<<"murito---->"<<muro<<endl;
                }
@@ -600,9 +616,8 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
               if(a->top >= hitBox.getGlobalBounds().top){
                 colSuelo = true;
                 suelo = true;
-                
                 if(!muro){
-                distanciasuelo=a->top+2;
+                distanciasuelo=a->top+4;
                 }
             }
             

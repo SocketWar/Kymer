@@ -131,7 +131,9 @@ int Mapa1::Run() {
             jugador.update(tiempo);
             
             //enemigo
+            enemigo->calcularColision(map.getColisiones(),map.getnObjetos());
             enemigo->update(tiempo,jugador);
+            
             
 
             int lifePlayer = h->getContHP();

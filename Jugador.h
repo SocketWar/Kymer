@@ -69,8 +69,11 @@ private:
     bool suelo;
     bool colision;
     bool estadocolision;
+    bool muro;
     //colisiones
     RectangleShape hitBox;
+    RectangleShape trol;
+    RectangleShape trol2;
     
     //interpolacion
     Estado *viejo;

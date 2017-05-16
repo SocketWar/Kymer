@@ -17,7 +17,7 @@ Jugador::Jugador(int anchura, int altura) {
     velocidad.y = 0;
 
     velocidadanimacion = 0.1;
-    velocidadmovimiento = 900.0f;
+    velocidadmovimiento = 500.0f;
 
     //Sprites
     animacion = new Animacion("res/img/Personaje13052017.png");
@@ -32,6 +32,7 @@ Jugador::Jugador(int anchura, int altura) {
     hitBox.setScale(1.5, 2.2);
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
+    bool muro=false;
     
     if (!TEX.loadFromFile("res/img/balada2.png")) {
         std::cerr << "Error en textura bala";
@@ -77,7 +78,11 @@ void Jugador::Movimiento(Time &time) {
                 actual = 15; 
             }
             animacion->orientacion(1);
+            if(!muro){
             movimiento.x = tiempo*velocidadmovimiento;
+            }else{
+            movimiento.x=0;    
+            }
         }
 
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
@@ -89,7 +94,11 @@ void Jugador::Movimiento(Time &time) {
                 actual = 15; 
             }
             animacion->orientacion(0);
+            if(!muro){
             movimiento.x = -tiempo*velocidadmovimiento;
+            }else{
+            movimiento.x=0;    
+            }
         }
         if (Keyboard::isKeyPressed(Keyboard::Down)) {
             if (arma==0){
@@ -483,25 +492,60 @@ RectangleShape Jugador::gethitBox() {
 }
 
 void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
-   
-    bool colSuelo = false;  
+    
+    
+  
+    trol.setScale(1.5, 2.2);
+    trol.setSize(Vector2f(32, 32));
+    trol.setFillColor(Color::Blue);
+    
+    trol2.setScale(1.5, 2.2);
+    trol2.setSize(Vector2f(32, 32));
+    trol2.setFillColor(Color::Green);
+    
+    bool colSuelo = false; 
+    
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
-                
+               
         if (a->intersects(hitBox.getGlobalBounds())) {
 
-            cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
+            //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
             colision = true;
             
-            if(a->top <= hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height){
+             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<=hitBox.getGlobalBounds().top){
+               
+               cout<<"no pasas"<<endl;
+               muro=true;
+               if(Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::Space)){
+                   muro=false;
+               }
+              
+           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<=hitBox.getGlobalBounds().top){
+               cout<<"no pasas"<<endl;
+               muro=true;
+               if(Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::Space)){
+                   muro=false;
+               }
+           }
+                 
+              if(a->top >= hitBox.getGlobalBounds().top){
                 colSuelo = true;
                 suelo = true;
+                
+                if(!muro){
                 distanciasuelo=a->top+2;
+                }
             }
+            
+            cout<<"rectanguloWid----->>"<<a->top<<endl;
+            //cout<<"rectanguloLeft----->>"<<a->left<<endl;
+            cout<<"JugadorWid----->>"<<hitBox.getGlobalBounds().top<<endl;
+            //cout<<"JugadorLeft----->>"<<hitBox.getGlobalBounds().left<<endl;
             
         }
 
-        cout << "el suelo es:" << suelo << endl;
+        //cout << "el suelo es:" << suelo << endl;
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
     }
 

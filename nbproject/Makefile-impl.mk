@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=TodoJunto
+PROJECTNAME=MenuSonido
 
 # Active Configuration
 DEFAULTCONF=Debug

@@ -32,7 +32,7 @@ Jugador::Jugador(int anchura, int altura) {
     hitBox.setScale(1.5, 2.2);
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
-    bool muro=false;
+    muro=false;
     
     if (!TEX.loadFromFile("res/img/balada2.png")) {
         std::cerr << "Error en textura bala";
@@ -513,7 +513,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
             //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
             colision = true;
             
-             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<=hitBox.getGlobalBounds().top){
+             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<hitBox.getGlobalBounds().top){
                
                cout<<"no pasas"<<endl;
                muro=true;
@@ -521,7 +521,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                    muro=false;
                }
               
-           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<=hitBox.getGlobalBounds().top){
+           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<hitBox.getGlobalBounds().top){
                cout<<"no pasas"<<endl;
                muro=true;
                if(Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::Space)){

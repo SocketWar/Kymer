@@ -121,7 +121,7 @@ void Jugador::Saltar() {
     //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
 
-    if (!colision) {
+    if (!colision || Keyboard::isKeyPressed(Keyboard::C)) {
         suelo = false;
     }
 
@@ -510,22 +510,26 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                
         if (a->intersects(hitBox.getGlobalBounds())) {
 
-            //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
+            
+            //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
             
-             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<hitBox.getGlobalBounds().top){
+             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<=hitBox.getGlobalBounds().top){
                
-               cout<<"no pasas"<<endl;
+               //cout<<"no pasas"<<endl;
+                             cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
                muro=true;
-               if(Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::Space)){
+               if(Keyboard::isKeyPressed(Keyboard::Left) || a->top+8>hitBox.getGlobalBounds().top){
                    muro=false;
+                   cout<<"murito---->"<<muro<<endl;
                }
               
-           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<hitBox.getGlobalBounds().top){
+           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<=hitBox.getGlobalBounds().top){
                cout<<"no pasas"<<endl;
                muro=true;
-               if(Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::Space)){
+               if(Keyboard::isKeyPressed(Keyboard::Right) || a->top+8>hitBox.getGlobalBounds().top){
                    muro=false;
+                   cout<<"murito---->"<<muro<<endl;
                }
            }
                  
@@ -538,9 +542,9 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 }
             }
             
-            cout<<"rectanguloWid----->>"<<a->top<<endl;
+            //cout<<"rectanguloWid----->>"<<a->top<<endl;
             //cout<<"rectanguloLeft----->>"<<a->left<<endl;
-            cout<<"JugadorWid----->>"<<hitBox.getGlobalBounds().top<<endl;
+            //cout<<"JugadorWid----->>"<<hitBox.getGlobalBounds().top<<endl;
             //cout<<"JugadorLeft----->>"<<hitBox.getGlobalBounds().left<<endl;
             
         }

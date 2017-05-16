@@ -426,9 +426,7 @@ void Enemigo::Saltar() {
     //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
 
-    if (!colision) {
-        suelo = false;
-    }
+   
     
    /* cout<<"vaca->>>>>>>>"<<hitBox.getPosition().y<<endl;
     float distancia=hitBox.getGlobalBounds().top;
@@ -447,7 +445,9 @@ void Enemigo::Saltar() {
         velocidad.y = 0;
         
     }
-
+    if (!colision) {
+        suelo = false;
+    }
     animacion->Movimiento(velocidad);
     /*
     if ((posicion.y + 2) != distanciasuelo) {
@@ -584,7 +584,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     trol2.setFillColor(Color::Green);
     */
     bool colSuelo = false; 
-    
+    bool colMuro= false;
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
                
@@ -598,7 +598,8 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                
                //cout<<"no pasas"<<endl;
                //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
-               muro=true;
+                 colMuro=true;
+                 muro=true;
                if(random==0){
                    muro=false;
                    cout<<"murito---->"<<muro<<endl;
@@ -607,6 +608,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
            }else if(a->left+a->width-15<=hitBox.getGlobalBounds().left){
                cout<<"no pasas"<<endl;
                muro=true;
+               colMuro=true;
                if(random==1){
                    muro=false;
                    cout<<"murito---->"<<muro<<endl;
@@ -626,6 +628,8 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
             //cout<<"JugadorWid----->>"<<hitBox.getGlobalBounds().top<<endl;
             //cout<<"JugadorLeft----->>"<<hitBox.getGlobalBounds().left<<endl;
             
+        }else{
+            colision=false;
         }
 
         //cout << "el suelo es:" << suelo << endl;
@@ -634,6 +638,9 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 
     if(!colSuelo){
         suelo = false;
+    }
+    if(!colMuro){
+        muro = false;
     }
    
 }

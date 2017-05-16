@@ -74,9 +74,18 @@ int Mapa1::Run() {
     int desplazamientoCamara = 500;
     Jugador jugador(anchura, altura);
     Enemigo *enemigo;
-    int tipoE=4;
-    enemigo = new Enemigo(tipoE);
+    Enemigo *enemigo2;
+    Enemigo *enemigo3;
+    Enemigo *enemigo4;
+    Enemigo *enemigo5;
+    Enemigo *enemigo6;
     
+    enemigo = new Enemigo(4);
+    enemigo3 = new Enemigo(4);
+    enemigo4 = new Enemigo(4);
+    enemigo5 = new Enemigo(4);
+    enemigo6 = new Enemigo(4);
+    enemigo2=new Enemigo(2);
   
     View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
@@ -133,6 +142,17 @@ int Mapa1::Run() {
             //enemigo
             enemigo->calcularColision(map.getColisiones(),map.getnObjetos());
             enemigo->update(tiempo,jugador);
+            enemigo2->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo2->update(tiempo,jugador);
+            enemigo3->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo3->update(tiempo,jugador);
+            enemigo4->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo4->update(tiempo,jugador);
+            enemigo5->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo5->update(tiempo,jugador);
+            enemigo6->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo6->update(tiempo,jugador);
+            
             
             
 
@@ -213,7 +233,12 @@ int Mapa1::Run() {
         App.draw(map);
         jugador.render(interpolacion,tiempoAnimacion);
         enemigo->render(interpolacion,tiempoAnimacion);
-        enemigo->RenderGranada(App);
+        enemigo2->render(interpolacion,tiempoAnimacion);
+        enemigo3->render(interpolacion,tiempoAnimacion);
+        enemigo4->render(interpolacion,tiempoAnimacion);
+        enemigo5->render(interpolacion,tiempoAnimacion);
+        enemigo6->render(interpolacion,tiempoAnimacion);
+        //enemigo->RenderGranada(App);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(App, vista,jugador);
         jugador.setVidas(h->getContHP());

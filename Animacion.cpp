@@ -96,7 +96,7 @@ void Animacion::spritePersonaje(char le) {
             animacion[26] = 4; //escopeta cuchillo agachado
             posX = 275;
             posY = 505;
-            escala = 2.2f;
+            escala = 2.f;
 
             xi = 60;
             yi = 50;
@@ -160,7 +160,7 @@ void Animacion::spritePersonaje(char le) {
             if(le=='p')
             sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
             else if(le=='e')
-            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
+            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width /2 , sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
             else if(le=='v')
             sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width /2 , sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);  
         }

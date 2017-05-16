@@ -74,7 +74,7 @@ int Mapa1::Run() {
     int desplazamientoCamara = 500;
     Jugador jugador(anchura, altura);
     Enemigo *enemigo;
-    int tipoE=3;
+    int tipoE=4;
     enemigo = new Enemigo(tipoE);
     
   

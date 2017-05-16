@@ -121,8 +121,13 @@ void Jugador::Saltar() {
      
 
     } else if (!suelo) {
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
-        actual = 3;
+        if (arma==0){
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+            actual = 3;
+        }else{
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[17];
+            actual = 17;
+        }
         velocidad.y += gravedad;
     } else {
         animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));

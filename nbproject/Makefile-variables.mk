@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=menusonido
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/menusonido
+CND_ARTIFACT_NAME_Debug=kymertodo
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kymertodo
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=menusonido.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/menusonido.tar
+CND_PACKAGE_NAME_Debug=kymertodo.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kymertodo.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=menusonido
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/menusonido
+CND_ARTIFACT_NAME_Release=kymertodo
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kymertodo
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=menusonido.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/menusonido.tar
+CND_PACKAGE_NAME_Release=kymertodo.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kymertodo.tar
 #
 # include compiler specific variables
 #

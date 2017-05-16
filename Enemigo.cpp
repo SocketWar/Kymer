@@ -7,8 +7,14 @@
 Enemigo::Enemigo(int tipoE) {
 
     velocidadAnimacion = 0.1;
-    animacion = new Animacion("res/img/enemigocomun1.png");
-    animacion->spritePersonaje('e');
+    if (tipoE != 4){
+        animacion = new Animacion("res/img/enemigocomun1.png");
+        animacion->spritePersonaje('e');
+    }else{
+        animacion = new Animacion("res/img/VacaBurra.png");
+        animacion->spritePersonaje('v');
+    }
+    
     c = new sf::Clock();
     time1=0;
     time_aux=-1;
@@ -122,7 +128,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         int speedY = 0;
                         float GranadaX = 0;
                         float GranadaY = 0;
-                        velocidadAnimacion = 0.05;
+                        velocidadAnimacion = 0.08;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
                             actual = 4;
@@ -161,7 +167,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         int speedY = 0;
                         float morteroX = 0;
                         float morteroY = 0;
-                        velocidadAnimacion = 0.05;
+                        velocidadAnimacion = 0.07;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
                             actual = 8;
@@ -199,7 +205,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     time_aux=time1;
                     //Movimiento a jugador
                       velocidadAnimacion = 0.1;
-                         velocidadmovimiento = 1000.0f;
+                         velocidadmovimiento = 800.0f;
                     if(posJugador.x>posEnemigo.x){
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -215,11 +221,10 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                 }
             }
         }
-    }else{
-        actual = 5;
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
-        //Enemigo metralleta
-        if(tipo==2){
+        //enemigo escopeta
+    }else if(tipo==2){
+            actual = 5;
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
             if(abs(dif)>320){
             //Movimiento random
             sorpresa=false;
@@ -250,7 +255,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         if(time_aux==time1)
                             sorpresa=true;
 
-                          velocidadAnimacion = 0.5;
+                          velocidadAnimacion = 0.8;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
                             actual = 3;
@@ -264,7 +269,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         //Movimiento a jugador
                         time_aux=time1;
                           velocidadAnimacion = 0.1;
-                             velocidadmovimiento = 900.0f;
+                             velocidadmovimiento = 750.0f;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                             actual = 1;
@@ -315,7 +320,70 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     }
                 }
             }
-        }
+        
+    }else if (tipo==4){
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+        actual = 1;
+            if(abs(dif)>320){
+            //Movimiento random
+            
+            if (time_aux==-1 || time1==time_aux){
+                random = rand()%2;
+                time_aux=time1+1;
+            }
+            if (random==1) {
+               totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+               actual = 1;
+               animacion->orientacion(0);
+               movimiento.x= tiempo*velocidadmovimiento;
+            }
+
+            if (random==0) {          
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                actual = 1;
+                animacion->orientacion(1);
+                movimiento.x= -tiempo*velocidadmovimiento;
+            }
+
+            }else{
+              
+                time_aux=time1;
+                if(abs(dif)>80){
+                   //Movimiento a jugador
+                        time_aux=time1;
+                        velocidadAnimacion = 0.1;
+                        velocidadmovimiento = 750.0f;
+                        if(posJugador.x<posEnemigo.x){
+                            totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                            actual = 1;
+                           animacion->orientacion(1);
+                            movimiento.x= -tiempo*velocidadmovimiento;
+                        }else{
+                            totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                           actual = 1;
+                            animacion->orientacion(0);
+                           movimiento.x= tiempo*velocidadmovimiento;
+                        }
+                    
+                }else{
+                    //atacar
+                    velocidadAnimacion = 0.08;
+                    if(posJugador.x<posEnemigo.x){
+                        totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+                        actual = 0;
+                        animacion->orientacion(1);
+                    
+
+                    }else{
+                       totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+                       actual = 0;
+                       animacion->orientacion(0);
+                    
+
+                    }
+                    
+                }
+            }
     }
     animacion->Movimiento(movimiento);
 }

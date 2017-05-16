@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Kymertodo
+PROJECTNAME=TodoJunto
 
 # Active Configuration
 DEFAULTCONF=Debug

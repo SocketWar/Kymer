@@ -163,8 +163,8 @@ void Jugador::Disparar() {
         if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
             speedY = -25;
             speedX = 0;
-            balaX = animacion->getSpriteE().getPosition().x - 20;
-            balaY = animacion->getSpriteE().getPosition().y + 10;
+            balaX = animacion->getSpriteE().getPosition().x-10;
+            balaY = animacion->getSpriteE().getPosition().y-90;
             Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
             balaDisparo->setPosition(balaX, balaY);
             balaDisparo->loadSprite(TEX, 0, 0);
@@ -229,12 +229,12 @@ void Jugador::Disparar() {
                 speedX = 25;
                 speedY = 0;
                 balaX = animacion->getSpriteE().getPosition().x + 50;
-                balaY = animacion->getSpriteE().getPosition().y + 100;
+                balaY = animacion->getSpriteE().getPosition().y-60;
             } else {
                 speedX = -25;
                 speedY = 0;
                 balaX = animacion->getSpriteE().getPosition().x - 50;
-                balaY = animacion->getSpriteE().getPosition().y + 100;
+                balaY = animacion->getSpriteE().getPosition().y-60;
             }
             Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
             balaDisparo->setPosition(balaX, balaY);
@@ -302,12 +302,12 @@ void Jugador::DispararGranada() {
                 speedX = 10;
                 speedY = 15;
                 GranadaX = animacion->getSpriteE().getPosition().x + 40;
-                GranadaY = animacion->getSpriteE().getPosition().y + 100;
+                GranadaY = animacion->getSpriteE().getPosition().y-60;
             } else {
                 speedX = -10;
                 speedY = 15;
                 GranadaX = animacion->getSpriteE().getPosition().x;
-                GranadaY = animacion->getSpriteE().getPosition().y + 100;
+                GranadaY = animacion->getSpriteE().getPosition().y -60;
             }
             Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
             granadaDisparo->setPosition(GranadaX, GranadaY);

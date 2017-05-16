@@ -121,10 +121,14 @@ void Jugador::Saltar() {
     //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
     
+    
+    if (Keyboard::isKeyPressed(Keyboard::C)) {
+        suelo = false;
+    }
+    
     if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
         velocidad.y = -velocidadsalto;
-     
-
+    
     } else if (!suelo) {
         if (arma==0){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
@@ -134,7 +138,7 @@ void Jugador::Saltar() {
             actual = 17;
         }
         velocidad.y += gravedad;
-    } else {
+    }else {
         animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
         velocidad.y = 0;
         
@@ -152,10 +156,10 @@ void Jugador::Saltar() {
         }
     }
 */
-    
-        if (!colision || Keyboard::isKeyPressed(Keyboard::C)) {
+    if (!colision) {
         suelo = false;
     }
+        
 }
 
 void Jugador::Disparar() {

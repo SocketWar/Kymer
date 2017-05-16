@@ -373,7 +373,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                    //Movimiento a jugador
                         time_aux=time1;
                         velocidadAnimacion = 0.1;
-                        velocidadmovimiento = 600.0f;
+                        velocidadmovimiento = 300.0f;
                         if(posJugador.x<posEnemigo.x){
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                             actual = 1;
@@ -425,18 +425,13 @@ void Enemigo::Saltar() {
     //float posicion = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
     //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
-
-   
     
-   /* cout<<"vaca->>>>>>>>"<<hitBox.getPosition().y<<endl;
-    float distancia=hitBox.getGlobalBounds().top;
-    if (muro) {
+    //cout<<"vaca->>>>>>>>"<<hitBox.getPosition().y<<endl;
+   
+    if (muro && suelo) {
         velocidad.y = -velocidadsalto;
-        if(distancia < distancia-200){
-            suelo=false;
-            muro=false;
-        }
-    }*/ if (!suelo) {
+        
+    } else if (!suelo) {
         
         velocidad.y += gravedad;
         
@@ -551,7 +546,7 @@ void Enemigo::render(float interpolacion,Time &tiempo){
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo,nuevo,interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
-    //Window.draw(hitBox);
+    Window.draw(hitBox);
     
 }
 

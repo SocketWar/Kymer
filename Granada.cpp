@@ -29,7 +29,10 @@ Granada::Granada(int h, int w, float spX,float spY, int dist)
     TIEMPO=dist;
     X=300;
     Y=100;
-    Reloj = new Clock();
+    Reloj = new Clock();    
+    //Estados
+    viejo = new Estado();
+    nuevo = new Estado();
 }
 
 
@@ -88,4 +91,20 @@ Granada::~Granada() {
     delete SPRITE;
     delete HITBOX;
     delete Reloj;
+}
+
+Estado* Granada::getViejo() {
+
+    return viejo;
+}
+
+Estado* Granada::getNuevo() {
+
+    return nuevo;
+}
+
+void Granada::actualizarEstado() {
+
+    viejo=nuevo;
+    
 }

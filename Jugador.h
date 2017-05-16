@@ -26,7 +26,6 @@ public:
     int getActual();
     int gettotalSpritesAnimacion();
     int getframeActual(Time &tiempo);
-    void DispararGranada();
     void actualizarEstado();
     void setEstado();
     void Morir();

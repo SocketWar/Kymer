@@ -252,85 +252,77 @@ void Jugador::Disparar() {
             RelojBala.restart();
         }
 
-    }
-
-
-
-}
-
-void Jugador::DispararGranada() {
-    velocidadAnimacion = 0.1;
-    int speedX = 0;
-    int speedY = 0;
-    float GranadaX = 0;
-    float GranadaY = 0;
-    
-    if (Keyboard::isKeyPressed(Keyboard::G) && granadas>0) {
+    }else{
         velocidadAnimacion = 0.1;
+        int speedX = 0;
+        int speedY = 0;
+        float GranadaX = 0;
+        float GranadaY = 0;
 
-        if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 4)) {
-            if (arma==0){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
-                actual = 12;
-            }else if (arma==1){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
-                actual = 23; 
-            }
+        if (Keyboard::isKeyPressed(Keyboard::G) && granadas>0) {
+            velocidadAnimacion = 0.1;
 
-        } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 4)) {
-            if (arma==0){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
-                actual = 12;
-            }else if (arma==1){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
-                actual = 23; 
-            }
+            if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 4)) {
+                if (arma==0){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
+                    actual = 12;
+                }else if (arma==1){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
+                    actual = 23; 
+                }
 
-        } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 4)) {
-            if (arma==0){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
-                actual = 13;
-            }else if (arma==1){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[24];
-                actual = 24; 
-            }
-        } else {
-            if (arma==0){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
-                actual = 11;
-            }else if (arma==1){
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[22];
-                actual = 22; 
-            }
-        }
+            } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 4)) {
+                if (arma==0){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
+                    actual = 12;
+                }else if (arma==1){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
+                    actual = 23; 
+                }
 
-        if (RelojGranada.getElapsedTime().asMilliseconds() > 600) {
-            granadas--;
-            
-            if (animacion->getOrientacion() != 0) {
-                speedX = 10;
-                speedY = 15;
-                GranadaX = animacion->getSpriteE().getPosition().x + 40;
-                GranadaY = animacion->getSpriteE().getPosition().y-60;
+            } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 4)) {
+                if (arma==0){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
+                    actual = 13;
+                }else if (arma==1){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[24];
+                    actual = 24; 
+                }
             } else {
-                speedX = -10;
-                speedY = 15;
-                GranadaX = animacion->getSpriteE().getPosition().x;
-                GranadaY = animacion->getSpriteE().getPosition().y -60;
+                if (arma==0){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
+                    actual = 11;
+                }else if (arma==1){
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[22];
+                    actual = 22; 
+                }
             }
-            Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
-            granadaDisparo->setPosition(GranadaX, GranadaY);
-            granadaDisparo->loadSprite(TEX2, 0, 0);
-            CARGADORGRANADA.push_back(granadaDisparo);
-            RelojGranada.restart();
+
+            if (RelojGranada.getElapsedTime().asMilliseconds() > 600) {
+                granadas--;
+
+                if (animacion->getOrientacion() != 0) {
+                    speedX = 10;
+                    speedY = 15;
+                    GranadaX = animacion->getSpriteE().getPosition().x + 40;
+                    GranadaY = animacion->getSpriteE().getPosition().y-60;
+                } else {
+                    speedX = -10;
+                    speedY = 15;
+                    GranadaX = animacion->getSpriteE().getPosition().x;
+                    GranadaY = animacion->getSpriteE().getPosition().y -60;
+                }
+                Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
+                granadaDisparo->setPosition(GranadaX, GranadaY);
+                granadaDisparo->loadSprite(TEX2, 0, 0);
+                CARGADORGRANADA.push_back(granadaDisparo);
+                RelojGranada.restart();
+            }
         }
-
-
     }
 
-
-
 }
+
 
 void Jugador::UpdateDisparo() {
     int contador = 0;
@@ -359,6 +351,7 @@ void Jugador::UpdateDisparo() {
     }
     CARGADOR = CargadorAux;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+        CARGADORGRANADA[contador]->actualizarEstado();
         move = CARGADORGRANADA[contador]->move();
         switch (move) {
             case 1:
@@ -389,7 +382,7 @@ void Jugador::RenderDisparo(float interpolacion) {
         Window.draw(CARGADOR[contador]->getSprite());
     }
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
-        //CARGADOR[contador]->setPosition(CARGADOR[contador]->getViejo()->getInterpolacion(CARGADOR[contador]->getViejo(),CARGADOR[contador]->getNuevo(),interpolacion));
+        CARGADORGRANADA[contador]->getSprite().setPosition(CARGADORGRANADA[contador]->getViejo()->getInterpolacion(CARGADORGRANADA[contador]->getViejo(),CARGADORGRANADA[contador]->getNuevo(),interpolacion));
         Window.draw(CARGADORGRANADA[contador]->getSprite());
     }
 }
@@ -578,7 +571,6 @@ void Jugador::update(Time &tiempo){
             Saltar();
             Disparar();
             UpdateDisparo();
-            DispararGranada();
             nuevo->actualizartiempo(getPos().x,getPos().y);
             
 }

@@ -3,6 +3,7 @@
 #define GRANADA_H
 
 #include <SFML/Graphics.hpp>
+#include "Estado.h"
 
 using namespace sf;
 
@@ -25,6 +26,9 @@ public:
     Sprite getSprite(){ return *SPRITE;}
     Texture getTexture(){return *TEX;}
     Rect<float> getHitbox(){return *HITBOX;}
+    Estado* getViejo();
+    Estado* getNuevo();
+    void actualizarEstado();
     
 private:
     int HEIGTH;
@@ -37,6 +41,8 @@ private:
     Sprite *SPRITE;
     Rect<float> *HITBOX;
     sf::Clock *Reloj;
+    Estado *viejo;
+    Estado *nuevo;
 };
 
 #endif /* GRANADA_H */

@@ -117,7 +117,7 @@ void Jugador::Movimiento(Time &time) {
 void Jugador::Saltar() {
     
     
-    float posicion = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
+    //float posicion = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
     //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
 
@@ -494,7 +494,7 @@ RectangleShape Jugador::gethitBox() {
 void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     
     
-  
+  /*
     trol.setScale(1.5, 2.2);
     trol.setSize(Vector2f(32, 32));
     trol.setFillColor(Color::Blue);
@@ -502,7 +502,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     trol2.setScale(1.5, 2.2);
     trol2.setSize(Vector2f(32, 32));
     trol2.setFillColor(Color::Green);
-    
+    */
     bool colSuelo = false; 
     
     for (int i = 0; i < nobjetos - 2; i++) {
@@ -517,7 +517,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
              if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<=hitBox.getGlobalBounds().top){
                
                //cout<<"no pasas"<<endl;
-                             cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
+               //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
                muro=true;
                if(Keyboard::isKeyPressed(Keyboard::Left) || a->top+8>hitBox.getGlobalBounds().top){
                    muro=false;

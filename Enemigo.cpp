@@ -19,7 +19,15 @@ Enemigo::Enemigo(int tipoE) {
     time1=0;
     time_aux=-1;
     velocidadmovimiento = 600.0f;
+    gravedad = 2.0f;
+    distanciasuelo = 700;
+    velocidadsalto = 20.0f;
+    velocidad.x = 0;
+    velocidad.y = 0;
     
+    //Estados
+    viejo = new Estado();
+    nuevo = new Estado();
      //Colisiones
     hitBox.setScale(1.5, 2.2);
     hitBox.setSize(Vector2f(32, 32));
@@ -47,6 +55,9 @@ Animacion Enemigo::getAnimacion() {
     return *animacion;
 
 }
+
+
+
 
 void Enemigo::Movimiento(Time &time, Jugador jugador) {
 
@@ -388,6 +399,48 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     animacion->Movimiento(movimiento);
 }
 
+
+
+void Enemigo::Saltar() {
+    
+    
+    //float posicion = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
+    //cout<<"posicion de los pies"<<posicion<<endl;
+    velocidadAnimacion = 0.3;
+
+    if (!colision) {
+        suelo = false;
+    }
+
+    if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
+        velocidad.y = -velocidadsalto;
+     
+
+    } else if (!suelo) {
+        
+        velocidad.y += gravedad;
+    } else {
+        animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
+        velocidad.y = 0;
+        
+    }
+
+    animacion->Movimiento(velocidad);
+    /*
+    if ((posicion.y + 2) != distanciasuelo) {
+        if (arma==0){
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+            actual = 3;
+        }else if (arma==1){
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[17];
+            actual = 17;
+        }
+    }
+*/
+    
+    
+}
+
 void Enemigo::UpdateGranada() {
     int contador = 0;
     int move;
@@ -438,6 +491,9 @@ void Enemigo::RenderGranada(RenderWindow &window) {
     }
 }
 
+Vector2f Enemigo::getPos() {
+    return animacion->getSpriteE().getPosition();
+}
 
 int Enemigo::getActual() {
 
@@ -459,7 +515,7 @@ int Enemigo::getframeActual(Time& tiempo) {
             //Disparar();
             UpdateGranada();
             //DispararGranada();
-            //nuevo->actualizartiempo(getPos().x,getPos().y);
+            nuevo->actualizartiempo(getPos().x,getPos().y);
             
 }
 
@@ -474,4 +530,95 @@ void Enemigo::render(float interpolacion,Time &tiempo){
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
     //Window.draw(hitBox);
     
+}
+
+
+void Enemigo::actualizarHitbox(){
+    
+    
+    if(Keyboard::isKeyPressed(Keyboard::Down)){
+        
+        hitBox.setScale(1.5, 1.5);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 48);
+        
+    }else{
+        
+        hitBox.setScale(1.5, 2.2);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 70);
+        
+    }
+}
+
+
+RectangleShape Enemigo::gethitBox() {
+
+    return hitBox;
+}
+
+void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
+    
+    
+  /*
+    trol.setScale(1.5, 2.2);
+    trol.setSize(Vector2f(32, 32));
+    trol.setFillColor(Color::Blue);
+    
+    trol2.setScale(1.5, 2.2);
+    trol2.setSize(Vector2f(32, 32));
+    trol2.setFillColor(Color::Green);
+    */
+    bool colSuelo = false; 
+    
+    for (int i = 0; i < nobjetos - 2; i++) {
+        FloatRect* a = arrayColisiones[i];
+               
+        if (a->intersects(hitBox.getGlobalBounds())) {
+
+            
+            //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
+            colision = true;
+            
+             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<=hitBox.getGlobalBounds().top){
+               
+               //cout<<"no pasas"<<endl;
+               //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
+               muro=true;
+               if(Keyboard::isKeyPressed(Keyboard::Left) || a->top+8>hitBox.getGlobalBounds().top){
+                   muro=false;
+                   cout<<"murito---->"<<muro<<endl;
+               }
+              
+           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<=hitBox.getGlobalBounds().top){
+               cout<<"no pasas"<<endl;
+               muro=true;
+               if(Keyboard::isKeyPressed(Keyboard::Right) || a->top+8>hitBox.getGlobalBounds().top){
+                   muro=false;
+                   cout<<"murito---->"<<muro<<endl;
+               }
+           }
+                 
+              if(a->top >= hitBox.getGlobalBounds().top){
+                colSuelo = true;
+                suelo = true;
+                
+                if(!muro){
+                distanciasuelo=a->top+2;
+                }
+            }
+            
+            //cout<<"rectanguloWid----->>"<<a->top<<endl;
+            //cout<<"rectanguloLeft----->>"<<a->left<<endl;
+            //cout<<"JugadorWid----->>"<<hitBox.getGlobalBounds().top<<endl;
+            //cout<<"JugadorLeft----->>"<<hitBox.getGlobalBounds().left<<endl;
+            
+        }
+
+        //cout << "el suelo es:" << suelo << endl;
+        //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
+    }
+
+    if(!colSuelo){
+        suelo = false;
+    }
+   
 }

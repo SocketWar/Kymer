@@ -3,7 +3,7 @@
 #define BALA_H
 
 #include <SFML/Graphics.hpp>
-
+#include "Estado.h"
 using namespace sf;
 
 class Bala {
@@ -26,6 +26,9 @@ public:
     Sprite getSprite(){ return *SPRITE;}
     Texture getTexture(){return *TEX;}
     Rect<float> getHitbox(){return *HITBOX;}
+    Estado* getViejo();
+    Estado* getNuevo();
+    void actualizarEstado();
     
 protected:
     int HEIGTH;
@@ -39,6 +42,8 @@ protected:
     Texture *TEX;
     Sprite *SPRITE;
     Rect<float> *HITBOX;
+    Estado *viejo;
+    Estado *nuevo;
 
 };
 

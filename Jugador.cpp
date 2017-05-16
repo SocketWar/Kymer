@@ -338,6 +338,7 @@ void Jugador::UpdateDisparo() {
     std::vector<Bala*> CargadorAux;
     std::vector<Granada*> CargadorAuxGranada;
     for (contador = 0; contador < CARGADOR.size(); contador++) {
+        CARGADOR[contador]->actualizarEstado();
         move = CARGADOR[contador]->move();
         switch (move) {
             case 1:
@@ -352,6 +353,9 @@ void Jugador::UpdateDisparo() {
                 break;
 
         }
+        
+        CARGADOR[contador]->getNuevo()->actualizartiempo(CARGADOR[contador]->getSprite().getPosition().x,CARGADOR[contador]->getSprite().getPosition().y);
+        
     }
     CARGADOR = CargadorAux;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
@@ -374,13 +378,19 @@ void Jugador::UpdateDisparo() {
 
 }
 
-void Jugador::RenderDisparo(RenderWindow &window) {
+void Jugador::RenderDisparo(float interpolacion) {
+    
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& Window= motor->getWindow();
+    
     int contador = 0;
     for (contador = 0; contador < CARGADOR.size(); contador++) {
-        window.draw(CARGADOR[contador]->getSprite());
+        CARGADOR[contador]->getSprite().setPosition(CARGADOR[contador]->getViejo()->getInterpolacion(CARGADOR[contador]->getViejo(),CARGADOR[contador]->getNuevo(),interpolacion));
+        Window.draw(CARGADOR[contador]->getSprite());
     }
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
-        window.draw(CARGADORGRANADA[contador]->getSprite());
+        //CARGADOR[contador]->setPosition(CARGADOR[contador]->getViejo()->getInterpolacion(CARGADOR[contador]->getViejo(),CARGADOR[contador]->getNuevo(),interpolacion));
+        Window.draw(CARGADORGRANADA[contador]->getSprite());
     }
 }
 
@@ -582,6 +592,7 @@ void Jugador::render(float interpolacion,Time &tiempo){
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo,nuevo,interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    RenderDisparo(interpolacion);
    // Window.draw(hitBox);
     
 }

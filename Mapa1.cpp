@@ -129,9 +129,9 @@ int Mapa1::Run() {
             //jugador
             jugador.calcularColision(map.getColisiones(),map.getnObjetos());
             jugador.update(tiempo);
-            enemigo->UpdateGranada();
+            
             //enemigo
-            enemigo->Movimiento(tiempo,jugador);
+            enemigo->update(tiempo,jugador);
             
 
             int lifePlayer = h->getContHP();
@@ -210,9 +210,8 @@ int Mapa1::Run() {
         //dibujamos 
         App.draw(map);
         jugador.render(interpolacion,tiempoAnimacion);
-        App.draw(enemigo->getAnimacion().getSprite(enemigo->getActual(),enemigo->getframeActual(tiempoAnimacion)));
+        enemigo->render(interpolacion,tiempoAnimacion);
         enemigo->RenderGranada(App);
-        jugador.RenderDisparo(App);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(App, vista,jugador);
         jugador.setVidas(h->getContHP());

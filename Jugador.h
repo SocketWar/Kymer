@@ -19,7 +19,7 @@ public:
     void Saltar();
     void Disparar();
     void UpdateDisparo();
-    void RenderDisparo(RenderWindow &window);
+    void RenderDisparo(float interpolacion);
     RectangleShape getJugador();
     Vector2f getPos();
     Animacion getAnimacion();

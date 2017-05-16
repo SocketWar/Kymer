@@ -17,6 +17,10 @@ Bala::Bala(int h, int w, float spX,float spY, int dist)
     TIEMPO=dist;
     X=300;
     Y=100;
+    
+    //Estados
+    viejo = new Estado();
+    nuevo = new Estado();
 }
 
 
@@ -70,3 +74,19 @@ Bala::~Bala() {
     delete HITBOX;
 }
 
+
+Estado* Bala::getViejo() {
+
+    return viejo;
+}
+
+Estado* Bala::getNuevo() {
+
+    return nuevo;
+}
+
+void Bala::actualizarEstado() {
+
+    viejo=nuevo;
+    
+}

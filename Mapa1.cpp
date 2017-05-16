@@ -17,8 +17,9 @@ Mapa1::Mapa1(void) {
 
 }
 
-int Mapa1::Run(RenderWindow &App) {
-
+int Mapa1::Run() {
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& App= motor->getWindow();
     bool Running = true; //booleano que controla el bucle mientras la pantalla esta seleccionada
 
     //App.setSize(Vector2u(App.getSize().x,App.getSize().y));
@@ -65,18 +66,18 @@ int Mapa1::Run(RenderWindow &App) {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    Vector2f movInterpolado;
+    
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
     int desplazamientoCamara = 500;
     Jugador jugador(anchura, altura);
-    Enemigo enemigo('e');
-    Enemigo vaca('v');
+    Enemigo *enemigo;
+    int tipoE=3;
+    enemigo = new Enemigo(tipoE);
     
-    cout<<"donde coño esta la puta vaca : "<<enemigo.getAnimacion().getSpriteE().getPosition().x<<","<<enemigo.getAnimacion().getSpriteE().getPosition().y
-<<endl;
+  
     View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
@@ -119,25 +120,20 @@ int Mapa1::Run(RenderWindow &App) {
             tiempoupdate += update;
             bucle++;
             //estados
-            jugador.actualizarEstado(); //actualiza el estado del jugador(estado viejo = estado nuevo)
             Event evento;
             while (App.pollEvent(evento)) {
                 if (evento.type == Event::Closed)
                     App.close();
             }
             //llamadas a update
-            jugador.Movimiento(tiempo);
-            enemigo.Movimiento(tiempo);
-            vaca.Movimiento(tiempo);
-            jugador.Saltar();
-            jugador.Disparar();
-            jugador.UpdateDisparo();
-            jugador.DispararGranada();
+            //jugador
+            jugador.calcularColision(map.getColisiones(),map.getnObjetos());
+            jugador.update(tiempo);
+            enemigo->UpdateGranada();
+            //enemigo
+            enemigo->Movimiento(tiempo,jugador);
             
 
-            //actualizar estados
-            //  nuevo.actualizartiempo(jugador.getPos().x, jugador.getPos().y);
-            jugador.setEstado(); //despues de moverse el jugador, cambia el estado nuevo en x e y actuales
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
             int contg = h->getContGranada();
@@ -204,26 +200,22 @@ int Mapa1::Run(RenderWindow &App) {
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
 
-        movInterpolado = jugador.getViejo()->getInterpolacion(jugador.getViejo(), jugador.getNuevo(), interpolacion); //alamacena en un vector la interpolacion
-
         vista.setCenter(Vector2f(jugador.getPos().x + desplazamientoCamara, vista.getCenter().y));
         App.setView(vista);
 
-        jugador.getAnimacion().MovimientoInterpolado(movInterpolado);
-
+       
         //limpiampos pantalla
         App.clear(Color(150, 200, 200));
 
         //dibujamos 
         App.draw(map);
-        App.draw(jugador.getAnimacion().getSprite(jugador.getActual(), jugador.getframeActual(tiempoAnimacion)));
-        App.draw(enemigo.getAnimacion().getSprite(enemigo.getActual(), enemigo.getframeActual(tiempoAnimacion)));
-        App.draw(vaca.getAnimacion().getSprite(vaca.getActual(), vaca.getframeActual(tiempoAnimacion)));
-
+        jugador.render(interpolacion,tiempoAnimacion);
+        App.draw(enemigo->getAnimacion().getSprite(enemigo->getActual(),enemigo->getframeActual(tiempoAnimacion)));
+        enemigo->RenderGranada(App);
         jugador.RenderDisparo(App);
         //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
         h->Update(App, vista,jugador);
-        
+        jugador.setVidas(h->getContHP());
         App.display();
         }
         else{

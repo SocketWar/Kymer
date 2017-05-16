@@ -8,10 +8,13 @@
 #include "Granada.h"
 #include "Estado.h"
 #include "sonido.h"
+#include "Motor2D.h"
 
 class Jugador {
 public:
     Jugador(int anchura, int altura);
+    void update(Time &tiempo);
+    void render(float interpolacion,Time &tiempo);
     void Movimiento(Time &tiempo);
     void Saltar();
     void Disparar();
@@ -36,6 +39,9 @@ public:
     void setArma(int i);
     int getArma();
     sonido getSonido();
+    void actualizarHitbox();
+    void calcularColision(FloatRect** arrayColisiones,int nobjetos);
+    RectangleShape gethitBox();
 private:
 
     Vector2f velocidad; //velocidad en las dos posiciones
@@ -60,6 +66,11 @@ private:
     int granadas;
     int arma;
     sonido *soundEffect;
+    bool suelo;
+    bool colision;
+    bool estadocolision;
+    //colisiones
+    RectangleShape hitBox;
     
     //interpolacion
     Estado *viejo;

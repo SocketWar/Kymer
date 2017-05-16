@@ -18,7 +18,7 @@
 #include "cScreen.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
+#include "Motor2D.h"
 using namespace std;
 using namespace sf;
 
@@ -33,7 +33,7 @@ private:
 
 public:
     menu(void);
-    virtual int Run(RenderWindow &App);
+    virtual int Run();
 };
 
 

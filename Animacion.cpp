@@ -157,8 +157,7 @@ void Animacion::spritePersonaje(char l) {
             sprites[f][j]->setScale(escala, escala);
             sprites[f][j]->setTextureRect(IntRect(xi * j, yi * f, xi, yi));
             sprites[f][j]->setPosition(posX, posY);
-            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 2, sprites[f][j]->getLocalBounds().height / 2);
-            sprites[f][j]->setOrigin(15, 0);
+            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
 
         }
     }

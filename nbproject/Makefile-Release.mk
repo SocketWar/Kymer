@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Granada.o \
 	${OBJECTDIR}/Jugador.o \
 	${OBJECTDIR}/Mapa1.o \
+	${OBJECTDIR}/Motor2D.o \
 	${OBJECTDIR}/MovimientoIA.o \
 	${OBJECTDIR}/ObjetoPuntuacion.o \
 	${OBJECTDIR}/hud.o \
@@ -71,11 +72,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/kymer5
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/menusonido
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/kymer5: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/menusonido: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/kymer5 ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/menusonido ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/Animacion.o: Animacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -111,6 +112,11 @@ ${OBJECTDIR}/Mapa1.o: Mapa1.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Mapa1.o Mapa1.cpp
+
+${OBJECTDIR}/Motor2D.o: Motor2D.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor2D.o Motor2D.cpp
 
 ${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp
 	${MKDIR} -p ${OBJECTDIR}

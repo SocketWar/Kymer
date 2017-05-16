@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include "screens.hpp"
 #include "cabecera.hpp"
+#include "Motor2D.h"
 
 int main(int argc, char** argv) {
     //Applications variables
@@ -10,7 +11,8 @@ int main(int argc, char** argv) {
     int screen = 0;
 
     //creacion de la pantalla
-    sf::RenderWindow App(sf::VideoMode(1352, 888), "Kymer");
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& App= motor->getWindow();
 
     //Mouse cursor no more visible
     App.setMouseCursorVisible(false);
@@ -26,7 +28,7 @@ int main(int argc, char** argv) {
 
     //Main loop
     while (screen >= 0) {
-        screen = Screens[screen]->Run(App);
+        screen = Screens[screen]->Run();
     }
 
     return EXIT_SUCCESS;

@@ -15,7 +15,9 @@ menu::menu(void) {
     comoJugar = false;
 }
 
-int menu::Run(RenderWindow &App) {
+int menu::Run() {
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& App= motor->getWindow();
     View vista(Vector2f(App.getSize().x / 2, App.getSize().y / 2), 
             Vector2f(App.getSize().x, App.getSize().y));
     

@@ -11,7 +11,7 @@ Jugador::Jugador(int anchura, int altura) {
  
     
     gravedad = 2.0f;
-    distanciasuelo = 458;
+    distanciasuelo = 700;
     velocidadsalto = 20.0f;
     velocidad.x = 0;
     velocidad.y = 0;
@@ -28,7 +28,11 @@ Jugador::Jugador(int anchura, int altura) {
     //Estados
     viejo = new Estado();
     nuevo = new Estado();
-
+    //Colisiones
+    hitBox.setScale(1.5, 2.2);
+    hitBox.setSize(Vector2f(32, 32));
+    hitBox.setFillColor(Color::Blue);
+    
     if (!TEX.loadFromFile("res/img/balada2.png")) {
         std::cerr << "Error en textura bala";
         exit(0);
@@ -102,14 +106,32 @@ void Jugador::Movimiento(Time &time) {
 }
 
 void Jugador::Saltar() {
-
-    Vector2f posicion = getPos();
-    //cout<<posicion.y<<endl;
+    
+    
+    float posicion = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
+    //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
-    if (Keyboard::isKeyPressed(Keyboard::Space) && (posicion.y + 2) == distanciasuelo) {
-        velocidad.y = -velocidadsalto;
 
+    if (!colision) {
+        suelo = false;
     }
+
+    if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
+        velocidad.y = -velocidadsalto;
+     
+
+    } else if (!suelo) {
+        totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
+        actual = 3;
+        velocidad.y += gravedad;
+    } else {
+        animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
+        velocidad.y = 0;
+        
+    }
+
+    animacion->Movimiento(velocidad);
+    /*
     if ((posicion.y + 2) != distanciasuelo) {
         if (arma==0){
             totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
@@ -119,19 +141,9 @@ void Jugador::Saltar() {
             actual = 17;
         }
     }
-
-    if (posicion.y + animacion->getSpriteE().getScale().y < distanciasuelo || velocidad.y < 0) {
-
-        velocidad.y += gravedad;
-
-    } else {
-
-        animacion->MovimientoInterpolado(Vector2f(posicion.x, distanciasuelo - animacion->getSpriteE().getScale().y));
-        velocidad.y = 0;
-
-    }
-
-    animacion->Movimiento(velocidad);
+*/
+    
+    
 }
 
 void Jugador::Disparar() {
@@ -439,4 +451,84 @@ Estado* Jugador::getNuevo() {
 
 sonido Jugador::getSonido(){
     return *soundEffect;
+}
+
+
+
+void Jugador::actualizarHitbox(){
+    
+    
+    if(Keyboard::isKeyPressed(Keyboard::Down)){
+        
+        hitBox.setScale(1.5, 1.5);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 48);
+        
+    }else{
+        
+        hitBox.setScale(1.5, 2.2);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 70);
+        
+    }
+}
+
+
+RectangleShape Jugador::gethitBox() {
+
+    return hitBox;
+}
+
+void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
+   
+    bool colSuelo = false;  
+    for (int i = 0; i < nobjetos - 2; i++) {
+        FloatRect* a = arrayColisiones[i];
+                
+        if (a->intersects(hitBox.getGlobalBounds())) {
+
+            cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height << endl;
+            colision = true;
+            
+            if(a->top <= hitBox.getGlobalBounds().top + hitBox.getGlobalBounds().height){
+                colSuelo = true;
+                suelo = true;
+                distanciasuelo=a->top+2;
+            }
+            
+        }
+
+        cout << "el suelo es:" << suelo << endl;
+        //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
+    }
+
+    if(!colSuelo){
+        suelo = false;
+    }
+   
+}
+
+
+void Jugador::update(Time &tiempo){
+    
+    
+            viejo=nuevo;
+            Movimiento(tiempo);
+            Saltar();
+            Disparar();
+            UpdateDisparo();
+            DispararGranada();
+            nuevo->actualizartiempo(getPos().x,getPos().y);
+            
+}
+
+
+
+void Jugador::render(float interpolacion,Time &tiempo){
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& Window= motor->getWindow();
+    
+    actualizarHitbox();
+    animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo,nuevo,interpolacion));
+    Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+   // Window.draw(hitBox);
+    
 }

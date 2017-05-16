@@ -23,6 +23,7 @@
 #include "hud.h"
 #include "ObjetoPuntuacion.h"
 #include "Enemigo.h"
+#include "Motor2D.h"
 
 using namespace std;
 using namespace sf;
@@ -35,7 +36,7 @@ private:
     int altura;
 public:
     Mapa1(void);
-    virtual int Run(RenderWindow &App);
+    virtual int Run();
 
 };
 

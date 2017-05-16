@@ -524,20 +524,20 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
             //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
             
-             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20 && a->top<=hitBox.getGlobalBounds().top){
+             if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-15){
                
                //cout<<"no pasas"<<endl;
                //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
                muro=true;
-               if(Keyboard::isKeyPressed(Keyboard::Left) || a->top+8>hitBox.getGlobalBounds().top){
+               if(Keyboard::isKeyPressed(Keyboard::Left) || a->top>hitBox.getGlobalBounds().top){
                    muro=false;
                    cout<<"murito---->"<<muro<<endl;
                }
               
-           }else if(a->left+a->width-20<=hitBox.getGlobalBounds().left && a->top<=hitBox.getGlobalBounds().top){
+           }else if(a->left+a->width-15<=hitBox.getGlobalBounds().left){
                cout<<"no pasas"<<endl;
                muro=true;
-               if(Keyboard::isKeyPressed(Keyboard::Right) || a->top+8>hitBox.getGlobalBounds().top){
+               if(Keyboard::isKeyPressed(Keyboard::Right) || a->top>hitBox.getGlobalBounds().top){
                    muro=false;
                    cout<<"murito---->"<<muro<<endl;
                }

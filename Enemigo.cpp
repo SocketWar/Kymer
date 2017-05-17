@@ -409,8 +409,8 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
             if (abs(dif) > 80) {
                 //Movimiento a jugador
                 time_aux = time1;
-                velocidadAnimacion = 0.1;
-                velocidadmovimiento = 300.0f;
+                velocidadAnimacion = 0.08;
+                velocidadmovimiento = 900.0f;
                 if (posJugador.x < posEnemigo.x) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                     actual = 1;
@@ -445,7 +445,6 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     actual = 0;
                     animacion->orientacion(0);
 
-
                 }
 
             }
@@ -457,7 +456,6 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
 void Enemigo::Saltar() {
 
 
-    velocidadAnimacion = 0.3;
 
 
     if (muro && suelo) {

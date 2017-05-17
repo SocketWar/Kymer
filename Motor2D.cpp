@@ -20,7 +20,7 @@ bool Motor2D::inst =false;
 //creamos la ventana en el contructor nada mas crear la instancia
 Motor2D::Motor2D() {
     
-    window = new RenderWindow(VideoMode(1280,720), "Kymer");
+    window = new RenderWindow(VideoMode(1350,888), "Kymer");
     inst=true;
     
 }

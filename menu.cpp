@@ -26,8 +26,11 @@ int menu::Run() {
     bool Running = true;
     
     Texture Texture;
-    Sprite Sprite;
+    sf::Texture como;
+    Sprite sprite;
     
+    
+    /*carga imagen howToPlay*/
     int alpha = alpha_max;
     
     Font Font;
@@ -41,13 +44,18 @@ int menu::Run() {
     int menu = 0;
 
     if (!Texture.loadFromFile("res/img/menu.png")) {
-        cerr << "Error loading presentation.gif" << std::endl;
+        cerr << "Error loading menu.png" << std::endl;
         return (-1);
     }
+       if (!como.loadFromFile("res/img/Controls.png")) {
+        cerr << "Error loading menu.png" << std::endl;
+        return (-1);
+    }
+    
     //cout<<"tam de menu:"<<   Texture.getSize().x <<","<<   Texture.getSize().y<<endl;
     Texture.getSize().x;
-    Sprite.setTexture(Texture);
-    Sprite.setColor(sf::Color(255, 255, 255, alpha));
+    sprite.setTexture(Texture);
+    sprite.setColor(sf::Color(255, 255, 255, alpha));
     if (!Font.loadFromFile("letras.ttf")) {
         std::cerr << "letras.ttf" << std::endl;
         return (-1);
@@ -164,6 +172,13 @@ int menu::Run() {
                             options = true;
                             versus = false;
                             comoJugar = false;
+                        } else if(menu==4 && comoJugar){
+                            playing = false;
+                            options = false;
+                            versus = false;
+                            comoJugar = false;
+                            sprite.setTexture(Texture);
+                            menu = 0;
                         } else if(menu==4){
                             playing = false;
                             options = false;
@@ -176,6 +191,8 @@ int menu::Run() {
                     default:
                         break;
                 }
+
+                
             }
         }
         //When getting at alpha_max, we stop modifying the sprite
@@ -183,7 +200,7 @@ int menu::Run() {
 
             alpha++;
         }
-        Sprite.setColor(sf::Color(255, 255, 255, alpha / alpha_div));
+        sprite.setColor(sf::Color(255, 255, 255, alpha / alpha_div));
         if (menu == 0) {
             Menu1.setColor(Color(255, 0, 0, 255));  
             MenuPVP.setColor(Color(255, 255, 255, 255));
@@ -220,20 +237,32 @@ int menu::Run() {
         //Clearing screen
         App.clear();
         //Drawing
-        App.draw(Sprite);
+     if(comoJugar){
+         
+         sprite.setTexture(como);
+//         if(sf::Keyboard::Key(Keyboard::Return)){
+//             comoJugar== false;
+//             sprite.setTexture(Texture);
+//         }
+     }
+      
+        App.draw(sprite);
         if (alpha == alpha_max) {
             if (playing) {
                 App.draw(Menu3);
                 MenuComoJugar.setPosition(Vector2f(400.f, 400.f));
             } else {
-                App.draw(Menu1);
-                App.draw(MenuPVP);
-                MenuComoJugar.setPosition(Vector2f(430.f, 750.f));
+                 if(!comoJugar){
+                    App.draw(Menu1);
+                    App.draw(MenuPVP);
+                    MenuComoJugar.setPosition(Vector2f(430.f, 750.f));
+                 }
             }
-            
-            App.draw(MenuOptions);
-            App.draw(Menu2);
-            App.draw(MenuComoJugar);
+            if(!comoJugar){
+                App.draw(MenuOptions);
+                App.draw(Menu2);//exit
+                App.draw(MenuComoJugar);
+            }
         }
         App.display();
     }

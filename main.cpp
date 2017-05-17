@@ -17,12 +17,13 @@ int main(int argc, char** argv) {
     //Mouse cursor no more visible
     App.setMouseCursorVisible(false);
 
-    //Screens preparations
-    menu s0;
+    //preparacion pantallas
+    menu s0;//menu
     Screens.push_back(&s0);
-    Mapa1 s1;
+    Mapa1 s1;//mapa1
     Screens.push_back(&s1);
-    //CARGA SONIDO
+    
+ 
 
 
 

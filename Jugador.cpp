@@ -6,10 +6,10 @@
 #include "sonido.h"
 
 Jugador::Jugador(int anchura, int altura) {
-   soundEffect = new sonido(); 
-   soundEffect->setSonido("res/audio/shot.wav");
- 
-    
+    soundEffect = new sonido();
+    soundEffect->setSonido("res/audio/shot.wav");
+
+
     gravedad = 2.0f;
     distanciasuelo = 700;
     velocidadsalto = 20.0f;
@@ -32,8 +32,8 @@ Jugador::Jugador(int anchura, int altura) {
     hitBox.setScale(1.5, 2.2);
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
-    muro=false;
-    
+    muro = false;
+
     if (!TEX.loadFromFile("res/img/balada2.png")) {
         std::cerr << "Error en textura bala";
         exit(0);
@@ -42,106 +42,105 @@ Jugador::Jugador(int anchura, int altura) {
         std::cerr << "Error en textura Granada";
         exit(0);
     }
-    
+
 
 }
-
 
 void Jugador::Movimiento(Time &time) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
-    
-    if (vidas<=0){
+
+    if (vidas <= 0) {
         Morir();
-      
-    }else if (Keyboard::isKeyPressed(Keyboard::V)) {
+
+    } else if (Keyboard::isKeyPressed(Keyboard::V)) {
         velocidadAnimacion = 0.1f;
         totalSpritesAnimacion = animacion->getNumAnimaciones()[28];
         actual = 28;
-    }else{
-    if (arma==0){
-        actual = 0;
+    } else {
+        if (arma == 0) {
+            actual = 0;
 
-    
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-    }else if (arma==1){
-        actual = 14;
-        totalSpritesAnimacion = animacion->getNumAnimaciones()[14];
-    }
+
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+        } else if (arma == 1) {
+            actual = 14;
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[14];
+        }
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                 actual = 1;
-            }else if (arma==1){
-               totalSpritesAnimacion = animacion->getNumAnimaciones()[15];
-                actual = 15; 
+            } else if (arma == 1) {
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[15];
+                actual = 15;
             }
             animacion->orientacion(1);
-            if(!muro){
-            movimiento.x = tiempo*velocidadmovimiento;
-            }else{
-            movimiento.x=0;    
+            if (!muro) {
+                movimiento.x = tiempo*velocidadmovimiento;
+            } else {
+                movimiento.x = 0;
             }
         }
 
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                 actual = 1;
-            }else if (arma==1){
-               totalSpritesAnimacion = animacion->getNumAnimaciones()[15];
-                actual = 15; 
+            } else if (arma == 1) {
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[15];
+                actual = 15;
             }
             animacion->orientacion(0);
-            if(!muro){
-            movimiento.x = -tiempo*velocidadmovimiento;
-            }else{
-            movimiento.x=0;    
+            if (!muro) {
+                movimiento.x = -tiempo*velocidadmovimiento;
+            } else {
+                movimiento.x = 0;
             }
         }
         if (Keyboard::isKeyPressed(Keyboard::Down)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
                 actual = 2;
-            }else if (arma==1){
-               totalSpritesAnimacion = animacion->getNumAnimaciones()[16];
-                actual = 16; 
+            } else if (arma == 1) {
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[16];
+                actual = 16;
             }
         }
-    
-    animacion->Movimiento(movimiento);
+
+        animacion->Movimiento(movimiento);
     }
 }
 
 void Jugador::Saltar() {
-    
-    
+
+
     //float posicion = animacion->getSpriteE().getGlobalBounds().top + animacion->getSpriteE().getGlobalBounds().height;
     //cout<<"posicion de los pies"<<posicion<<endl;
     velocidadAnimacion = 0.3;
-    
-    
+
+
     if (Keyboard::isKeyPressed(Keyboard::C)) {
         suelo = false;
     }
-    
+
     if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
         velocidad.y = -velocidadsalto;
-    
+
     } else if (!suelo) {
-        if (arma==0){
+        if (arma == 0) {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
             actual = 3;
-        }else{
+        } else {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[17];
             actual = 17;
         }
         velocidad.y += gravedad;
-    }else {
+    } else {
         animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
         velocidad.y = 0;
-        
+
     }
 
     animacion->Movimiento(velocidad);
@@ -155,11 +154,11 @@ void Jugador::Saltar() {
             actual = 17;
         }
     }
-*/
+     */
     if (!colision) {
         suelo = false;
     }
-        
+
 }
 
 void Jugador::Disparar() {
@@ -168,71 +167,73 @@ void Jugador::Disparar() {
     int speedY = 0;
     float balaX = 0;
     float balaY = 0;
-    
+
     if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion = 0.085;
         if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
             speedY = -25;
             speedX = 0;
-            balaX = animacion->getSpriteE().getPosition().x-10;
-            balaY = animacion->getSpriteE().getPosition().y-90;
+            balaX = animacion->getSpriteE().getPosition().x - 10;
+            balaY = animacion->getSpriteE().getPosition().y - 90;
             Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
             balaDisparo->setPosition(balaX, balaY);
             balaDisparo->loadSprite(TEX, 0, 0);
             CARGADOR.push_back(balaDisparo);
             RelojBala.restart();
         }
-        if (arma==0){
+        if (arma == 0) {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[7];
             actual = 7;
-        }else if (arma==1){
-           totalSpritesAnimacion = animacion->getNumAnimaciones()[20];
-            actual = 20; 
+        } else if (arma == 1) {
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[20];
+            actual = 20;
         }
-       
+
     } else if (Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion = 0.085;
-        if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 2)) {
+        if (Keyboard::isKeyPressed(Keyboard::Right) ) {
+                cout << "maravilloso" << endl;
 
-        if (arma==0){
-            totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
-            actual = 8;
-//            soundEffect->getSonido().play();
-           
-
-
-        }else if (arma==1){
-           totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
-            actual = 21; 
-        }
-
-
-        } else if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 2)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
                 actual = 8;
-            }else if (arma==1){
+                //            soundEffect->getSonido().play();
+
+
+
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
-                actual = 21; 
+                actual = 21;
             }
 
-        } else if (Keyboard::isKeyPressed(Keyboard::A) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 2)) {
 
-            if (arma==0){
+        } else if ( Keyboard::isKeyPressed(Keyboard::Left)) {
+            if (arma == 0) {
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
+                actual = 8;
+            } else if (arma == 1) {
+                totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
+                actual = 21;
+            }
+
+        } else if ( Keyboard::isKeyPressed(Keyboard::Down)) {
+
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
                 actual = 6;
-            }else if (arma==1){
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[19];
-                actual = 19; 
+                actual = 19;
             }
 
         } else {
-            if (arma==0){
+            
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
                 actual = 5;
-            }else if (arma==1){
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[18];
-                actual = 18; 
+                actual = 18;
             }
         }
         if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
@@ -240,12 +241,12 @@ void Jugador::Disparar() {
                 speedX = 25;
                 speedY = 0;
                 balaX = animacion->getSpriteE().getPosition().x + 50;
-                balaY = animacion->getSpriteE().getPosition().y-60;
+                balaY = animacion->getSpriteE().getPosition().y - 60;
             } else {
                 speedX = -25;
                 speedY = 0;
                 balaX = animacion->getSpriteE().getPosition().x - 50;
-                balaY = animacion->getSpriteE().getPosition().y-60;
+                balaY = animacion->getSpriteE().getPosition().y - 60;
             }
             Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
             balaDisparo->setPosition(balaX, balaY);
@@ -266,59 +267,59 @@ void Jugador::DispararGranada() {
     int speedY = 0;
     float GranadaX = 0;
     float GranadaY = 0;
-    
-    if (Keyboard::isKeyPressed(Keyboard::G) && granadas>0) {
+
+    if (Keyboard::isKeyPressed(Keyboard::G) && granadas > 0) {
         velocidadAnimacion = 0.1;
 
         if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 4)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
                 actual = 12;
-            }else if (arma==1){
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
-                actual = 23; 
+                actual = 23;
             }
 
         } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 4)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
                 actual = 12;
-            }else if (arma==1){
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[23];
-                actual = 23; 
+                actual = 23;
             }
 
         } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 4)) {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
                 actual = 13;
-            }else if (arma==1){
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[24];
-                actual = 24; 
+                actual = 24;
             }
         } else {
-            if (arma==0){
+            if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[11];
                 actual = 11;
-            }else if (arma==1){
+            } else if (arma == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[22];
-                actual = 22; 
+                actual = 22;
             }
         }
 
         if (RelojGranada.getElapsedTime().asMilliseconds() > 600) {
             granadas--;
-            
+
             if (animacion->getOrientacion() != 0) {
                 speedX = 10;
                 speedY = 15;
                 GranadaX = animacion->getSpriteE().getPosition().x + 40;
-                GranadaY = animacion->getSpriteE().getPosition().y-60;
+                GranadaY = animacion->getSpriteE().getPosition().y - 60;
             } else {
                 speedX = -10;
                 speedY = 15;
                 GranadaX = animacion->getSpriteE().getPosition().x;
-                GranadaY = animacion->getSpriteE().getPosition().y -60;
+                GranadaY = animacion->getSpriteE().getPosition().y - 60;
             }
             Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
             granadaDisparo->setPosition(GranadaX, GranadaY);
@@ -355,9 +356,9 @@ void Jugador::UpdateDisparo() {
                 break;
 
         }
-        
-        CARGADOR[contador]->getNuevo()->actualizartiempo(CARGADOR[contador]->getSprite().getPosition().x,CARGADOR[contador]->getSprite().getPosition().y);
-        
+
+        CARGADOR[contador]->getNuevo()->actualizartiempo(CARGADOR[contador]->getSprite().getPosition().x, CARGADOR[contador]->getSprite().getPosition().y);
+
     }
     CARGADOR = CargadorAux;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
@@ -381,13 +382,13 @@ void Jugador::UpdateDisparo() {
 }
 
 void Jugador::RenderDisparo(float interpolacion) {
-    
+
     Motor2D *motor = Motor2D::GetInstance();
-    RenderWindow& Window= motor->getWindow();
-    
+    RenderWindow& Window = motor->getWindow();
+
     int contador = 0;
     for (contador = 0; contador < CARGADOR.size(); contador++) {
-        CARGADOR[contador]->getSprite().setPosition(CARGADOR[contador]->getViejo()->getInterpolacion(CARGADOR[contador]->getViejo(),CARGADOR[contador]->getNuevo(),interpolacion));
+        CARGADOR[contador]->getSprite().setPosition(CARGADOR[contador]->getViejo()->getInterpolacion(CARGADOR[contador]->getViejo(), CARGADOR[contador]->getNuevo(), interpolacion));
         Window.draw(CARGADOR[contador]->getSprite());
     }
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
@@ -396,7 +397,7 @@ void Jugador::RenderDisparo(float interpolacion) {
     }
 }
 
-void Jugador::Morir(){
+void Jugador::Morir() {
     //para probar la animacio0n se pone en un boton por defecto "M"
     velocidadAnimacion = 0.2f;
     totalSpritesAnimacion = animacion->getNumAnimaciones()[27];
@@ -439,6 +440,7 @@ void Jugador::setVidas(int i) {
 int Jugador::getVidas() {
     return vidas;
 }
+
 void Jugador::setGranadas(int i) {
     granadas = i;
 }
@@ -446,12 +448,15 @@ void Jugador::setGranadas(int i) {
 int Jugador::getGranadas() {
     return granadas;
 }
-void Jugador::setArma(int i){
-    arma=i;
+
+void Jugador::setArma(int i) {
+    arma = i;
 }
-int Jugador::getArma(){
+
+int Jugador::getArma() {
     return arma;
 }
+
 void Jugador::actualizarEstado() {
 
     viejo = nuevo;
@@ -475,28 +480,25 @@ Estado* Jugador::getNuevo() {
     return nuevo;
 }
 
-sonido Jugador::getSonido(){
+sonido Jugador::getSonido() {
     return *soundEffect;
 }
 
+void Jugador::actualizarHitbox() {
 
 
-void Jugador::actualizarHitbox(){
-    
-    
-    if(Keyboard::isKeyPressed(Keyboard::Down)){
-        
+    if (Keyboard::isKeyPressed(Keyboard::Down)) {
+
         hitBox.setScale(1.5, 1.5);
         hitBox.setPosition(getPos().x - 25, getPos().y - 48);
-        
-    }else{
-        
+
+    } else {
+
         hitBox.setScale(1.5, 2.2);
         hitBox.setPosition(getPos().x - 25, getPos().y - 70);
-        
+
     }
 }
-
 
 RectangleShape Jugador::gethitBox() {
 
@@ -504,108 +506,105 @@ RectangleShape Jugador::gethitBox() {
 }
 
 void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
+
+
+    /*
+      trol.setScale(1.5, 2.2);
+      trol.setSize(Vector2f(32, 32));
+      trol.setFillColor(Color::Blue);
     
-    
-  /*
-    trol.setScale(1.5, 2.2);
-    trol.setSize(Vector2f(32, 32));
-    trol.setFillColor(Color::Blue);
-    
-    trol2.setScale(1.5, 2.2);
-    trol2.setSize(Vector2f(32, 32));
-    trol2.setFillColor(Color::Green);
-    */
-    bool colSuelo = false; 
-    bool colMuro= false;
+      trol2.setScale(1.5, 2.2);
+      trol2.setSize(Vector2f(32, 32));
+      trol2.setFillColor(Color::Green);
+     */
+    bool colSuelo = false;
+    bool colMuro = false;
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
-               
+
         if (a->intersects(hitBox.getGlobalBounds())) {
 
-            
+
             cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
-            
-                 if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20){
-                     
-                     cout<<"colisionmuro"<<endl;
-                     colMuro=true;
-                     muro=true;
-                     
-                 if(Keyboard::isKeyPressed(Keyboard::Left) || a->top>hitBox.getGlobalBounds().top){
-                        muro=false;
-                        cout<<"yanocolisiona---->"<<muro<<endl;
-                    }
-                 }
-                
-                 
-                 if(a->left+a->width-15<=hitBox.getGlobalBounds().left){
-                     
-                     cout<<"colisionmuro"<<endl;
-                     colMuro=true;
-                     muro=true;
-                    
-                      if(Keyboard::isKeyPressed(Keyboard::Right) || a->top>hitBox.getGlobalBounds().top){
-                          
-                          muro=false;
-                        cout<<"yanocolisiona---->"<<muro<<endl;
-                      }
-                 }
-            
-              if(a->top >= hitBox.getGlobalBounds().top){
-                colSuelo = true;
-                suelo = true;
-                
-                if(!muro){
-                distanciasuelo=a->top+2;
+
+            if (a->left >= hitBox.getGlobalBounds().left + hitBox.getGlobalBounds().width - 20) {
+
+                cout << "colisionmuro" << endl;
+                colMuro = true;
+                muro = true;
+
+                if (Keyboard::isKeyPressed(Keyboard::Left) || a->top > hitBox.getGlobalBounds().top) {
+                    muro = false;
+                    cout << "yanocolisiona---->" << muro << endl;
                 }
             }
-            
+
+
+            if (a->left + a->width - 15 <= hitBox.getGlobalBounds().left) {
+
+                cout << "colisionmuro" << endl;
+                colMuro = true;
+                muro = true;
+
+                if (Keyboard::isKeyPressed(Keyboard::Right) || a->top > hitBox.getGlobalBounds().top) {
+
+                    muro = false;
+                    cout << "yanocolisiona---->" << muro << endl;
+                }
+            }
+
+            if (a->top >= hitBox.getGlobalBounds().top) {
+                colSuelo = true;
+                suelo = true;
+
+                if (!muro) {
+                    distanciasuelo = a->top + 2;
+                }
+            }
+
             //cout<<"rectanguloWid----->>"<<a->top<<endl;
             //cout<<"rectanguloLeft----->>"<<a->left<<endl;
             //cout<<"JugadorWid----->>"<<hitBox.getGlobalBounds().top<<endl;
             //cout<<"JugadorLeft----->>"<<hitBox.getGlobalBounds().left<<endl;
-            
-        }else{
-            colision=false;
+
+        } else {
+            colision = false;
         }
 
         //cout << "el suelo es:" << suelo << endl;
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
     }
 
-    if(!colSuelo){
+    if (!colSuelo) {
         suelo = false;
     }
-    if(!colMuro){
-        muro=false;
+    if (!colMuro) {
+        muro = false;
     }
 }
 
+void Jugador::update(Time &tiempo) {
 
-void Jugador::update(Time &tiempo){
-    
-    
-            viejo=nuevo;
-            Movimiento(tiempo);
-            Saltar();
-            Disparar();
-            UpdateDisparo();
-            DispararGranada();
-            nuevo->actualizartiempo(getPos().x,getPos().y);
-            
+
+    viejo = nuevo;
+    Movimiento(tiempo);
+    Saltar();
+    Disparar();
+    UpdateDisparo();
+    DispararGranada();
+    nuevo->actualizartiempo(getPos().x, getPos().y);
+
 }
 
-
-
-void Jugador::render(float interpolacion,Time &tiempo){
+void Jugador::render(float interpolacion, Time &tiempo) {
     Motor2D *motor = Motor2D::GetInstance();
-    RenderWindow& Window= motor->getWindow();
-    
+    RenderWindow& Window = motor->getWindow();
+
     actualizarHitbox();
-    animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo,nuevo,interpolacion));
+    animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
     RenderDisparo(interpolacion);
-   // Window.draw(hitBox);
-    
+    // Window.draw(hitBox);
+
 }

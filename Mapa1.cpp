@@ -153,8 +153,23 @@ int Mapa1::Run() {
             enemigo6->calcularColision(map.getColisiones(),map.getnObjetos());
             enemigo6->update(tiempo,jugador);
             
-            
-            
+            std::cout << "Conectado: "<< sf::Joystick::isConnected(0) << std::endl;
+            /*std::cout << "Botones: "<< sf::Joystick::getButtonCount(0) << std::endl;
+            std::cout << "Botones 0: "<< sf::Joystick::isButtonPressed(0, 0) << std::endl;
+            std::cout << "Botones 1: "<< sf::Joystick::isButtonPressed(0, 1) << std::endl;
+            std::cout << "Botones 2: "<< sf::Joystick::isButtonPressed(0, 2) << std::endl;
+            std::cout << "Botones 3: "<< sf::Joystick::isButtonPressed(0, 3) << std::endl;
+            std::cout << "Botones 4: "<< sf::Joystick::isButtonPressed(0, 4) << std::endl;
+            std::cout << "Botones 5: "<< sf::Joystick::isButtonPressed(0, 5) << std::endl;
+            std::cout << "Botones 6: "<< sf::Joystick::isButtonPressed(0, 6) << std::endl;
+            std::cout << "Botones 7: "<< sf::Joystick::isButtonPressed(0, 7) << std::endl;
+            std::cout << "Botones 8: "<< sf::Joystick::isButtonPressed(0, 8) << std::endl;
+            std::cout << "Botones 9: "<< sf::Joystick::isButtonPressed(0, 9) << std::endl;
+            std::cout << "Botones 10: "<< sf::Joystick::isButtonPressed(0, 10) << std::endl;
+            std::cout << "Botones 11: "<< sf::Joystick::isButtonPressed(0, 11) << std::endl;
+            std::cout << "Botones 12: "<< sf::Joystick::isButtonPressed(0, 12) << std::endl;
+            std::cout << "Botones 13: "<< sf::Joystick::isButtonPressed(0, 13) << std::endl;
+            std::cout << "Botones 14: "<< sf::Joystick::isButtonPressed(0, 14) << std::endl;*/
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();

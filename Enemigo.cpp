@@ -65,6 +65,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     Vector2f posJugador = jugador.getPos();
     Vector2f posEnemigo = animacion->getSpriteE().getPosition();
     float dif = posJugador.x - posEnemigo.x;
+    float dify = posJugador.y - posEnemigo.y;
 
     time1 = c->getElapsedTime().asSeconds();
     actual = 0;
@@ -72,7 +73,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     //velocidadmovimiento = 600.0f;
     //Enemigo granada
     if (tipo == 1 || tipo == 3) {
-        if (abs(dif) > 480) {
+        if (abs(dif) > 480 || abs(dify)>200) {
             //Movimiento random
             sorpresa = false;
             if (time_aux == -1 || time1 == time_aux) {
@@ -104,7 +105,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
         } else {
             if (actual == 3)
                 time_aux = time1;
-            if (abs(dif) > 400) {
+            if (abs(dif) > 400 || abs(dify)>200) {
                 //Sorpresa al ver a jugador
                 if (!sorpresa) {
                     if (time_aux == time1)
@@ -146,7 +147,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                     }
                 }
             } else {
-                if (abs(dif) > 250) {
+                if (abs(dif) > 250 || abs(dify)>200) {
                     time_aux = time1;
                     if (tipo != 3) {
                         //Lanzar Granada a jugador
@@ -259,7 +260,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     } else if (tipo == 2) {
         actual = 5;
         totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
-        if (abs(dif) > 320) {
+        if (abs(dif) > 320 || abs(dify)>200) {
             //Movimiento random
             sorpresa = false;
             if (time_aux == -1 || time1 == time_aux) {
@@ -291,7 +292,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
         } else {
             if (actual == 3)
                 time_aux = time1;
-            if (abs(dif) > 140) {
+            if (abs(dif) > 140 && abs(dify)<200 && abs(dify)>50) {
                 //Sorpresa al ver a jugador
                 if (!sorpresa) {
                     if (time_aux == time1)
@@ -374,9 +375,13 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
     } else if (tipo == 4) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
         actual = 1;
-        if (abs(dif) > 320) {
+        if (abs(dif) > 320 || pasota || abs(dify)>200) {
             //Movimiento random
-
+            
+            if (RelojRandom.getElapsedTime().asMilliseconds() > 1000 && pasota) {
+                pasota=false;
+                RelojRandom.restart();
+            }
             if (time_aux == -1 || time1 == time_aux) {
                 random = rand() % 2;
                 time_aux = time1 + 1;
@@ -406,47 +411,61 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
         } else {
 
             time_aux = time1;
-            if (abs(dif) > 80) {
+            if (abs(dif) > 80 && abs(dify)<200) {
                 //Movimiento a jugador
-                time_aux = time1;
-                velocidadAnimacion = 0.08;
-                velocidadmovimiento = 900.0f;
-                if (posJugador.x < posEnemigo.x) {
-                    totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
-                    actual = 1;
-                    animacion->orientacion(1);
-                    if (!muro) {
-                        movimiento.x = -tiempo*velocidadmovimiento;
+
+
+                if (RelojRandom.getElapsedTime().asMilliseconds() > 1000) {
+                    random2 = rand() % 100;
+                    RelojRandom.restart();
+                }
+                if (random2 >= 10) {
+                    //Movimiento a jugador
+                    pasota = false;
+                    time_aux = time1;
+                    velocidadAnimacion = 0.1;
+                    velocidadmovimiento = 900.0f;
+                    if (posJugador.x < posEnemigo.x) {
+                        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                        actual = 1;
+                        animacion->orientacion(1);
+                        if (!muro) {
+                            movimiento.x = -tiempo*velocidadmovimiento;
+                        } else {
+                            movimiento.x = 0;
+                        }
                     } else {
-                        movimiento.x = 0;
+                        totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
+                        actual = 1;
+                        animacion->orientacion(0);
+                        if (!muro) {
+                            movimiento.x = tiempo*velocidadmovimiento;
+                        } else {
+                            movimiento.x = 0;
+                        }
                     }
                 } else {
-                    totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
-                    actual = 1;
-                    animacion->orientacion(0);
-                    if (!muro) {
-                        movimiento.x = tiempo*velocidadmovimiento;
-                    } else {
-                        movimiento.x = 0;
-                    }
+                    pasota = true;
                 }
 
             } else {
                 //atacar
-                velocidadAnimacion = 0.08;
-                if (posJugador.x < posEnemigo.x) {
-                    totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-                    actual = 0;
-                    animacion->orientacion(1);
+                if( abs(dify)<100){
+                    velocidadAnimacion = 0.08;
+                    if (posJugador.x < posEnemigo.x) {
+                        totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+                        actual = 0;
+                        animacion->orientacion(1);
 
 
-                } else {
-                    totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
-                    actual = 0;
-                    animacion->orientacion(0);
+                    } else {
+                        totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
+                        actual = 0;
+                        animacion->orientacion(0);
 
+
+                    }
                 }
-
             }
         }
     }
@@ -555,6 +574,7 @@ int Enemigo::getframeActual(Time& tiempo) {
     return frameActual;
 
 }
+
 void Enemigo::update(Time &tiempo, Jugador jugador) {
 
 
@@ -602,7 +622,7 @@ RectangleShape Enemigo::gethitBox() {
 void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 
 
-   
+
     bool colSuelo = false;
     bool colMuro = false;
     for (int i = 0; i < nobjetos - 2; i++) {

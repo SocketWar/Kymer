@@ -41,6 +41,9 @@ private:
     int time_aux;
     Clock RelojGranada;
     Clock RelojBala;
+    Clock RelojRandom;
+    int random2;
+    bool pasota;
     vector<Granada*> CARGADORGRANADA;
     vector<Bala*> CARGADOR;
     sf::Clock *c;

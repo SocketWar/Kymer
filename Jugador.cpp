@@ -51,7 +51,7 @@ void Jugador::Movimiento(Time &time) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
-    
+    //std::cout << tiempo << endl;
     if (vidas<=0){
         Morir();
       
@@ -83,9 +83,7 @@ void Jugador::Movimiento(Time &time) {
             }else{
             movimiento.x=0;    
             }
-        }
-
-        if (Keyboard::isKeyPressed(Keyboard::Left)) {
+        }else if (Keyboard::isKeyPressed(Keyboard::Left)) {
             if (arma==0){
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                 actual = 1;
@@ -523,32 +521,32 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
         if (a->intersects(hitBox.getGlobalBounds())) {
 
             
-            cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
+            //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
             
                  if(a->left>=hitBox.getGlobalBounds().left+hitBox.getGlobalBounds().width-20){
                      
-                     cout<<"colisionmuro"<<endl;
+                    // cout<<"colisionmuro"<<endl;
                      colMuro=true;
                      muro=true;
                      
                  if(Keyboard::isKeyPressed(Keyboard::Left) || a->top>hitBox.getGlobalBounds().top){
                         muro=false;
-                        cout<<"yanocolisiona---->"<<muro<<endl;
+                        //cout<<"yanocolisiona---->"<<muro<<endl;
                     }
                  }
                 
                  
                  if(a->left+a->width-15<=hitBox.getGlobalBounds().left){
                      
-                     cout<<"colisionmuro"<<endl;
+                     //cout<<"colisionmuro"<<endl;
                      colMuro=true;
                      muro=true;
                     
                       if(Keyboard::isKeyPressed(Keyboard::Right) || a->top>hitBox.getGlobalBounds().top){
                           
                           muro=false;
-                        cout<<"yanocolisiona---->"<<muro<<endl;
+                        //cout<<"yanocolisiona---->"<<muro<<endl;
                       }
                  }
             

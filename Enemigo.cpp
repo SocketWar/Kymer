@@ -727,7 +727,7 @@ void Enemigo::ColisionJugador(Jugador jugador){
             }
         }
         
-        
+        //granadas
         for(int j=0;j<jugador.getArrayGranadas().size();j++){
             
             if(jugador.getArrayGranadas()[j]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())){

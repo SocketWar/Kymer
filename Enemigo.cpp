@@ -715,7 +715,7 @@ void Enemigo::ColisionJugador(Jugador jugador){
         
         cout<<"ostiaputacomo pegan"<<endl;
     }
-    }else{
+    }
     
         //balas
         
@@ -732,9 +732,9 @@ void Enemigo::ColisionJugador(Jugador jugador){
             
             if(jugador.getArrayGranadas()[j]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())){
                 
-                cout<<"tocado"<<endl;
+                cout<<"tocadogranada"<<endl;
             }
         }
         
-    }
+    
 }

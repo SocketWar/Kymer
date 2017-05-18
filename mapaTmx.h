@@ -12,7 +12,7 @@ using namespace tinyxml2;
 
 class mapaTmx : public Drawable, public Transformable {
 public:
-    mapaTmx();
+    mapaTmx(string mapa, string tileSheet);
     bool load(const string& tileset);
     FloatRect** getColisiones();
     Vector2f** getSpawn();

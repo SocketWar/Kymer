@@ -1,13 +1,13 @@
 #include "mapaTmx.h"
 
-mapaTmx::mapaTmx() {
+mapaTmx::mapaTmx(string mapa, string texTileSheet) {
     cout << "ENTRADO EN CONSTRUCTOR" << endl;
 
-    const string texStr = "res/img/tiles.png";
-
+    const string a = mapa;
+    
     cout << "CARGANDO LA TEXTURA...";
     tex = new Texture();
-    if (!tex->loadFromFile(texStr)) {
+    if (!tex->loadFromFile(texTileSheet)) {
         cerr << "Error cargando la textura";
         exit(0);
     }
@@ -15,7 +15,7 @@ mapaTmx::mapaTmx() {
 
     cout << "CARGANDO EL MAPA...";
     doc = new XMLDocument();
-    doc->LoadFile("res/tmx/mapa2.tmx");
+    doc->LoadFile(mapa.data());
     cout << "OK" << endl;
 
     cout << "CREANDO EL XML DOCUMENT.....";
@@ -73,7 +73,7 @@ mapaTmx::mapaTmx() {
 
     CargaObjetos();
 
-    if (load(texStr))
+    if (load(texTileSheet))
         cout << "LOAD...OK" << endl;
 
     //Muestrainfo();

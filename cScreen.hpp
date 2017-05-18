@@ -16,13 +16,10 @@
 
 #include "Estado.h"
 
+class cScreen {
+public:
+    virtual int Run() = 0;
 
-
-class cScreen
-{
-public :
-    virtual int Run () = 0;
-     
-}; 
+};
 #endif /* CSCREEN_HPP */
 

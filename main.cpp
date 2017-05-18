@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     //preparacion pantallas
     menu s0;//menu
     Screens.push_back(&s0);
-    Mapa1 s1;//mapa1
+    Mapa1 s1("res/tmx/mapa2.tmx", "res/img/tiles.png");//mapa1
     Screens.push_back(&s1);
     
 

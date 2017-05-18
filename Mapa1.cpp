@@ -7,13 +7,15 @@
 #include "Mapa1.hpp"
 #include "sonido.h"
 
-Mapa1::Mapa1(void) {
+Mapa1::Mapa1(string mapa, string tileSheet) {
     update = 1000 / 25;
     frameskip = 5;
 
     anchura = 1024;
     altura = 720;
 
+    this->mapa = mapa;
+    this->tileSheet = tileSheet;
 }
 
 int Mapa1::Run() {
@@ -71,7 +73,7 @@ int Mapa1::Run() {
     // ---------------------------------------
     int numeroenemigos = 8;
     int vacas = 4;
-    
+
     Jugador jugador(anchura, altura);
     Enemigo **enemigos = new Enemigo*[numeroenemigos];
 
@@ -87,37 +89,12 @@ int Mapa1::Run() {
     View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
-    mapaTmx map;
+    mapaTmx map(mapa, tileSheet);
 
     // ---------------------------------------
     // HUD
     // ---------------------------------------
-
-    Font *fuente = new Font();
-    /*Texture *cuadradoPuntuacion = new Texture();
-     
-    if (!cuadradoPuntuacion->loadFromFile("res/img/pru.png")) {
-        cerr << "Error cargando la imagen pru.png";
-        exit(0);
-    }*/
-
     hud *h = new hud(vista, jugador);
-    // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
-    //Rect<float> boxR(300, 250, 50, 50);
-
-
-    // ---------------------------------------
-    // PAUSA
-    // ---------------------------------------
-    bool pausa = false;
-    Text textoPausa;
-    textoPausa.setFont(*fuente);
-    textoPausa.setCharacterSize(100);
-    textoPausa.setString("PAUSA");
-
-
-
-
 
     while (Running) {
 
@@ -194,9 +171,6 @@ int Mapa1::Run() {
             if (Keyboard::isKeyPressed(Keyboard::Escape))
                 return 0;
 
-            if (Keyboard::isKeyPressed(Keyboard::P))
-                pausa = true;
-
             if (Keyboard::isKeyPressed(Keyboard::A)) {
                 // sound.setVolume(1);
                 //                disparo.getSonido().play();
@@ -224,7 +198,7 @@ int Mapa1::Run() {
         //dibujamos 
         App.draw(map);
         jugador.render(interpolacion, tiempoAnimacion);
-        
+
 
         for (int i = 0; i < numeroenemigos; i++) {
 

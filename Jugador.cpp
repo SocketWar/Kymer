@@ -587,7 +587,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 void Jugador::update(Time &tiempo) {
 
 
-    viejo = nuevo;
+    *viejo = *nuevo;
     Movimiento(tiempo);
     Saltar();
     Disparar();

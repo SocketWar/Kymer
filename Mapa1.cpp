@@ -11,8 +11,8 @@ Mapa1::Mapa1(void) {
     update = 1000 / 25;
     frameskip = 5;
 
-    anchura = 1352;
-    altura = 888;
+    anchura = 1024;
+    altura = 720;
 
 
 }

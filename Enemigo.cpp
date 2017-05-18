@@ -582,7 +582,7 @@ int Enemigo::getframeActual(Time& tiempo) {
 void Enemigo::update(Time &tiempo, Jugador jugador) {
 
 
-    viejo = nuevo;
+    *viejo = *nuevo;
     Movimiento(tiempo, jugador);
     Saltar();
     //Disparar();

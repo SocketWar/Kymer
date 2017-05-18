@@ -87,6 +87,6 @@ Estado* Bala::getNuevo() {
 
 void Bala::actualizarEstado() {
 
-    viejo=nuevo;
+    *viejo=*nuevo;
     
 }

@@ -599,6 +599,8 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    RenderGranada(Window);
+   
     //Window.draw(hitBox);
 
 }

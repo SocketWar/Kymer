@@ -3,7 +3,7 @@
 mapaTmx::mapaTmx() {
     cout << "ENTRADO EN CONSTRUCTOR" << endl;
 
-    const string texStr = "res/img/tiles_2.png";
+    const string texStr = "res/img/tiles.png";
 
     cout << "CARGANDO LA TEXTURA...";
     tex = new Texture();
@@ -15,7 +15,7 @@ mapaTmx::mapaTmx() {
 
     cout << "CARGANDO EL MAPA...";
     doc = new XMLDocument();
-    doc->LoadFile("res/tmx/s2.tmx");
+    doc->LoadFile("res/tmx/mapa2.tmx");
     cout << "OK" << endl;
 
     cout << "CREANDO EL XML DOCUMENT.....";

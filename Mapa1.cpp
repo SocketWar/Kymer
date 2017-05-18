@@ -85,7 +85,7 @@ int Mapa1::Run() {
     enemigo4 = new Enemigo(4);
     enemigo5 = new Enemigo(4);
     enemigo6 = new Enemigo(4);
-    enemigo2=new Enemigo(2);
+    enemigo2=new Enemigo(1);
   
     View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));

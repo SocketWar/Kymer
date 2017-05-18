@@ -72,7 +72,7 @@ mapaTmx::mapaTmx() {
     cout << "OK" << endl;
 
     CargaObjetos();
-    
+
     if (load(texStr))
         cout << "LOAD...OK" << endl;
 
@@ -222,7 +222,7 @@ void mapaTmx::CargaPropiedades() {
 
     //SI HAY ERROR EN EL SPACING SE PONE A 0
     if (tileset->QueryIntAttribute("spacing", &espaciado)) {
-        cout << "ERROR EN SPACING: ESTABLECIDO A 0 ....";
+        cout << "NO HAY SPACING: ESTABLECIDO A 0 ....";
         espaciado = 0;
     }
 
@@ -250,23 +250,46 @@ void mapaTmx::CargaPropiedades() {
  * 
  */
 void mapaTmx::CargaObjetos() {
-    cout << "CARGANDO OBJETOS...";
+    cout << "CARGANDO OBJETOS..." << endl;
     layer = map->FirstChildElement("objectgroup")->FirstChildElement("object");
-    int count = 0;
+
+    int countColision = 0;
+    int countSpawn = 0;
+    int countPunt = 0;
+
     while (layer) {
-        count++;
+        if (layer->Attribute("name") != NULL) {
+            string nombre = layer->Attribute("name");
+            //cout << nombre << endl;
+            if (nombre == "Spawn") {
+                countSpawn++;
+            } else {
+                if (nombre == "Punt") {
+                    countPunt++;
+                }
+            }
+        } else {
+            countColision++;
+        }
         layer = layer->NextSiblingElement("object");
     }
-    nObjetos = count;
-    cout << " ENCONTRADOS " << count << " OBJETOS DE COLISIONES" << endl;
-    
+    nObjetos = countColision;
+    nSpawn = countSpawn;
+    nPuntos = countPunt;
+    cout << "ENCONTRADOS " << countColision << " OBJETOS DE COLISIONES" << endl;
+    cout << "ENCONTRADOS " << countSpawn << " PUNTOS DE SPAWN" << endl;
+    cout << "ENCONTRADOS " << countPunt << " OBJETOS DE PUNTUACION" << endl;
+
     cout << "CREANDO OBJETOS DE COLISIONES...";
-    colisiones = new Rect<float>*[count];
+    colisiones = new Rect<float>*[countColision];
+    spawn = new Vector2f*[countSpawn];
+    puntos = new Vector2f*[countPunt];
+
     layer = map->FirstChildElement("objectgroup")->FirstChildElement("object");
-    
-    string nombreCapa = map->FirstChildElement("objectgroup")->Attribute("name");
-    
-    count = 0;
+
+    //string nombreCapa = map->FirstChildElement("objectgroup")->Attribute("name");
+
+    countColision = countSpawn = countPunt = 0;
     float x, y, ancho, alto;
     x = y = ancho = alto = 0;
     while (layer) {
@@ -274,15 +297,38 @@ void mapaTmx::CargaObjetos() {
         layer->QueryFloatAttribute("y", &y);
         layer->QueryFloatAttribute("width", &ancho);
         layer->QueryFloatAttribute("height", &alto);
-        colisiones[count] = new Rect<float>(x, y, ancho, alto);
-        count++;
+
+        if (layer->Attribute("name") != NULL) {
+            string nombre = layer->Attribute("name");
+            //cout << nombre << endl;
+            if (nombre == "Spawn") {
+                spawn[countSpawn] = new Vector2f(x, y);
+                countSpawn++;
+            } else {
+                if (nombre == "Punt") {
+                    spawn[countPunt] = new Vector2f(x, y);
+                    countPunt++;
+                }
+            }
+        } else {
+            colisiones[countColision] = new Rect<float>(x, y, ancho, alto);
+            countColision++;
+        }
         layer = layer->NextSiblingElement("object");
     }
     cout << "OK" << endl;
 }
 
-Rect<float>** mapaTmx::getColisiones(){
+Rect<float>** mapaTmx::getColisiones() {
     return colisiones;
+}
+
+Vector2f** mapaTmx::getSpawn() {
+    return spawn;
+}
+
+Vector2f** mapaTmx::getPuntuaciones() {
+    return puntos;
 }
 
 void mapaTmx::draw(RenderTarget &target, RenderStates states) const {
@@ -296,6 +342,36 @@ void mapaTmx::draw(RenderTarget &target, RenderStates states) const {
     target.draw(m_vertices, states);
 }
 
-int mapaTmx::getnObjetos(){
+int mapaTmx::getnColisiones() {
     return nObjetos;
+}
+
+int mapaTmx::getnSpawn() {
+    return nSpawn;
+}
+
+int mapaTmx::getnPuntos() {
+    return nPuntos;
+}
+
+mapaTmx::~mapaTmx() {
+    delete &dimEnTiles;
+    delete &dimTiles;
+    delete &dimTileSheet;
+    delete &nElementos;
+
+    delete tex;
+    delete doc;
+    delete &map;
+    delete &tileset;
+    delete &image;
+
+    delete tileSheet;
+    delete sprites;
+
+    delete &layer;
+    delete &lay;
+    delete &data;
+    delete &colisiones;
+    delete &m_vertices;
 }

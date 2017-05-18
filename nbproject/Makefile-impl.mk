@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=todogood4
+PROJECTNAME=Kymer
 
 # Active Configuration
 DEFAULTCONF=Debug

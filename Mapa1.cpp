@@ -136,21 +136,21 @@ int Mapa1::Run() {
             }
             //llamadas a update
             //jugador
-            jugador.calcularColision(map.getColisiones(),map.getnObjetos());
+            jugador.calcularColision(map.getColisiones(),map.getnColisiones());
             jugador.update(tiempo);
             
             //enemigo
-            enemigo->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo->calcularColision(map.getColisiones(),map.getnColisiones());
             enemigo->update(tiempo,jugador);
-            enemigo2->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo2->calcularColision(map.getColisiones(),map.getnColisiones());
             enemigo2->update(tiempo,jugador);
-            enemigo3->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo3->calcularColision(map.getColisiones(),map.getnColisiones());
             enemigo3->update(tiempo,jugador);
-            enemigo4->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo4->calcularColision(map.getColisiones(),map.getnColisiones());
             enemigo4->update(tiempo,jugador);
-            enemigo5->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo5->calcularColision(map.getColisiones(),map.getnColisiones());
             enemigo5->update(tiempo,jugador);
-            enemigo6->calcularColision(map.getColisiones(),map.getnObjetos());
+            enemigo6->calcularColision(map.getColisiones(),map.getnColisiones());
             enemigo6->update(tiempo,jugador);
             
             

@@ -23,9 +23,6 @@ int main(int argc, char** argv) {
     Mapa1 s1;//mapa1
     Screens.push_back(&s1);
     
- 
-
-
 
     //Main loop
     while (screen >= 0) {

@@ -14,18 +14,16 @@ Mapa1::Mapa1(void) {
     anchura = 1024;
     altura = 720;
 
-
 }
 
 int Mapa1::Run() {
     Motor2D *motor = Motor2D::GetInstance();
-    RenderWindow& App= motor->getWindow();
+    RenderWindow& App = motor->getWindow();
     bool Running = true; //booleano que controla el bucle mientras la pantalla esta seleccionada
 
     //App.setSize(Vector2u(App.getSize().x,App.getSize().y));
     Event event;
-    cout << "el mapa se muestra en  :" << anchura << "x" << altura << endl;
-
+    //cout << "el mapa se muestra en  :" << anchura << "x" << altura << endl;
     App.setFramerateLimit(120);
     // ---------------------------------------
     // RELOJES Y TIEMPOS
@@ -35,14 +33,14 @@ int Mapa1::Run() {
     Time tiempo;
     Time tiempoAnimacion;
 
-    
+
     //----------------------------------------
     // SONIDOS
     //----------------------------------------
-//    sonido disparo;
-//    disparo.setSonido("res/audio/shot.wav");
-    
-     SoundBuffer buffer;
+    //    sonido disparo;
+    //    disparo.setSonido("res/audio/shot.wav");
+
+    SoundBuffer buffer;
     if (!buffer.loadFromFile("res/audio/menu.ogg")) {
         cout << " el archivo de audio Menu no esta disponible" << endl;
     }
@@ -51,14 +49,14 @@ int Mapa1::Run() {
 
     sound.play();
     sound.setLoop(true);
-    
-         SoundBuffer bufferd;
+
+    SoundBuffer bufferd;
     if (!bufferd.loadFromFile("res/audio/shot.wav")) {
         cout << " el archivo de audio Menu no esta disponible" << endl;
     }
     Sound sound2;
     sound2.setBuffer(bufferd);
-   
+
 
     // ---------------------------------------
     // INTERPOLACION
@@ -66,28 +64,27 @@ int Mapa1::Run() {
     Int32 tiempoupdate = clock1.getElapsedTime().asMilliseconds();
     int bucle = 0;
     float interpolacion;
-    
+
 
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    int desplazamientoCamara = 500;
-    Jugador jugador(anchura, altura);
-    Enemigo *enemigo;
-    Enemigo *enemigo2;
-    Enemigo *enemigo3;
-    Enemigo *enemigo4;
-    Enemigo *enemigo5;
-    Enemigo *enemigo6;
+    int numeroenemigos = 8;
+    int vacas = 4;
     
-    enemigo = new Enemigo(4);
-    enemigo3 = new Enemigo(4);
-    enemigo4 = new Enemigo(4);
-    enemigo5 = new Enemigo(4);
-    enemigo6 = new Enemigo(4);
-    enemigo2=new Enemigo(1);
-  
-    View vista( Vector2f(jugador.getPos().x + desplazamientoCamara, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y) );
+    Jugador jugador(anchura, altura);
+    Enemigo **enemigos = new Enemigo*[numeroenemigos];
+
+    for (int i = 0; i < numeroenemigos; i++) {
+
+        if (i < vacas)
+            enemigos[i] = new Enemigo(4);
+        if (i >= vacas)
+            enemigos[i] = new Enemigo(1);
+    }
+
+
+    View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
     mapaTmx map;
@@ -95,19 +92,19 @@ int Mapa1::Run() {
     // ---------------------------------------
     // HUD
     // ---------------------------------------
-   
+
     Font *fuente = new Font();
     /*Texture *cuadradoPuntuacion = new Texture();
-
+     
     if (!cuadradoPuntuacion->loadFromFile("res/img/pru.png")) {
         cerr << "Error cargando la imagen pru.png";
         exit(0);
     }*/
 
-    hud *h = new hud(vista,jugador);
+    hud *h = new hud(vista, jugador);
     // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
     //Rect<float> boxR(300, 250, 50, 50);
-  
+
 
     // ---------------------------------------
     // PAUSA
@@ -117,11 +114,13 @@ int Mapa1::Run() {
     textoPausa.setFont(*fuente);
     textoPausa.setCharacterSize(100);
     textoPausa.setString("PAUSA");
-    Vector2f centro(vista.getCenter().x - desplazamientoCamara, vista.getSize().y / 4);
+
+
+
 
 
     while (Running) {
-        if(!pausa){
+
         bucle = 0;
         tiempo = clocl2.restart();
         while (clock1.getElapsedTime().asMilliseconds() > tiempoupdate && bucle < frameskip) {
@@ -136,25 +135,19 @@ int Mapa1::Run() {
             }
             //llamadas a update
             //jugador
-            jugador.calcularColision(map.getColisiones(),map.getnColisiones());
+            jugador.calcularColision(map.getColisiones(), map.getnColisiones());
             jugador.update(tiempo);
-            
+
             //enemigo
-            enemigo->calcularColision(map.getColisiones(),map.getnColisiones());
-            enemigo->update(tiempo,jugador);
-            enemigo2->calcularColision(map.getColisiones(),map.getnColisiones());
-            enemigo2->update(tiempo,jugador);
-            enemigo3->calcularColision(map.getColisiones(),map.getnColisiones());
-            enemigo3->update(tiempo,jugador);
-            enemigo4->calcularColision(map.getColisiones(),map.getnColisiones());
-            enemigo4->update(tiempo,jugador);
-            enemigo5->calcularColision(map.getColisiones(),map.getnColisiones());
-            enemigo5->update(tiempo,jugador);
-            enemigo6->calcularColision(map.getColisiones(),map.getnColisiones());
-            enemigo6->update(tiempo,jugador);
-            
-            
-            
+
+
+            for (int i = 0; i < numeroenemigos; i++) {
+
+                enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
+                enemigos[i]->update(tiempo, jugador);
+            }
+
+
 
             int lifePlayer = h->getContHP();
             int cont = h->getPunt();
@@ -188,28 +181,28 @@ int Mapa1::Run() {
             }
             if (Keyboard::isKeyPressed(Keyboard::Num3)) {
                 contg++;
-                h->changeGranada(contg,jugador);
+                h->changeGranada(contg, jugador);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num4)) {
                 contg--;
-                h->changeGranada(contg,jugador);
+                h->changeGranada(contg, jugador);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
             }
-            
+
             if (Keyboard::isKeyPressed(Keyboard::Escape))
                 return 0;
-            
+
             if (Keyboard::isKeyPressed(Keyboard::P))
                 pausa = true;
-             
-            if (Keyboard::isKeyPressed(Keyboard::A)){
-               // sound.setVolume(1);
-//                disparo.getSonido().play();
+
+            if (Keyboard::isKeyPressed(Keyboard::A)) {
+                // sound.setVolume(1);
+                //                disparo.getSonido().play();
                 sound2.play();
             }
-            
+
             /*
             if (boxR.intersects(item->getHitbox())) {
                 item->recogerObjeto();
@@ -217,49 +210,35 @@ int Mapa1::Run() {
             }
              */
         }
-        
-        
+
+
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
 
-        vista.setCenter(Vector2f(jugador.getPos().x + desplazamientoCamara, vista.getCenter().y));
-        App.setView(vista);
 
-       
+
+
         //limpiampos pantalla
         App.clear(Color(150, 200, 200));
 
         //dibujamos 
         App.draw(map);
-        jugador.render(interpolacion,tiempoAnimacion);
-        enemigo->render(interpolacion,tiempoAnimacion);
-        enemigo2->render(interpolacion,tiempoAnimacion);
-        enemigo3->render(interpolacion,tiempoAnimacion);
-        enemigo4->render(interpolacion,tiempoAnimacion);
-        enemigo5->render(interpolacion,tiempoAnimacion);
-        enemigo6->render(interpolacion,tiempoAnimacion);
+        jugador.render(interpolacion, tiempoAnimacion);
+        
+
+        for (int i = 0; i < numeroenemigos; i++) {
+
+            enemigos[i]->render(interpolacion, tiempoAnimacion);
+
+        }
+
+        vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
+        App.setView(vista);
         //enemigo->RenderGranada(App);
-        //cout << "VISTA => " << vista.getCenter().x <<  ", " << vista.getCenter().y << endl;
-        h->Update(App, vista,jugador);
+        h->Update(App, vista, jugador);
         jugador.setVidas(h->getContHP());
         App.display();
-        }
-        else{
-            centro.x = vista.getCenter().x;
-            centro.y =  vista.getSize().y / 6;
-            
-            textoPausa.setPosition(centro);
-            
-            if (Keyboard::isKeyPressed(Keyboard::Escape))
-                return 0;
-            
-            if (Keyboard::isKeyPressed(Keyboard::O))
-                pausa = false;
-            
-            
-            App.draw(textoPausa);
-            App.display();
-        }
+
     }
 
     //Never reaching this point normally, but just in case, exit the application

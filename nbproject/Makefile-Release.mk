@@ -44,11 +44,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/Mapa1.o \
 	${OBJECTDIR}/Motor2D.o \
 	${OBJECTDIR}/MovimientoIA.o \
-	${OBJECTDIR}/ObjetoPuntuacion.o \
 	${OBJECTDIR}/hud.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapaTmx.o \
 	${OBJECTDIR}/menu.o \
+	${OBJECTDIR}/objetos.o \
 	${OBJECTDIR}/screen_1.o \
 	${OBJECTDIR}/sonido.o \
 	${OBJECTDIR}/tinyxml2.o
@@ -123,11 +123,6 @@ ${OBJECTDIR}/MovimientoIA.o: MovimientoIA.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MovimientoIA.o MovimientoIA.cpp
 
-${OBJECTDIR}/ObjetoPuntuacion.o: ObjetoPuntuacion.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ObjetoPuntuacion.o ObjetoPuntuacion.cpp
-
 ${OBJECTDIR}/hud.o: hud.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -147,6 +142,11 @@ ${OBJECTDIR}/menu.o: menu.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/menu.o menu.cpp
+
+${OBJECTDIR}/objetos.o: objetos.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/objetos.o objetos.cpp
 
 ${OBJECTDIR}/screen_1.o: screen_1.cpp
 	${MKDIR} -p ${OBJECTDIR}

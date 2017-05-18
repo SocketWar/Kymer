@@ -23,6 +23,8 @@ public:
     sonido();
     void setSonido(string ruta);
     Sound getSonido();
+    void reproducir();
+    
 private:
     SoundBuffer *buffer;
     Sound *sound;

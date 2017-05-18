@@ -71,7 +71,8 @@ int Mapa1::Run() {
     // ---------------------------------------
     int numeroenemigos = 5;
     int vacas = 4;
-    
+    objetos *machineGun;
+    machineGun = new objetos('a');
     Jugador jugador(anchura, altura);
     Enemigo **enemigos = new Enemigo*[numeroenemigos];
 
@@ -100,7 +101,7 @@ int Mapa1::Run() {
         exit(0);
     }*/
 
-    hud *h = new hud(vista, jugador);
+    hud *h = new hud(vista);
     // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
     //Rect<float> boxR(300, 250, 50, 50);
 
@@ -134,9 +135,10 @@ int Mapa1::Run() {
             }
             //llamadas a update
             //jugador
+            
             jugador.calcularColision(map.getColisiones(), map.getnColisiones());
             jugador.update(tiempo);
-
+            jugador.recogeObjeto(*machineGun);
             //enemigo
             for (int i = 0; i < numeroenemigos; i++) {
 
@@ -179,11 +181,11 @@ int Mapa1::Run() {
             }
             if (Keyboard::isKeyPressed(Keyboard::Num3)) {
                 contg++;
-                h->changeGranada(contg, jugador);
+                h->changeGranada(contg);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num4)) {
                 contg--;
-                h->changeGranada(contg, jugador);
+                h->changeGranada(contg);
             }
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
@@ -221,8 +223,8 @@ int Mapa1::Run() {
 
         //dibujamos 
         App.draw(map);
-        jugador.render(interpolacion, tiempoAnimacion);
-        
+        jugador.render(interpolacion, tiempoAnimacion,*h);
+        machineGun->RenderObjeto();
 
         for (int i = 0; i < numeroenemigos; i++) {
 
@@ -233,7 +235,8 @@ int Mapa1::Run() {
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
         App.setView(vista);
         //enemigo->RenderGranada(App);
-        h->Update(App, vista, jugador);
+        h->Update(vista);
+        h->render(); 
         jugador.setVidas(h->getContHP());
         App.display();
 

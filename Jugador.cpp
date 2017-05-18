@@ -1,15 +1,13 @@
 
 #include "Jugador.h"
-#include "Estado.h"
-#include "Bala.h"
-#include "Granada.h"
-#include "sonido.h"
+
 
 Jugador::Jugador(int anchura, int altura) {
     soundEffect = new sonido();
     soundEffect->setSonido("res/audio/shot.wav");
 
-
+    vidas=5;
+    granadas=5;
     gravedad = 2.0f;
     distanciasuelo = 700;
     velocidadsalto = 20.0f;
@@ -441,6 +439,11 @@ int Jugador::getVidas() {
     return vidas;
 }
 
+void Jugador::restarVidas(){
+    if(vidas>0)
+    vidas--;
+}
+
 void Jugador::setGranadas(int i) {
     granadas = i;
 }
@@ -609,14 +612,35 @@ void Jugador::update(Time &tiempo) {
 
 }
 
-void Jugador::render(float interpolacion, Time &tiempo) {
+void Jugador::render(float interpolacion, Time &tiempo,hud& h) {
     Motor2D *motor = Motor2D::GetInstance();
     RenderWindow& Window = motor->getWindow();
-
+    actualizarHud(h);
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
     RenderDisparo(interpolacion);
     // Window.draw(hitBox);
 
+}
+
+
+void Jugador::recogeObjeto(objetos &obj) {
+  
+  if(obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())){
+          obj.reproducirSonido();
+          this->setArma(1);
+          
+}
+}
+
+void Jugador::actualizarHud(hud& h) {
+    
+    if(this->arma ==1){
+        h.changeArma(1);
+    }else {
+        h.changeArma(0);
+    }
+    h.changeContHP(vidas);
+    h.changeGranada(granadas);
 }

@@ -25,8 +25,11 @@
  */
 
 #include "hud.h"
+using namespace std;
 
-hud::hud(sf::View &win,Jugador &j) {
+//hud::hud(sf::View &win,Jugador &j) {
+hud::hud(sf::View &win) {
+    
     sf::Texture *hTex = new sf::Texture();
     sf::Font *f = new sf::Font();
 
@@ -78,16 +81,16 @@ hud::hud(sf::View &win,Jugador &j) {
 
     c = new sf::Clock();
     contPunt = 0;
-    contG = 5;
+    contG = 0;
     contHP = 3;
     time = 30;
     font = f;
     time_aux = 0;
     num_arma=0;
     
-    j.setVidas(contHP);
-    j.setGranadas(contG);
-    j.setArma(num_arma);
+//    j.setVidas(contHP);
+//    j.setGranadas(contG);
+//    j.setArma(num_arma);
 
     s << "";
 
@@ -229,15 +232,18 @@ void hud::changeArma(int i) {
     }
 }
 
-void hud::changeGranada(int i,Jugador &j) {
+//void hud::changeGranada(int i,Jugador &j) {
+void hud::changeGranada(int i) {
     if (i >= 0) {
-        contG = i;
+        
+       
+         contG = i;
         s.str(std::string());
-        s << "         (x" << contG << ")";
-        grenadeText->setString(s.str());
-        if (contG!=j.getGranadas()){
-            j.setGranadas(contG);     
-        }
+         s << "         (x" << contG << ")";
+         grenadeText->setString(s.str());
+////        if (contG!=j.getGranadas()){
+////            j.setGranadas(contG);     
+////        }
     }
 }
 
@@ -338,14 +344,12 @@ hud::~hud() {
     c = NULL;
 }
 
-void hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
+//void hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
+void hud::Update(sf::View &vista) {
 
-    
-    /*
-        if (item->getRecogido() == false)
-            win.draw(item->getSprite());
-     */
-
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& win = motor->getWindow();
+   
     float x0=vista.getCenter().x-win.getDefaultView().getCenter().x; 
     float y0=vista.getCenter().y-win.getDefaultView().getCenter().y;
     float aux_x;
@@ -385,29 +389,24 @@ void hud::Update(sf::RenderWindow &win, sf::View &vista, Jugador &j) {
     grenadeText->setPosition(granada->getPosition().x+aux_x,granada->getPosition().y);
     
     updateTime();
-    if (contHP != j.getVidas()){
-        j.setVidas(contHP);
-        
-    }
-    if (contG!=j.getGranadas()){
-        changeGranada(j.getGranadas(),j);     
-    }
-    if (j.getArma()!=num_arma){
-        j.setArma(num_arma);
-    }
-    
-    //Window.draw(rectangulo);
-    win.draw(getTextVida());
-    win.draw(getArma());
-    win.draw(getGranada());
-    win.draw(getTextArma());
-    win.draw(getIcono());
-    win.draw(getTextPunt());
-    win.draw(getTextTime());
-    win.draw(getTextGranada());
-    for (int n = 0; n < getContHP(); n++) {
-        win.draw(getPlayerHP(n));
-    }
+
     
 }
+
+void hud::render() {
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& Window = motor->getWindow();
+        Window.draw(getTextVida());
+    Window.draw(getArma());
+    Window.draw(getGranada());
+    Window.draw(getTextArma());
+    Window.draw(getIcono());
+    Window.draw(getTextPunt());
+    Window.draw(getTextTime());
+    Window.draw(getTextGranada());
+    for (int n = 0; n < getContHP(); n++) {
+        Window.draw(getPlayerHP(n));
+    }
+}
+
 

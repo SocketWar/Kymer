@@ -21,7 +21,6 @@
 #include "MovimientoIA.h"
 #include "Jugador.h"
 #include "hud.h"
-#include "ObjetoPuntuacion.h"
 #include "Enemigo.h"
 #include "Motor2D.h"
 

@@ -30,3 +30,8 @@ void sonido::setSonido(string ruta){
 Sound sonido::getSonido(){
     return *sound;
 }
+
+void sonido::reproducir() {
+    this->sound->play();
+}
+

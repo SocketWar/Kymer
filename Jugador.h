@@ -9,12 +9,14 @@
 #include "Estado.h"
 #include "sonido.h"
 #include "Motor2D.h"
+#include "hud.h"
+#include "objetos.h"
 
 class Jugador {
 public:
     Jugador(int anchura, int altura);
     void update(Time &tiempo);
-    void render(float interpolacion,Time &tiempo);
+    void render(float interpolacion,Time &tiempo,hud& h);
     void Movimiento(Time &tiempo);
     void Saltar();
     void Disparar();
@@ -32,6 +34,7 @@ public:
     void Morir();
     Estado* getViejo();
     Estado* getNuevo();
+    void restarVidas();
     void setVidas(int i);
     int getVidas();
     void setGranadas(int i);
@@ -44,6 +47,8 @@ public:
     RectangleShape gethitBox();
     vector<Bala*> getArrayBalas();
     vector<Granada*> getArrayGranadas();
+    void actualizarHud(hud& h); 
+    void recogeObjeto(objetos &obj);
     
 private:
 

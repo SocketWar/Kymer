@@ -23,7 +23,7 @@ public:
     RectangleShape gethitBox();
     void update(Time &tiempo,Time &tiempoanimacion, Jugador jugador);
     void render(float interpolacion,Time &tiempo);
-    void ColisionJugador(Jugador jugador);
+    void ColisionJugador(Jugador &jugador);
     void actualizarHitBoxataqueVaca();
 private:
     

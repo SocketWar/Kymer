@@ -1,0 +1,59 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/* 
+ * File:   objetos.cpp
+ * Author: darktom
+ * 
+ * Created on May 18, 2017, 5:28 PM
+ */
+
+#include "objetos.h"
+
+objetos::objetos(char i) {
+    
+    Sound = new sonido();
+    Sound->setSonido("res/audio/heavyMachine.wav");
+    
+    tex = new Texture();
+    if(!tex->loadFromFile("res/img/heavyMachineGun.png")){
+        cout<<"Error cargando la textura de objeto escopeta"<<endl;
+        
+    }
+    size = Vector2f(31,30);
+    pos =  Vector2f(154,600);
+    sprite = new Sprite(*tex);
+    sprite->setTextureRect(IntRect(0, 0 , 31, 30));
+    sprite->setPosition(Vector2f(200,600));
+    tocado = false;
+    
+}
+Vector2f objetos::getPos() {
+    return pos;
+}
+
+Vector2f objetos::getSize() {
+    return size;
+}
+
+void objetos::RenderObjeto() {/*renderizado basico para mostrar objeto por pantalla*/
+    
+    Motor2D *motor = Motor2D::GetInstance();
+    RenderWindow& Window = motor->getWindow();
+    Window.draw(*sprite);
+ 
+   
+}
+
+void objetos::reproducirSonido() {
+   // cout<<"reproducir sonido"<<endl;
+    Sound->reproducir();
+}
+
+
+Sprite objetos::getSprite(){
+    return *sprite;
+}

@@ -473,7 +473,7 @@ void Enemigo::Movimiento(Time &time,Time &tiempoanimacion, Jugador jugador) {
                     }
                     if(getframeActual(tiempoanimacion)>=15 && getframeActual(tiempoanimacion)<=17){
                     
-                    hitBoxataqueVaca.setScale(1,1);
+                    hitBoxataqueVaca.setScale(4,4);
                     }else{
                     hitBoxataqueVaca.setScale(0,0);    
                     }
@@ -610,7 +610,7 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
     
     RenderGranada(Window);
-    //Window.draw(hitBoxataqueVaca);
+    Window.draw(hitBoxataqueVaca);
     //Window.draw(hitBox);
 
 }
@@ -634,9 +634,9 @@ void Enemigo::actualizarHitBoxataqueVaca(){
     
     if(tipo==4){
         if(animacion->getOrientacion()==1)
-        hitBoxataqueVaca.setPosition(getPos().x-70 , getPos().y -50);
+        hitBoxataqueVaca.setPosition(getPos().x-90 , getPos().y -50);
          if(animacion->getOrientacion()==0)
-        hitBoxataqueVaca.setPosition(getPos().x+70 , getPos().y -50);
+        hitBoxataqueVaca.setPosition(getPos().x+90 , getPos().y -50);
     
     }
 }
@@ -708,14 +708,14 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 
 }
 
-void Enemigo::ColisionJugador(Jugador jugador){
+void Enemigo::ColisionJugador(Jugador &jugador){
     
     if(tipo==4){
     if(jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca.getGlobalBounds())){
-        
+        jugador.restarVidas();
         cout<<"ostiaputacomo pegan"<<endl;
     }
-    }
+ }
     
         //balas
         

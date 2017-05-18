@@ -184,13 +184,14 @@ int Mapa1::Run() {
             }
              */
         }
+        
+        if(jugador.gethitBox().getPosition().x >= 480 && jugador.gethitBox().getPosition().x < 510){
+            return 2;
+        }
 
 
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
-
-
-
 
         //limpiampos pantalla
         App.clear(Color(150, 200, 200));
@@ -201,9 +202,7 @@ int Mapa1::Run() {
 
 
         for (int i = 0; i < numeroenemigos; i++) {
-
             enemigos[i]->render(interpolacion, tiempoAnimacion);
-
         }
 
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));

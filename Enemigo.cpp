@@ -187,7 +187,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                             granadaDisparo->loadSprite(TEX2, 0, 0);
                             CARGADORGRANADA.push_back(granadaDisparo);
                             RelojGranada.restart();
-                            std::cout << "Boom" << std::endl;
+                            //std::cout << "Boom" << std::endl;
                         }
                     } else {
                         //Lanzar Mortero a jugador
@@ -226,7 +226,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                             granadaDisparo->loadSprite(TEX2, 0, 0);
                             CARGADORGRANADA.push_back(granadaDisparo);
                             RelojGranada.restart();
-                            std::cout << "Boom" << std::endl;
+                            //std::cout << "Boom" << std::endl;
                         }
                     }
                 } else {
@@ -648,16 +648,16 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 muro = true;
                 if (random == 0) {
                     muro = false;
-                    cout << "murito---->" << muro << endl;
+                    //cout << "murito---->" << muro << endl;
                 }
 
             } else if (a->left + a->width - 15 <= hitBox.getGlobalBounds().left) {
-                cout << "no pasas" << endl;
+                //cout << "no pasas" << endl;
                 muro = true;
                 colMuro = true;
                 if (random == 1) {
                     muro = false;
-                    cout << "murito---->" << muro << endl;
+                    //cout << "murito---->" << muro << endl;
                 }
             }
 

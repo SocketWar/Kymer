@@ -355,23 +355,27 @@ int mapaTmx::getnPuntos() {
 }
 
 mapaTmx::~mapaTmx() {
-    delete &dimEnTiles;
+    delete tex;
+    delete doc;
+    delete tileSheet;
+  /*
+    delete &m_vertices;
     delete &dimTiles;
     delete &dimTileSheet;
     delete &nElementos;
-
-    delete tex;
-    delete doc;
     delete &map;
     delete &tileset;
     delete &image;
+   
 
-    delete tileSheet;
-    delete sprites;
 
     delete &layer;
     delete &lay;
     delete &data;
     delete &colisiones;
-    delete &m_vertices;
+     */
+    /*
+    delete &dimEnTiles;
+    delete sprites;
+     */
 }

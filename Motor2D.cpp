@@ -15,34 +15,37 @@
 
 
 Motor2D* Motor2D::instancia;
-bool Motor2D::inst =false;
+bool Motor2D::inst = false;
 
 //creamos la ventana en el contructor nada mas crear la instancia
+
 Motor2D::Motor2D() {
-    
-    window = new RenderWindow(VideoMode(1350,888), "Kymer");
-    inst=true;
-    
+
+    window = new RenderWindow(VideoMode(800, 600), "Kymer");
+    inst = true;
+
 }
 //comprobamos si existe y si no se crea una nueva
-Motor2D* Motor2D::GetInstance(){
-    
-   if(!inst){   
-     instancia= new Motor2D();
-   }
-   return instancia;
+
+Motor2D* Motor2D::GetInstance() {
+
+    if (!inst) {
+        instancia = new Motor2D();
+    }
+    return instancia;
 }
 
 //en caso de eliminar la instancia la variable de control sera false
+
 Motor2D::~Motor2D() {
-    
-   inst=false;
-    
+
+    inst = false;
+
 }
 
-RenderWindow& Motor2D::getWindow(){
-    
+RenderWindow& Motor2D::getWindow() {
+
     return *window;
-    
+
 }
 

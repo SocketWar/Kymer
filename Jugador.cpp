@@ -505,6 +505,18 @@ RectangleShape Jugador::gethitBox() {
     return hitBox;
 }
 
+vector<Bala*> Jugador::getArrayBalas(){
+    
+    
+    return CARGADOR;
+}
+
+vector<Granada*> Jugador::getArrayGranadas(){
+    
+    
+    return CARGADORGRANADA;
+}
+
 void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 
 
@@ -525,32 +537,32 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
         if (a->intersects(hitBox.getGlobalBounds())) {
 
 
-            cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
+            //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
 
             if (a->left >= hitBox.getGlobalBounds().left + hitBox.getGlobalBounds().width - 20) {
 
-                cout << "colisionmuro" << endl;
+                //cout << "colisionmuro" << endl;
                 colMuro = true;
                 muro = true;
 
                 if (Keyboard::isKeyPressed(Keyboard::Left) || a->top > hitBox.getGlobalBounds().top) {
                     muro = false;
-                    cout << "yanocolisiona---->" << muro << endl;
+                  //  cout << "yanocolisiona---->" << muro << endl;
                 }
             }
 
 
             if (a->left + a->width - 15 <= hitBox.getGlobalBounds().left) {
 
-                cout << "colisionmuro" << endl;
+                //cout << "colisionmuro" << endl;
                 colMuro = true;
                 muro = true;
 
                 if (Keyboard::isKeyPressed(Keyboard::Right) || a->top > hitBox.getGlobalBounds().top) {
 
                     muro = false;
-                    cout << "yanocolisiona---->" << muro << endl;
+                   // cout << "yanocolisiona---->" << muro << endl;
                 }
             }
 

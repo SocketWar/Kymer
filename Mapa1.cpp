@@ -69,7 +69,7 @@ int Mapa1::Run() {
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    int numeroenemigos = 8;
+    int numeroenemigos = 5;
     int vacas = 4;
     
     Jugador jugador(anchura, altura);
@@ -77,10 +77,9 @@ int Mapa1::Run() {
 
     for (int i = 0; i < numeroenemigos; i++) {
 
-        if (i < vacas)
+        
             enemigos[i] = new Enemigo(4);
-        if (i >= vacas)
-            enemigos[i] = new Enemigo(1);
+        
     }
 
 
@@ -139,12 +138,11 @@ int Mapa1::Run() {
             jugador.update(tiempo);
 
             //enemigo
-
-
             for (int i = 0; i < numeroenemigos; i++) {
 
                 enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
-                enemigos[i]->update(tiempo, jugador);
+                enemigos[i]->ColisionJugador(jugador);
+                enemigos[i]->update(tiempo,tiempoAnimacion ,jugador);
             }
 
 

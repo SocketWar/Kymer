@@ -42,6 +42,9 @@ public:
     void actualizarHitbox();
     void calcularColision(FloatRect** arrayColisiones,int nobjetos);
     RectangleShape gethitBox();
+    vector<Bala*> getArrayBalas();
+    vector<Granada*> getArrayGranadas();
+    
 private:
 
     Vector2f velocidad; //velocidad en las dos posiciones

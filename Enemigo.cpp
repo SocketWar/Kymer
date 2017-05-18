@@ -13,6 +13,9 @@ Enemigo::Enemigo(int tipoE) {
     } else {
         animacion = new Animacion("res/img/VacaBurra.png");
         animacion->spritePersonaje('v');
+        hitBoxataqueVaca.setScale(0, 0);
+        hitBoxataqueVaca.setSize(Vector2f(12, 12));
+        hitBoxataqueVaca.setFillColor(Color::Blue);
     }
 
     c = new sf::Clock();
@@ -58,7 +61,7 @@ Animacion Enemigo::getAnimacion() {
 
 }
 
-void Enemigo::Movimiento(Time &time, Jugador jugador) {
+void Enemigo::Movimiento(Time &time,Time &tiempoanimacion, Jugador jugador) {
 
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
@@ -378,6 +381,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
         actual = 1;
         if (abs(dif) > 320 || pasota || abs(dify)>200) {
+            hitBoxataqueVaca.setScale(0,0);
             //Movimiento random
             velocidadAnimacion = 0.1;
             velocidadmovimiento = 320.0f;
@@ -417,7 +421,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
             if (abs(dif) > 80 && abs(dify)<200) {
                 //Movimiento a jugador
 
-
+                 
                 if (RelojRandom.getElapsedTime().asMilliseconds() > 1000) {
                     random2 = rand() % 100;
                     RelojRandom.restart();
@@ -432,6 +436,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
                         animacion->orientacion(1);
+                        
                         if (!muro) {
                             movimiento.x = -tiempo*velocidadmovimiento;
                         } else {
@@ -441,6 +446,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
                         animacion->orientacion(0);
+                        
                         if (!muro) {
                             movimiento.x = tiempo*velocidadmovimiento;
                         } else {
@@ -450,7 +456,7 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                 } else {
                     pasota = true;
                 }
-
+                
             } else {
                 //atacar
                 if( abs(dify)<100){
@@ -460,14 +466,16 @@ void Enemigo::Movimiento(Time &time, Jugador jugador) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
                         actual = 0;
                         animacion->orientacion(1);
-
-
                     } else {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
                         actual = 0;
                         animacion->orientacion(0);
-
-
+                    }
+                    if(getframeActual(tiempoanimacion)>=15 && getframeActual(tiempoanimacion)<=17){
+                    
+                    hitBoxataqueVaca.setScale(1,1);
+                    }else{
+                    hitBoxataqueVaca.setScale(0,0);    
                     }
                 }
             }
@@ -579,11 +587,11 @@ int Enemigo::getframeActual(Time& tiempo) {
 
 }
 
-void Enemigo::update(Time &tiempo, Jugador jugador) {
+void Enemigo::update(Time &tiempo,Time &tiempoanimacion, Jugador jugador) {
 
 
     *viejo = *nuevo;
-    Movimiento(tiempo, jugador);
+    Movimiento(tiempo,tiempoanimacion,jugador);
     Saltar();
     //Disparar();
     UpdateGranada();
@@ -596,11 +604,13 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
     Motor2D *motor = Motor2D::GetInstance();
     RenderWindow& Window = motor->getWindow();
 
+    actualizarHitBoxataqueVaca();
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    
     RenderGranada(Window);
-   
+    //Window.draw(hitBoxataqueVaca);
     //Window.draw(hitBox);
 
 }
@@ -617,6 +627,17 @@ void Enemigo::actualizarHitbox() {
         hitBox.setScale(1.5, 2.2);
         hitBox.setPosition(getPos().x - 25, getPos().y - 70);
 
+    }
+}
+
+void Enemigo::actualizarHitBoxataqueVaca(){
+    
+    if(tipo==4){
+        if(animacion->getOrientacion()==1)
+        hitBoxataqueVaca.setPosition(getPos().x-70 , getPos().y -50);
+         if(animacion->getOrientacion()==0)
+        hitBoxataqueVaca.setPosition(getPos().x+70 , getPos().y -50);
+    
     }
 }
 
@@ -648,16 +669,16 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 muro = true;
                 if (random == 0) {
                     muro = false;
-                    cout << "murito---->" << muro << endl;
+                    //cout << "murito---->" << muro << endl;
                 }
 
             } else if (a->left + a->width - 15 <= hitBox.getGlobalBounds().left) {
-                cout << "no pasas" << endl;
+               // cout << "no pasas" << endl;
                 muro = true;
                 colMuro = true;
                 if (random == 1) {
                     muro = false;
-                    cout << "murito---->" << muro << endl;
+                 //   cout << "murito---->" << muro << endl;
                 }
             }
 
@@ -685,4 +706,35 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
         muro = false;
     }
 
+}
+
+void Enemigo::ColisionJugador(Jugador jugador){
+    
+    if(tipo==4){
+    if(jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca.getGlobalBounds())){
+        
+        cout<<"ostiaputacomo pegan"<<endl;
+    }
+    }else{
+    
+        //balas
+        
+        for(int i=0;i<jugador.getArrayBalas().size();i++){
+            
+            if(jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())){
+                
+                cout<<"tocado"<<endl;
+            }
+        }
+        
+        
+        for(int j=0;j<jugador.getArrayGranadas().size();j++){
+            
+            if(jugador.getArrayGranadas()[j]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())){
+                
+                cout<<"tocado"<<endl;
+            }
+        }
+        
+    }
 }

@@ -11,7 +11,7 @@ public:
     Animacion getAnimacion();
     Enemigo(const Enemigo& orig);
     virtual ~Enemigo();
-    void Movimiento(Time &tiempo, Jugador jugador);
+    void Movimiento(Time &tiempo,Time &tiempoanimacion, Jugador jugador);
     void Saltar();
     void UpdateGranada();
     void RenderGranada(RenderWindow &window);
@@ -21,8 +21,10 @@ public:
     void actualizarHitbox();
     void calcularColision(FloatRect** arrayColisiones,int nobjetos);
     RectangleShape gethitBox();
-    void update(Time &tiempo, Jugador jugador);
+    void update(Time &tiempo,Time &tiempoanimacion, Jugador jugador);
     void render(float interpolacion,Time &tiempo);
+    void ColisionJugador(Jugador jugador);
+    void actualizarHitBoxataqueVaca();
 private:
     
     Vector2f velocidad; //velocidad en las dos posiciones
@@ -35,6 +37,7 @@ private:
     Animacion *animacion;
     float velocidadmovimiento;
     RectangleShape hitBox;
+    RectangleShape hitBoxataqueVaca;
     int random;
     bool sorpresa;
     int time1;

@@ -1,13 +1,13 @@
 #include "mapaTmx.h"
 
-mapaTmx::mapaTmx() {
+mapaTmx::mapaTmx(string mapa, string texTileSheet) {
     cout << "ENTRADO EN CONSTRUCTOR" << endl;
 
-    const string texStr = "res/img/tiles.png";
-
+    const string a = mapa;
+    
     cout << "CARGANDO LA TEXTURA...";
     tex = new Texture();
-    if (!tex->loadFromFile(texStr)) {
+    if (!tex->loadFromFile(texTileSheet)) {
         cerr << "Error cargando la textura";
         exit(0);
     }
@@ -15,7 +15,7 @@ mapaTmx::mapaTmx() {
 
     cout << "CARGANDO EL MAPA...";
     doc = new XMLDocument();
-    doc->LoadFile("res/tmx/mapa2.tmx");
+    doc->LoadFile(mapa.data());
     cout << "OK" << endl;
 
     cout << "CREANDO EL XML DOCUMENT.....";
@@ -73,7 +73,7 @@ mapaTmx::mapaTmx() {
 
     CargaObjetos();
 
-    if (load(texStr))
+    if (load(texTileSheet))
         cout << "LOAD...OK" << endl;
 
     //Muestrainfo();
@@ -355,23 +355,29 @@ int mapaTmx::getnPuntos() {
 }
 
 mapaTmx::~mapaTmx() {
-    delete &dimEnTiles;
+    tex = NULL;
+    delete tex;
+    doc = NULL;
+    delete doc;
+    tileSheet = NULL;
+    delete tileSheet;
+    
+  /*
+    delete &m_vertices;
     delete &dimTiles;
     delete &dimTileSheet;
     delete &nElementos;
-
-    delete tex;
-    delete doc;
     delete &map;
     delete &tileset;
     delete &image;
+   
 
-    delete tileSheet;
-    delete sprites;
 
     delete &layer;
     delete &lay;
     delete &data;
     delete &colisiones;
-    delete &m_vertices;
+    delete &dimEnTiles;
+    delete sprites;
+     */
 }

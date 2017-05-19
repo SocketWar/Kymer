@@ -52,43 +52,45 @@ int menu::Run() {
         return (-1);
     }
     
-    //cout<<"tam de menu:"<<   Texture.getSize().x <<","<<   Texture.getSize().y<<endl;
-    Texture.getSize().x;
     sprite.setTexture(Texture);
+    sprite.setScale(motor->getEscala());
     sprite.setColor(sf::Color(255, 255, 255, alpha));
     if (!Font.loadFromFile("letras.ttf")) {
         std::cerr << "letras.ttf" << std::endl;
         return (-1);
     }
-    Menu1.setFont(Font);
-    Menu1.setCharacterSize(90);
-    Menu1.setString("Play");
-    Menu1.setPosition(Vector2f(555.f, 300.f));
     
+    float tamFuente = 90 * motor->getEscala().x;
+    
+     Menu1.setFont(Font);
+    Menu1.setCharacterSize(tamFuente);
+    Menu1.setString("Play");
+    Menu1.setPosition(Vector2f(555.f * motor->getEscala().x, 300.f * motor->getEscala().y));
+
     MenuPVP.setFont(Font);
-    MenuPVP.setCharacterSize(90);
+    MenuPVP.setCharacterSize(tamFuente);
     MenuPVP.setString("Versus");
-    MenuPVP.setPosition(Vector2f(535.f, 400.f));
+    MenuPVP.setPosition(Vector2f(535.f * motor->getEscala().x, 400.f * motor->getEscala().y));
 
     MenuOptions.setFont(Font);
-    MenuOptions.setCharacterSize(90);
+    MenuOptions.setCharacterSize(tamFuente);
     MenuOptions.setString("Options");
-    MenuOptions.setPosition(Vector2f(520.f, 520.f));
-    
+    MenuOptions.setPosition(Vector2f(520.f * motor->getEscala().x, 520.f * motor->getEscala().y));
+
     Menu2.setFont(Font);
-    Menu2.setCharacterSize(90);
+    Menu2.setCharacterSize(tamFuente);
     Menu2.setString("Exit");
-    Menu2.setPosition(Vector2f(575.f, 630.f));
-    
+    Menu2.setPosition(Vector2f(575.f * motor->getEscala().x, 630.f * motor->getEscala().y));
+
     MenuComoJugar.setFont(Font);
-    MenuComoJugar.setCharacterSize(90);
+    MenuComoJugar.setCharacterSize(tamFuente);
     MenuComoJugar.setString("How to play?");
-    MenuComoJugar.setPosition(Vector2f(430.f, 750.f));
+    MenuComoJugar.setPosition(Vector2f(430.f * motor->getEscala().x, 750.f * motor->getEscala().y));
 
     Menu3.setFont(Font);
-    Menu3.setCharacterSize(90);
+    Menu3.setCharacterSize(tamFuente);
     Menu3.setString("Continue");
-    Menu3.setPosition(Vector2f(500.f, 300.f));
+    Menu3.setPosition(Vector2f(500.f * motor->getEscala().x, 300.f * motor->getEscala().y));
 
     if (playing) {
         alpha = alpha_max;
@@ -246,21 +248,21 @@ int menu::Run() {
 //         }
      }
       
-        App.draw(sprite);
+         App.draw(sprite);
         if (alpha == alpha_max) {
             if (playing) {
                 App.draw(Menu3);
-                MenuComoJugar.setPosition(Vector2f(400.f, 400.f));
+                MenuComoJugar.setPosition(Vector2f(400.f * motor->getEscala().x, 400.f * motor->getEscala().y));
             } else {
-                 if(!comoJugar){
+                if (!comoJugar) {
                     App.draw(Menu1);
                     App.draw(MenuPVP);
-                    MenuComoJugar.setPosition(Vector2f(430.f, 750.f));
-                 }
+                    MenuComoJugar.setPosition(Vector2f(430.f * motor->getEscala().x, 750.f * motor->getEscala().y));
+                }
             }
-            if(!comoJugar){
+            if (!comoJugar) {
                 App.draw(MenuOptions);
-                App.draw(Menu2);//exit
+                App.draw(Menu2); //exit
                 App.draw(MenuComoJugar);
             }
         }

@@ -15,34 +15,37 @@
 
 
 Motor2D* Motor2D::instancia;
-bool Motor2D::inst =false;
-
+bool Motor2D::inst = false;
 //creamos la ventana en el contructor nada mas crear la instancia
+
 Motor2D::Motor2D() {
+    window = new RenderWindow(VideoMode(1280, 720), "Kymer", Style::Close);
     
-    window = new RenderWindow(VideoMode(1350,888), "Kymer");
-    inst=true;
+    //REFERENCIA AL TAMAÑO DE LA IMAGEN DEL MENU
+    escala.x = (float) window->getSize().x/ 1366;
+    escala.y = (float) window->getSize().y / 888;
     
+    inst = true;
 }
 //comprobamos si existe y si no se crea una nueva
-Motor2D* Motor2D::GetInstance(){
-    
-   if(!inst){   
-     instancia= new Motor2D();
-   }
-   return instancia;
+
+Motor2D* Motor2D::GetInstance() {
+    if (!inst) {
+        instancia = new Motor2D();
+    }
+    return instancia;
 }
 
 //en caso de eliminar la instancia la variable de control sera false
 Motor2D::~Motor2D() {
-    
-   inst=false;
-    
+    inst = false;
 }
 
-RenderWindow& Motor2D::getWindow(){
-    
+RenderWindow& Motor2D::getWindow() {
     return *window;
-    
+}
+
+Vector2f Motor2D::getEscala(){
+    return escala;
 }
 

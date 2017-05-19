@@ -7,13 +7,15 @@
 #include "Mapa1.hpp"
 #include "sonido.h"
 
-Mapa1::Mapa1(void) {
+Mapa1::Mapa1(string mapa, string tileSheet) {
     update = 1000 / 25;
     frameskip = 5;
 
     anchura = 1024;
     altura = 720;
 
+    this->mapa = mapa;
+    this->tileSheet = tileSheet;
 }
 
 int Mapa1::Run() {
@@ -78,16 +80,16 @@ int Mapa1::Run() {
 
     for (int i = 0; i < numeroenemigos; i++) {
 
-        
-            enemigos[i] = new Enemigo(4);
-        
+
+        enemigos[i] = new Enemigo(4);
+
     }
 
 
     View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
-    mapaTmx map;
+    mapaTmx map(mapa, tileSheet);
 
     // ---------------------------------------
     // HUD
@@ -135,7 +137,7 @@ int Mapa1::Run() {
             }
             //llamadas a update
             //jugador
-            
+
             jugador.calcularColision(map.getColisiones(), map.getnColisiones());
             jugador.update(tiempo);
             jugador.recogeObjeto(*machineGun);
@@ -144,7 +146,7 @@ int Mapa1::Run() {
 
                 enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
                 enemigos[i]->ColisionJugador(jugador);
-                enemigos[i]->update(tiempo,tiempoAnimacion ,jugador);
+                enemigos[i]->update(tiempo, tiempoAnimacion, jugador);
             }
 
 
@@ -202,6 +204,9 @@ int Mapa1::Run() {
                 //                disparo.getSonido().play();
                 //sound2.play();
             }
+            if (Keyboard::isKeyPressed(Keyboard::B)) {
+                return 2;
+            }
 
             /*
             if (boxR.intersects(item->getHitbox())) {
@@ -210,7 +215,6 @@ int Mapa1::Run() {
             }
              */
         }
-
 
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
@@ -223,7 +227,7 @@ int Mapa1::Run() {
 
         //dibujamos 
         App.draw(map);
-        jugador.render(interpolacion, tiempoAnimacion,*h);
+        jugador.render(interpolacion, tiempoAnimacion, *h);
         machineGun->RenderObjeto();
 
         for (int i = 0; i < numeroenemigos; i++) {
@@ -236,7 +240,7 @@ int Mapa1::Run() {
         App.setView(vista);
         //enemigo->RenderGranada(App);
         h->Update(vista);
-        h->render(); 
+        h->render();
         jugador.setVidas(h->getContHP());
         App.display();
 

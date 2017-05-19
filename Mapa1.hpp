@@ -33,8 +33,11 @@ private:
     int frameskip;
     int anchura;
     int altura;
+
+    string mapa;
+    string tileSheet;
 public:
-    Mapa1(void);
+    Mapa1(string mapa, string tileSheet);
     virtual int Run();
 
 };

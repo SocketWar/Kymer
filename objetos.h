@@ -18,6 +18,7 @@ public:
     Vector2f getSize();
     void reproducirSonido();
     Sprite getSprite();
+    char getTipo();
 private:
     Texture *tex;
     Sprite *sprite;
@@ -25,6 +26,7 @@ private:
     Vector2f pos;
     Vector2f size;
     sonido *Sound;
+    char tipo;
 
 };
 

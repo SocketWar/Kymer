@@ -191,7 +191,7 @@ void Jugador::Disparar() {
         velocidadAnimacion = 0.085;
 
         if (cuchillo) {
-            
+
             if (arma == 0) {
                 if (Keyboard::isKeyPressed(Keyboard::Down)) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[10];
@@ -338,7 +338,7 @@ void Jugador::DispararGranada() {
                 GranadaY = animacion->getSpriteE().getPosition().y - 60;
             }
             Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
-//            Granada *granadaDisparo = new Granada(112, 55, speedX, speedY, 60);
+            //            Granada *granadaDisparo = new Granada(112, 55, speedX, speedY, 60);
             granadaDisparo->setPosition(GranadaX, GranadaY);
             granadaDisparo->loadSprite(TEX2, 0, 0);
             CARGADORGRANADA.push_back(granadaDisparo);
@@ -451,6 +451,7 @@ int Jugador::getframeActual(Time& tiempo) {
 }
 
 void Jugador::setVidas(int i) {
+    if (vidas>=0 && vidas<=6)
     vidas = i;
 }
 
@@ -625,7 +626,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     if (!colMuro) {
         muro = false;
     }
-     
+
 }
 
 void Jugador::update(Time &tiempo) {
@@ -656,8 +657,14 @@ void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
 void Jugador::recogeObjeto(objetos &obj) {
 
     if (obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())) {
-        obj.reproducirSonido();
-        this->setArma(1);
+        if (obj.getTipo() == 'a') {
+            obj.reproducirSonido();
+            this->setArma(1);
+        }else if (obj.getTipo() == 'v') {
+            int i=0;
+            i=getVidas()+1;
+            this->setVidas(i);
+        }
 
     }
 }

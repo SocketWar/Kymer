@@ -54,7 +54,10 @@ void Granada::loadSprite(Texture textura, int posX, int posY) {
     if (SPEEDY < 0)
         SPRITE->rotate(270);
 }
-
+ void Granada::setDimensiones(int w,int h){
+     WIDTH=w;
+     HEIGTH=h;
+ }
 /*
  * Si devuelve 1, avanza
  * Si devuelve 2, acaba su recorrido
@@ -75,7 +78,7 @@ int Granada::move() {
                 SPRITE->rotate(20);
             }
         } else {
-            SPRITE->setPosition(X, Y - 140);
+            SPRITE->setPosition(X, Y - 80);
             TIEMPO -= 1;
         }
         return 1;
@@ -99,14 +102,18 @@ bool Granada::colision(Rect<float> hit) {
 void Granada::explota(FloatRect *arrayColisiones) {
     if (arrayColisiones->intersects(getSprite().getGlobalBounds())) {
         cout << "BOOM! SUELO TOCADO" << endl;
+        if (!explosion){
         Texture textura;
-        if (!textura.loadFromFile("res/img/explosion2.png")) {
+        if (!textura.loadFromFile("res/img/explosion3.png")) {
             std::cerr << "Error en textura Granada";
             exit(0);
         }
-
+        setDimensiones(50,54);
         loadSprite(textura,0,0);
-        SPRITE->scale(3, 3);
+        
+        SPRITE->scale(0.9, 0.9);
+    }
+        
         SPRITE->setRotation(0);
         explosion = true;
     }

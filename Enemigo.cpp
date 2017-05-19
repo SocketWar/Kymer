@@ -81,12 +81,12 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         if (abs(dif) > 480 || abs(dify) > 200) {
             //Movimiento random
             sorpresa = false;
-            if (c->getElapsedTime().asMilliseconds()>1000){
+            if (c->getElapsedTime().asMilliseconds() > 1000) {
 
-            if (time_aux == -1 || time1 == time_aux) {
-                random = rand() % 3;
-                time_aux = time1 + 1;
-            }
+                if (time_aux == -1 || time1 == time_aux) {
+                    random = rand() % 3;
+                    time_aux = time1 + 1;
+                }
             }
             if (random == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -190,24 +190,22 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                                 std::cerr << "Error en textura Granada";
                                 exit(0);
                             }
-                           
+
                             if (abs(dif) < 350 && abs(dify) < 200) {
                                 if (posJugador.x < posEnemigo.x) {
                                     speedX = speedX + 5;
-                                    cout<<"holaaaaaaaaaa_cercaa"<<endl;
+
                                 } else {
                                     speedX = speedX - 5;
                                 }
 
-                            }else{
-                                cout<<"hola_lejos"<<endl;
                             }
                             Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
                             granadaDisparo->setPosition(GranadaX, GranadaY);
                             granadaDisparo->loadSprite(TEX2, 0, 0);
                             CARGADORGRANADA.push_back(granadaDisparo);
                             RelojGranada.restart();
-                            
+
                         }
                     }
                 } else {
@@ -245,11 +243,11 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         if (abs(dif) > 320 || abs(dify) > 200) {
             //Movimiento random
             sorpresa = false;
-            if (c->getElapsedTime().asMilliseconds()>1000){
-            if (time_aux == -1 || time1 == time_aux) {
-                random = rand() % 3;
-                time_aux = time1 + 1;
-            }
+            if (c->getElapsedTime().asMilliseconds() > 1000) {
+                if (time_aux == -1 || time1 == time_aux) {
+                    random = rand() % 3;
+                    time_aux = time1 + 1;
+                }
             }
             if (random == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -431,11 +429,11 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                 pasota = false;
                 RelojRandom.restart();
             }
-            if (c->getElapsedTime().asMilliseconds()>1000){
-            if (time_aux == -1 || time1 == time_aux) {
-                random = rand() % 2;
-                time_aux = time1 + 1;
-            }
+            if (c->getElapsedTime().asMilliseconds() > 1000) {
+                if (time_aux == -1 || time1 == time_aux) {
+                    random = rand() % 2;
+                    time_aux = time1 + 1;
+                }
             }
             if (random == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -532,23 +530,24 @@ void Enemigo::Saltar() {
 
 
 
+    
+        if (muro && suelo) {
+            velocidad.y = -velocidadsalto;
 
-    if (muro && suelo) {
-        velocidad.y = -velocidadsalto;
+        } else if (!suelo) {
 
-    } else if (!suelo) {
+            velocidad.y += gravedad;
 
-        velocidad.y += gravedad;
+        } else {
+            animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
+            velocidad.y = 0;
 
-    } else {
-        animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
-        velocidad.y = 0;
-
-    }
-    if (!colision) {
-        suelo = false;
-    }
-    animacion->Movimiento(velocidad);
+        }
+        if (!colision) {
+            suelo = false;
+        }
+        animacion->Movimiento(velocidad);
+  
     /*
     if ((posicion.y + 2) != distanciasuelo) {
         if (arma==0){

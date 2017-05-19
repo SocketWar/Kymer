@@ -15,6 +15,7 @@ public:
     void spriteMortero();
     bool colision(Rect<float> hit);
     void explota(FloatRect *arrayColisiones);
+    void setDimensiones(int w,int h);
     virtual ~Granada();
     int getHeigth(){ return HEIGTH;}
     int getWidth(){ return WIDTH;}

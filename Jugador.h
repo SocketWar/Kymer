@@ -82,8 +82,7 @@ private:
     bool cuchillo;
     //colisiones
     RectangleShape hitBox;
-    RectangleShape trol;
-    RectangleShape trol2;
+    
     
     //interpolacion
     Estado *viejo;

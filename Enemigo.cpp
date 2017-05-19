@@ -692,7 +692,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 colMuro = true;
                 if (random == 1) {
                     muro = false;
-                    //   cout << "murito---->" << muro << endl;
+                    //cout << "murito---->" << muro << endl;
                 }
             }
 

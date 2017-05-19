@@ -338,6 +338,7 @@ void Jugador::DispararGranada() {
                 GranadaY = animacion->getSpriteE().getPosition().y - 60;
             }
             Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
+//            Granada *granadaDisparo = new Granada(112, 55, speedX, speedY, 60);
             granadaDisparo->setPosition(GranadaX, GranadaY);
             granadaDisparo->loadSprite(TEX2, 0, 0);
             CARGADORGRANADA.push_back(granadaDisparo);

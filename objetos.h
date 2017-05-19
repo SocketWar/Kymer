@@ -12,7 +12,7 @@
 
 class objetos {
 public:
-    objetos(char t);
+    objetos(char i, float x, float y);
     Vector2f getPos();
     void RenderObjeto();//para mostrar por pantalla
     Vector2f getSize();

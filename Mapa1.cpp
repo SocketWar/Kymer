@@ -71,42 +71,35 @@ int Mapa1::Run() {
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    int numeroenemigos = 1;
+    mapaTmx map(mapa, tileSheet);
+
+    int numeroenemigos = 20;
     int vacas = 4;
-    objetos *machineGun;
-    machineGun = new objetos('a');
+    objetos **machineGun = new objetos*[map.getnPuntos()];
+
+    for (int i = 0; i < map.getnPuntos(); i++) {
+        Vector2f *v = map.getPuntuaciones()[i];
+        machineGun[i] = new objetos('a', v->x, v->y);
+    }
+
     Jugador jugador(anchura, altura);
     Enemigo **enemigos = new Enemigo*[numeroenemigos];
 
     for (int i = 0; i < numeroenemigos; i++) {
-
-
         enemigos[i] = new Enemigo(3);
-
     }
 
 
     View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
-    mapaTmx map(mapa, tileSheet);
 
     // ---------------------------------------
     // HUD
     // ---------------------------------------
 
     Font *fuente = new Font();
-    /*Texture *cuadradoPuntuacion = new Texture();
-     
-    if (!cuadradoPuntuacion->loadFromFile("res/img/pru.png")) {
-        cerr << "Error cargando la imagen pru.png";
-        exit(0);
-    }*/
-
     hud *h = new hud(vista);
-    // ObjetoPuntuacion *item = new ObjetoPuntuacion(cuadradoPuntuacion, 900, 550, 128, 128, 2000);
-    //Rect<float> boxR(300, 250, 50, 50);
-
 
     // ---------------------------------------
     // PAUSA
@@ -116,10 +109,6 @@ int Mapa1::Run() {
     textoPausa.setFont(*fuente);
     textoPausa.setCharacterSize(100);
     textoPausa.setString("PAUSA");
-
-
-
-
 
     while (Running) {
 
@@ -140,7 +129,11 @@ int Mapa1::Run() {
 
             jugador.calcularColision(map.getColisiones(), map.getnColisiones());
             jugador.update(tiempo);
-            jugador.recogeObjeto(*machineGun);
+
+            for (int i = 0; i < map.getnPuntos(); i++) {
+                jugador.recogeObjeto(*machineGun[i]);
+
+            }
             //enemigo
             for (int i = 0; i < numeroenemigos; i++) {
 
@@ -207,13 +200,6 @@ int Mapa1::Run() {
             if (Keyboard::isKeyPressed(Keyboard::B)) {
                 return 2;
             }
-
-            /*
-            if (boxR.intersects(item->getHitbox())) {
-                item->recogerObjeto();
-                h->changePunt(item->getPuntos());
-            }
-             */
         }
 
         //interpolacion de movimiento
@@ -228,7 +214,10 @@ int Mapa1::Run() {
         //dibujamos 
         App.draw(map);
         jugador.render(interpolacion, tiempoAnimacion, *h);
-        machineGun->RenderObjeto();
+
+        for (int i = 0; i < map.getnPuntos(); i++) {
+            machineGun[i]->RenderObjeto();
+        }
 
         for (int i = 0; i < numeroenemigos; i++) {
 

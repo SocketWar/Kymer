@@ -13,24 +13,25 @@
 
 #include "objetos.h"
 
-objetos::objetos(char i) {
-    
+objetos::objetos(char i, float x, float y) {
+
     Sound = new sonido();
     Sound->setSonido("res/audio/heavyMachine.wav");
-    
+
     tex = new Texture();
-    if(!tex->loadFromFile("res/img/heavyMachineGun.png")){
-        cout<<"Error cargando la textura de objeto escopeta"<<endl;
-        
+    if (!tex->loadFromFile("res/img/heavyMachineGun.png")) {
+        cout << "Error cargando la textura de objeto escopeta" << endl;
+
     }
-    size = Vector2f(31,30);
-    pos =  Vector2f(154,600);
+    size = Vector2f(31, 30);
+    pos = Vector2f(x, y);
     sprite = new Sprite(*tex);
-    sprite->setTextureRect(IntRect(0, 0 , 31, 30));
-    sprite->setPosition(Vector2f(200,600));
+    sprite->setTextureRect(IntRect(0, 0, 31, 30));
+    sprite->setPosition(pos);
     tocado = false;
-    
+
 }
+
 Vector2f objetos::getPos() {
     return pos;
 }
@@ -40,20 +41,19 @@ Vector2f objetos::getSize() {
 }
 
 void objetos::RenderObjeto() {/*renderizado basico para mostrar objeto por pantalla*/
-    
+
     Motor2D *motor = Motor2D::GetInstance();
     RenderWindow& Window = motor->getWindow();
     Window.draw(*sprite);
- 
-   
+
+
 }
 
 void objetos::reproducirSonido() {
-   // cout<<"reproducir sonido"<<endl;
+    // cout<<"reproducir sonido"<<endl;
     Sound->reproducir();
 }
 
-
-Sprite objetos::getSprite(){
+Sprite objetos::getSprite() {
     return *sprite;
 }

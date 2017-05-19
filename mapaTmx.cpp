@@ -306,7 +306,7 @@ void mapaTmx::CargaObjetos() {
                 countSpawn++;
             } else {
                 if (nombre == "Punt") {
-                    spawn[countPunt] = new Vector2f(x, y);
+                    puntos[countPunt] = new Vector2f(x, y);
                     countPunt++;
                 }
             }

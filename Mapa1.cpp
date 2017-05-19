@@ -88,6 +88,7 @@ int Mapa1::Run() {
 
     View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
+    //vista.zoom(motor->getEscala().x + motor->getEscala().y);
 
     mapaTmx map(mapa, tileSheet);
 

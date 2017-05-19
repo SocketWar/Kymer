@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=kymer
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kymer
+CND_ARTIFACT_NAME_Debug=cambioescena
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/cambioescena
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=kymer.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kymer.tar
+CND_PACKAGE_NAME_Debug=cambioescena.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/cambioescena.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=kymer
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kymer
+CND_ARTIFACT_NAME_Release=cambioescena
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/cambioescena
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=kymer.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kymer.tar
+CND_PACKAGE_NAME_Release=cambioescena.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/cambioescena.tar
 #
 # include compiler specific variables
 #

@@ -23,11 +23,12 @@ public:
     virtual ~Motor2D();
     Motor2D();
     RenderWindow& getWindow();
+    Vector2f getEscala();
 private:
     static Motor2D *instancia;
     RenderWindow* window;
     static bool inst;
-    
+    Vector2f escala;
 };
 
 #endif /* MOTOR2D_H */

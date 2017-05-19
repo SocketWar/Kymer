@@ -355,9 +355,13 @@ int mapaTmx::getnPuntos() {
 }
 
 mapaTmx::~mapaTmx() {
+    tex = NULL;
     delete tex;
+    doc = NULL;
     delete doc;
+    tileSheet = NULL;
     delete tileSheet;
+    
   /*
     delete &m_vertices;
     delete &dimTiles;
@@ -373,8 +377,6 @@ mapaTmx::~mapaTmx() {
     delete &lay;
     delete &data;
     delete &colisiones;
-     */
-    /*
     delete &dimEnTiles;
     delete sprites;
      */

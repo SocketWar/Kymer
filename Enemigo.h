@@ -25,6 +25,8 @@ public:
     void render(float interpolacion,Time &tiempo);
     void ColisionJugador(Jugador &jugador);
     void actualizarHitBoxataqueVaca();
+    void restarVidas();
+    int getVidas();
 private:
     
     Vector2f velocidad; //velocidad en las dos posiciones
@@ -58,6 +60,8 @@ private:
     bool colision;
     bool estadocolision;
     bool muro;
+    //variables enemigo
+    int vidas;
 };
 
 #endif /* ENEMIGO_H */

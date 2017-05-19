@@ -49,6 +49,7 @@ public:
     vector<Granada*> getArrayGranadas();
     void actualizarHud(hud& h); 
     void recogeObjeto(objetos &obj);
+    void animacionCuchillo(bool c);
     
 private:
 
@@ -78,6 +79,7 @@ private:
     bool colision;
     bool estadocolision;
     bool muro;
+    bool cuchillo;
     //colisiones
     RectangleShape hitBox;
     RectangleShape trol;

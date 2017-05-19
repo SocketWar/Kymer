@@ -69,7 +69,7 @@ int Mapa1::Run() {
     // ---------------------------------------
     // ELEMENTOS DE JUEGO
     // ---------------------------------------
-    int numeroenemigos = 5;
+    int numeroenemigos = 1;
     int vacas = 4;
     objetos *machineGun;
     machineGun = new objetos('a');
@@ -200,7 +200,7 @@ int Mapa1::Run() {
             if (Keyboard::isKeyPressed(Keyboard::A)) {
                 // sound.setVolume(1);
                 //                disparo.getSonido().play();
-                sound2.play();
+                //sound2.play();
             }
 
             /*

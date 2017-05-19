@@ -1,13 +1,13 @@
 
 #include "Jugador.h"
 
-
 Jugador::Jugador(int anchura, int altura) {
     soundEffect = new sonido();
     soundEffect->setSonido("res/audio/shot.wav");
 
-    vidas=5;
-    granadas=5;
+    arma = 0;
+    vidas = 5;
+    granadas = 5;
     gravedad = 2.0f;
     distanciasuelo = 700;
     velocidadsalto = 20.0f;
@@ -31,7 +31,7 @@ Jugador::Jugador(int anchura, int altura) {
     hitBox.setSize(Vector2f(32, 32));
     hitBox.setFillColor(Color::Blue);
     muro = false;
-
+    cuchillo = false;
     if (!TEX.loadFromFile("res/img/balada2.png")) {
         std::cerr << "Error en textura bala";
         exit(0);
@@ -189,73 +189,92 @@ void Jugador::Disparar() {
 
     } else if (Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion = 0.085;
-        if (Keyboard::isKeyPressed(Keyboard::Right) ) {
-                cout << "maravilloso" << endl;
 
-            if (arma == 0) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
-                actual = 8;
-                //            soundEffect->getSonido().play();
-
-
-
-            } else if (arma == 1) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
-                actual = 21;
-            }
-
-
-        } else if ( Keyboard::isKeyPressed(Keyboard::Left)) {
-            if (arma == 0) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
-                actual = 8;
-            } else if (arma == 1) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
-                actual = 21;
-            }
-
-        } else if ( Keyboard::isKeyPressed(Keyboard::Down)) {
-
-            if (arma == 0) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
-                actual = 6;
-            } else if (arma == 1) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[19];
-                actual = 19;
-            }
-
-        } else {
+        if (cuchillo) {
             
             if (arma == 0) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
-                actual = 5;
+                if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[10];
+                    actual = 10;
+                } else {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[9];
+                    actual = 9;
+                }
             } else if (arma == 1) {
-                totalSpritesAnimacion = animacion->getNumAnimaciones()[18];
-                actual = 18;
+                if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[26];
+                    actual = 26;
+                } else {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[25];
+                    actual = 25;
+                }
             }
+
         }
-        if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
-            if (animacion->getOrientacion() != 0) {
-                speedX = 25;
-                speedY = 0;
-                balaX = animacion->getSpriteE().getPosition().x + 50;
-                balaY = animacion->getSpriteE().getPosition().y - 60;
+
+
+        if (!cuchillo) {
+            if (Keyboard::isKeyPressed(Keyboard::Right)) {
+                cout << "maravilloso" << endl;
+
+                if (arma == 0) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
+                    actual = 8;
+                    //            soundEffect->getSonido().play();
+                } else if (arma == 1) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
+                    actual = 21;
+                }
+            } else if (Keyboard::isKeyPressed(Keyboard::Left)) {
+                if (arma == 0) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
+                    actual = 8;
+                } else if (arma == 1) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
+                    actual = 21;
+                }
+
+            } else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+
+                if (arma == 0) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
+                    actual = 6;
+                } else if (arma == 1) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[19];
+                    actual = 19;
+                }
+
             } else {
-                speedX = -25;
-                speedY = 0;
-                balaX = animacion->getSpriteE().getPosition().x - 50;
-                balaY = animacion->getSpriteE().getPosition().y - 60;
+
+                if (arma == 0) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[5];
+                    actual = 5;
+                } else if (arma == 1) {
+                    totalSpritesAnimacion = animacion->getNumAnimaciones()[18];
+                    actual = 18;
+                }
             }
-            Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
-            balaDisparo->setPosition(balaX, balaY);
-            balaDisparo->loadSprite(TEX, 0, 0);
-            CARGADOR.push_back(balaDisparo);
-            RelojBala.restart();
+            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+                if (animacion->getOrientacion() != 0) {
+                    speedX = 25;
+                    speedY = 0;
+                    balaX = animacion->getSpriteE().getPosition().x + 50;
+                    balaY = animacion->getSpriteE().getPosition().y - 60;
+                } else {
+                    speedX = -25;
+                    speedY = 0;
+                    balaX = animacion->getSpriteE().getPosition().x - 50;
+                    balaY = animacion->getSpriteE().getPosition().y - 60;
+                }
+                Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
+                balaDisparo->setPosition(balaX, balaY);
+                balaDisparo->loadSprite(TEX, 0, 0);
+                CARGADOR.push_back(balaDisparo);
+                RelojBala.restart();
+            }
+
         }
-
     }
-
-
 
 }
 
@@ -439,9 +458,9 @@ int Jugador::getVidas() {
     return vidas;
 }
 
-void Jugador::restarVidas(){
-    if(vidas>0)
-    vidas--;
+void Jugador::restarVidas() {
+    if (vidas > 0)
+        vidas--;
 }
 
 void Jugador::setGranadas(int i) {
@@ -469,6 +488,12 @@ void Jugador::actualizarEstado() {
 void Jugador::setEstado() {
 
     nuevo->actualizartiempo(getPos().x, getPos().y);
+
+}
+
+void Jugador::animacionCuchillo(bool c) {
+
+    cuchillo = c;
 
 }
 
@@ -508,15 +533,15 @@ RectangleShape Jugador::gethitBox() {
     return hitBox;
 }
 
-vector<Bala*> Jugador::getArrayBalas(){
-    
-    
+vector<Bala*> Jugador::getArrayBalas() {
+
+
     return CARGADOR;
 }
 
-vector<Granada*> Jugador::getArrayGranadas(){
-    
-    
+vector<Granada*> Jugador::getArrayGranadas() {
+
+
     return CARGADORGRANADA;
 }
 
@@ -551,7 +576,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 
                 if (Keyboard::isKeyPressed(Keyboard::Left) || a->top > hitBox.getGlobalBounds().top) {
                     muro = false;
-                  //  cout << "yanocolisiona---->" << muro << endl;
+                    //  cout << "yanocolisiona---->" << muro << endl;
                 }
             }
 
@@ -565,7 +590,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 if (Keyboard::isKeyPressed(Keyboard::Right) || a->top > hitBox.getGlobalBounds().top) {
 
                     muro = false;
-                   // cout << "yanocolisiona---->" << muro << endl;
+                    // cout << "yanocolisiona---->" << muro << endl;
                 }
             }
 
@@ -612,7 +637,7 @@ void Jugador::update(Time &tiempo) {
 
 }
 
-void Jugador::render(float interpolacion, Time &tiempo,hud& h) {
+void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
     Motor2D *motor = Motor2D::GetInstance();
     RenderWindow& Window = motor->getWindow();
     actualizarHud(h);
@@ -624,21 +649,20 @@ void Jugador::render(float interpolacion, Time &tiempo,hud& h) {
 
 }
 
-
 void Jugador::recogeObjeto(objetos &obj) {
-  
-  if(obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())){
-          obj.reproducirSonido();
-          this->setArma(1);
-          
-}
+
+    if (obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())) {
+        obj.reproducirSonido();
+        this->setArma(1);
+
+    }
 }
 
 void Jugador::actualizarHud(hud& h) {
-    
-    if(this->arma ==1){
+
+    if (this->arma == 1) {
         h.changeArma(1);
-    }else {
+    } else {
         h.changeArma(0);
     }
     h.changeContHP(vidas);

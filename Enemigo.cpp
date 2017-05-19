@@ -77,13 +77,16 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
     totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
     //velocidadmovimiento = 600.0f;
     //Enemigo granada
-    if (tipo == 1 || tipo == 3) {
+    if (tipo == 1) {
         if (abs(dif) > 480 || abs(dify) > 200) {
             //Movimiento random
             sorpresa = false;
+            if (c->getElapsedTime().asMilliseconds()>1000){
+
             if (time_aux == -1 || time1 == time_aux) {
                 random = rand() % 3;
                 time_aux = time1 + 1;
+            }
             }
             if (random == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -130,7 +133,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     //Movimiento a jugador
                     time_aux = time1;
                     velocidadAnimacion = 0.1;
-                    velocidadmovimiento = 850.0f;
+                    velocidadmovimiento = 1500.0f;
                     if (posJugador.x < posEnemigo.x) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -166,7 +169,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
                             actual = 4;
                             animacion->orientacion(1);
-                            speedX = -10;
+                            speedX = -9;
                             speedY = 15;
                             GranadaX = posEnemigo.x;
                             GranadaY = posEnemigo.y - 60;
@@ -175,7 +178,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
                             actual = 4;
                             animacion->orientacion(0);
-                            speedX = 10;
+                            speedX = 9;
                             speedY = 15;
                             GranadaX = animacion->getSpriteE().getPosition().x + 40;
                             GranadaY = animacion->getSpriteE().getPosition().y - 60;
@@ -187,51 +190,24 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                                 std::cerr << "Error en textura Granada";
                                 exit(0);
                             }
+                           
+                            if (abs(dif) < 350 && abs(dify) < 200) {
+                                if (posJugador.x < posEnemigo.x) {
+                                    speedX = speedX + 5;
+                                    cout<<"holaaaaaaaaaa_cercaa"<<endl;
+                                } else {
+                                    speedX = speedX - 5;
+                                }
+
+                            }else{
+                                cout<<"hola_lejos"<<endl;
+                            }
                             Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
                             granadaDisparo->setPosition(GranadaX, GranadaY);
                             granadaDisparo->loadSprite(TEX2, 0, 0);
                             CARGADORGRANADA.push_back(granadaDisparo);
                             RelojGranada.restart();
-                            std::cout << "Boom" << std::endl;
-                        }
-                    } else {
-                        //Lanzar Mortero a jugador
-                        int speedX = 0;
-                        int speedY = 0;
-                        float morteroX = 0;
-                        float morteroY = 0;
-                        velocidadAnimacion = 0.07;
-                        if (posJugador.x < posEnemigo.x) {
-                            totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
-                            actual = 8;
-                            animacion->orientacion(1);
-                            speedX = -10;
-                            speedY = 15;
-                            morteroX = posEnemigo.x;
-                            morteroY = posEnemigo.y - 60;
-
-                        } else {
-                            totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
-                            actual = 8;
-                            animacion->orientacion(0);
-                            speedX = 10;
-                            speedY = 15;
-                            morteroX = animacion->getSpriteE().getPosition().x + 40;
-                            morteroY = animacion->getSpriteE().getPosition().y - 60;
-
-                        }
-                        if (RelojGranada.getElapsedTime().asMilliseconds() > 1100) {
-                            Texture TEX2;
-                            if (!TEX2.loadFromFile("res/img/SpriteGranada.png")) {
-                                std::cerr << "Error en textura Granada";
-                                exit(0);
-                            }
-                            Granada *granadaDisparo = new Granada(18, 11, speedX, speedY, 60);
-                            granadaDisparo->setPosition(morteroX, morteroY);
-                            granadaDisparo->loadSprite(TEX2, 0, 0);
-                            CARGADORGRANADA.push_back(granadaDisparo);
-                            RelojGranada.restart();
-                            std::cout << "Boom" << std::endl;
+                            
                         }
                     }
                 } else {
@@ -269,9 +245,11 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         if (abs(dif) > 320 || abs(dify) > 200) {
             //Movimiento random
             sorpresa = false;
+            if (c->getElapsedTime().asMilliseconds()>1000){
             if (time_aux == -1 || time1 == time_aux) {
                 random = rand() % 3;
                 time_aux = time1 + 1;
+            }
             }
             if (random == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -378,6 +356,68 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                 }
             }
         }
+    } else if (tipo == 3) {
+        //Lanzar Mortero a jugador
+        int speedX = -9;
+        int speedY = 15;
+        float morteroX = 0;
+        float morteroY = 0;
+        int vx = 40;
+        int vy = 60;
+        velocidadAnimacion = 0.07;
+        if (posJugador.x < posEnemigo.x) {
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
+            actual = 8;
+            animacion->orientacion(1);
+
+            morteroX = posEnemigo.x;
+            morteroY = posEnemigo.y - vy;
+
+        } else {
+            totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
+            actual = 8;
+            animacion->orientacion(0);
+            speedX = speedX*-1;
+
+            morteroX = animacion->getSpriteE().getPosition().x + vx;
+            morteroY = animacion->getSpriteE().getPosition().y - vy;
+
+        }
+        if (abs(dif) < 640 && abs(dify) < 200) {
+            if (RelojGranada.getElapsedTime().asMilliseconds() > 1100) {
+
+                Texture TEX2;
+                if (!TEX2.loadFromFile("res/img/bala_mortero.png")) {
+                    std::cerr << "Error en textura Granada";
+                    exit(0);
+                }
+                if (abs(dif) < 200 && abs(dify) < 200) {
+                    if (posJugador.x < posEnemigo.x) {
+                        speedX = speedX + 6;
+
+                    } else {
+                        speedX = speedX - 6;
+                    }
+
+                }
+                if (abs(dif) < 350 && abs(dify) < 200) {
+                    if (posJugador.x < posEnemigo.x) {
+                        speedX = speedX + 2;
+
+                    } else {
+                        speedX = speedX - 2;
+                    }
+
+                }
+                Granada *granadaDisparo = new Granada(15, 15, speedX, speedY, 60);
+                granadaDisparo->setPosition(morteroX, morteroY);
+                granadaDisparo->loadSprite(TEX2, 0, 0);
+                granadaDisparo->spriteMortero();
+                CARGADORGRANADA.push_back(granadaDisparo);
+                RelojGranada.restart();
+
+            }
+        }
 
     } else if (tipo == 4) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -391,9 +431,11 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                 pasota = false;
                 RelojRandom.restart();
             }
+            if (c->getElapsedTime().asMilliseconds()>1000){
             if (time_aux == -1 || time1 == time_aux) {
                 random = rand() % 2;
                 time_aux = time1 + 1;
+            }
             }
             if (random == 1) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
@@ -692,7 +734,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 colMuro = true;
                 if (random == 1) {
                     muro = false;
-                    //cout << "murito---->" << muro << endl;
+                    //   cout << "murito---->" << muro << endl;
                 }
             }
 
@@ -703,6 +745,8 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                     distanciasuelo = a->top + 4;
                 }
             }
+
+
         } else {
             colision = false;
         }
@@ -723,42 +767,42 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 }
 
 void Enemigo::ColisionJugador(Jugador &jugador) {
-    
-    
+    bool golpeado = false;
     if (tipo == 4) {
         if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca.getGlobalBounds())) {
-           if(RelojCuchillo.getElapsedTime().asSeconds() > 0.1){
-            //jugador.restarVidas();
-            RelojCuchillo.restart();
-            cout << "ostiaputacomo pegan" << endl;
-           }
+            if (RelojCuchillo.getElapsedTime().asSeconds() > 0.1) {
+                jugador.restarVidas();
+                RelojCuchillo.restart();
+                cout << "ostiaputacomo pegan" << endl;
+            }
         }
     }
     //cuchillo
     if (jugador.gethitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
         jugador.animacionCuchillo(true);
-        if(Keyboard::isKeyPressed(Keyboard::A)){
-            if(RelojCuchillo.getElapsedTime().asSeconds() > 3){
-            restarVidas();
-            cout << "numero de vidas" << getVidas() << endl;
-            RelojCuchillo.restart();
+        if (Keyboard::isKeyPressed(Keyboard::A)) {
+            if (RelojCuchillo.getElapsedTime().asSeconds() > 3) {
+                restarVidas();
+                cout << "numero de vidas" << getVidas() << endl;
+                RelojCuchillo.restart();
             }
-            
+
         }
     } else {
         jugador.animacionCuchillo(false);
     }
 
     //balas
-    
+    if (!golpeado) {
         for (int i = 0; i < jugador.getArrayBalas().size(); i++) {
 
             if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
                 restarVidas();
+                golpeado = true;
                 cout << "numero de vidas" << getVidas() << endl;
             }
         }
-    
+    }
     //granadas
     for (int j = 0; j < jugador.getArrayGranadas().size(); j++) {
 

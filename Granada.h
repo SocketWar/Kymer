@@ -12,6 +12,7 @@ public:
     void setPosition(float xStart, float yStart);
     void loadSprite(Texture textura, int posX, int posY);
     int move();
+    void spriteMortero();
     bool colision(Rect<float> hit);
     void explota(FloatRect *arrayColisiones);
     virtual ~Granada();
@@ -39,6 +40,7 @@ private:
     Rect<float> *HITBOX;
     sf::Clock *Reloj;
     bool explosion;
+    bool mortero;
 };
 
 #endif /* GRANADA_H */

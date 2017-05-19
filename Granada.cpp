@@ -30,7 +30,8 @@ Granada::Granada(int h, int w, float spX, float spY, int dist) {
     X = 300;
     Y = 100;
     Reloj = new Clock();
-    explosion=false;
+    explosion = false;
+    mortero = false;
 }
 
 void Granada::setPosition(float xStart, float yStart) {
@@ -60,9 +61,9 @@ void Granada::loadSprite(Texture textura, int posX, int posY) {
  * Si devuelve -1, error
  */
 int Granada::move() {
-    
+
     if (TIEMPO != 0) {
-        if (!explosion){
+        if (!explosion) {
             X += SPEEDX;
             float a = 20.8f;
             Y += (-SPEEDY + ((a * Reloj->getElapsedTime().asSeconds())) * Reloj->getElapsedTime().asSeconds());
@@ -70,17 +71,19 @@ int Granada::move() {
             HITBOX->top = Y;
             SPRITE->setPosition(X, Y);
             TIEMPO -= 1;
-            SPRITE->rotate(20);
-        }else{
-            SPRITE->setPosition(X, Y-140);
+            if (!mortero) {
+                SPRITE->rotate(20);
+            }
+        } else {
+            SPRITE->setPosition(X, Y - 140);
             TIEMPO -= 1;
         }
         return 1;
-        
+
     } else {
         return 2;
     }
-    
+
     return -1;
 }
 
@@ -100,14 +103,16 @@ void Granada::explota(FloatRect *arrayColisiones) {
             std::cerr << "Error en textura Granada";
             exit(0);
         }
-        
+
         loadSprite(textura, 0, 0);
-        SPRITE->scale(6,6);
+        SPRITE->scale(6, 6);
         SPRITE->setRotation(0);
-        explosion=true;
+        explosion = true;
     }
 }
-
+void Granada::spriteMortero() {
+    mortero = true;
+}
 Granada::~Granada() {
     delete TEX;
     delete SPRITE;

@@ -81,7 +81,7 @@ int Mapa1::Run() {
     for (int i = 0; i < numeroenemigos; i++) {
 
 
-        enemigos[i] = new Enemigo(1);
+        enemigos[i] = new Enemigo(3);
 
     }
 

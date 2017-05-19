@@ -23,7 +23,7 @@ Enemigo::Enemigo(int tipoE) {
     c = new sf::Clock();
     time1 = 0;
     time_aux = -1;
-    velocidadmovimiento = 200.0f;
+    velocidadmovimiento = 2000.0f;
     gravedad = 2.0f;
     distanciasuelo = 700;
     velocidadsalto = 20.0f;
@@ -304,7 +304,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     if (time_aux == time1)
                         sorpresa = true;
 
-                    velocidadAnimacion = 0.8;
+                    velocidadAnimacion = 0.4;
                     if (posJugador.x < posEnemigo.x) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[3];
                         actual = 3;
@@ -318,7 +318,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     //Movimiento a jugador
                     time_aux = time1;
                     velocidadAnimacion = 0.1;
-                    velocidadmovimiento = 400.0f;
+                    velocidadmovimiento = 2500.0f;
                     if (posJugador.x < posEnemigo.x) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -386,7 +386,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
             hitBoxataqueVaca.setScale(0, 0);
             //Movimiento random
             velocidadAnimacion = 0.1;
-            velocidadmovimiento = 320.0f;
+            velocidadmovimiento = 600.0f;
             if (RelojRandom.getElapsedTime().asMilliseconds() > 1000 && pasota) {
                 pasota = false;
                 RelojRandom.restart();
@@ -432,8 +432,8 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     //Movimiento a jugador
                     pasota = false;
                     time_aux = time1;
-                    velocidadAnimacion = 0.1;
-                    velocidadmovimiento = 530.0f;
+                    velocidadAnimacion = 0.02;
+                    velocidadmovimiento = 2100.0f;
                     if (posJugador.x < posEnemigo.x) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -462,8 +462,8 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
             } else {
                 //atacar
                 if (abs(dify) < 100) {
-                    velocidadAnimacion = 0.09;
-                    velocidadmovimiento = 600.0f;
+                    velocidadAnimacion = 0.02;
+                    velocidadmovimiento = 2000.0f;
                     if (posJugador.x < posEnemigo.x) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
                         actual = 0;
@@ -473,7 +473,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                         actual = 0;
                         animacion->orientacion(0);
                     }
-                    if (getframeActual(tiempoanimacion) >= 8 && getframeActual(tiempoanimacion) <= 13) {
+                    if (getframeActual(tiempoanimacion) == 10) {
 
                         hitBoxataqueVaca.setScale(7, 4);
                     } else {
@@ -624,7 +624,7 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
 
     RenderGranada(Window);
 
-    //Window.draw(hitBoxataqueVaca);
+    Window.draw(hitBoxataqueVaca);
     //Window.draw(hitBox);
 
 }
@@ -728,8 +728,11 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
     bool golpeado = false;
     if (tipo == 4) {
         if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca.getGlobalBounds())) {
-           // jugador.restarVidas();
+           if(RelojCuchillo.getElapsedTime().asSeconds() > 0.1){
+            jugador.restarVidas();
+            RelojCuchillo.restart();
             cout << "ostiaputacomo pegan" << endl;
+           }
         }
     }
     //cuchillo

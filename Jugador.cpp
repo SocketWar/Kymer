@@ -15,7 +15,7 @@ Jugador::Jugador(int anchura, int altura) {
     velocidad.y = 0;
 
     velocidadanimacion = 0.1;
-    velocidadmovimiento = 850.0f;
+    velocidadmovimiento = 2000.0f;
 
     //Sprites
     animacion = new Animacion("res/img/Personaje13052017.png");

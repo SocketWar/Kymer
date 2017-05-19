@@ -161,7 +161,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                         float GranadaX = 0;
                         float GranadaY = 0;
                         velocidadAnimacion = 0.1;
-                        velocidadmovimiento = 500.0f;
+                        velocidadmovimiento = 180.0f;
                         if (posJugador.x < posEnemigo.x) {
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
                             actual = 4;
@@ -708,7 +708,9 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
         } else {
             colision = false;
         }
-
+        for (int contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+            CARGADORGRANADA[contador]->explota(arrayColisiones[i]);
+        }
         //cout << "el suelo es:" << suelo << endl;
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
     }

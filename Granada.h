@@ -1,7 +1,7 @@
 
 #ifndef GRANADA_H
 #define GRANADA_H
-
+#include "mapaTmx.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -13,6 +13,7 @@ public:
     void loadSprite(Texture textura, int posX, int posY);
     int move();
     bool colision(Rect<float> hit);
+    void explota(FloatRect *arrayColisiones);
     virtual ~Granada();
     int getHeigth(){ return HEIGTH;}
     int getWidth(){ return WIDTH;}
@@ -37,6 +38,7 @@ private:
     Sprite *SPRITE;
     Rect<float> *HITBOX;
     sf::Clock *Reloj;
+    bool explosion;
 };
 
 #endif /* GRANADA_H */

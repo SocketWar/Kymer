@@ -215,7 +215,6 @@ void Jugador::Disparar() {
 
         if (!cuchillo) {
             if (Keyboard::isKeyPressed(Keyboard::Right)) {
-                cout << "maravilloso" << endl;
 
                 if (arma == 0) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
@@ -614,6 +613,9 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 
         //cout << "el suelo es:" << suelo << endl;
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
+        for (int contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+            CARGADORGRANADA[contador]->explota(arrayColisiones[i]);
+        }
     }
 
     if (!colSuelo) {
@@ -622,6 +624,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     if (!colMuro) {
         muro = false;
     }
+     
 }
 
 void Jugador::update(Time &tiempo) {

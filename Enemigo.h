@@ -47,6 +47,7 @@ private:
     Clock RelojGranada;
     Clock RelojBala;
     Clock RelojRandom;
+    Clock RelojCuchillo;
     int random2;
     bool pasota;
     vector<Granada*> CARGADORGRANADA;

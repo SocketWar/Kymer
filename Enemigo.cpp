@@ -734,8 +734,12 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
     if (jugador.gethitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
         jugador.animacionCuchillo(true);
         if(Keyboard::isKeyPressed(Keyboard::A)){
+            if(RelojCuchillo.getElapsedTime().asSeconds() > 3){
             restarVidas();
             cout << "numero de vidas" << getVidas() << endl;
+            RelojCuchillo.restart();
+            }
+            
         }
     } else {
         jugador.animacionCuchillo(false);

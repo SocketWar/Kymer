@@ -7,7 +7,7 @@ Jugador::Jugador(int anchura, int altura) {
 
     arma = 0;
     vidas = 5;
-    granadas = 5;
+    granadas = 100;
     gravedad = 2.0f;
     distanciasuelo = 700;
     velocidadsalto = 20.0f;

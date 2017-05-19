@@ -703,8 +703,6 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                     distanciasuelo = a->top + 4;
                 }
             }
-
-
         } else {
             colision = false;
         }
@@ -725,11 +723,12 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 }
 
 void Enemigo::ColisionJugador(Jugador &jugador) {
-    bool golpeado = false;
+    
+    
     if (tipo == 4) {
         if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca.getGlobalBounds())) {
            if(RelojCuchillo.getElapsedTime().asSeconds() > 0.1){
-            jugador.restarVidas();
+            //jugador.restarVidas();
             RelojCuchillo.restart();
             cout << "ostiaputacomo pegan" << endl;
            }
@@ -751,16 +750,15 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
     }
 
     //balas
-    if (!golpeado) {
+    
         for (int i = 0; i < jugador.getArrayBalas().size(); i++) {
 
             if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
                 restarVidas();
-                golpeado = true;
                 cout << "numero de vidas" << getVidas() << endl;
             }
         }
-    }
+    
     //granadas
     for (int j = 0; j < jugador.getArrayGranadas().size(); j++) {
 

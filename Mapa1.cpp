@@ -42,8 +42,6 @@ int Mapa1::Run() {
     //----------------------------------------
     // SONIDOS
     //----------------------------------------
-    //    sonido disparo;
-    //    disparo.setSonido("res/audio/shot.wav");
 
     SoundBuffer buffer;
     if (!buffer.loadFromFile("res/audio/menu.ogg")) {
@@ -52,16 +50,10 @@ int Mapa1::Run() {
     Sound sound;
     sound.setBuffer(buffer);
 
-    sound.play();
+   // sound.play();
     sound.setLoop(true);
 
-    SoundBuffer bufferd;
-    if (!bufferd.loadFromFile("res/audio/shot.wav")) {
-        cout << " el archivo de audio Menu no esta disponible" << endl;
-    }
-    Sound sound2;
-    sound2.setBuffer(bufferd);
-
+   
 
     // ---------------------------------------
     // INTERPOLACION
@@ -76,7 +68,7 @@ int Mapa1::Run() {
     // ---------------------------------------
     mapaTmx map(mapa, tileSheet);
 
-    int numeroenemigos = 30;
+    int numeroenemigos = 10;
     int contemigos = 0;
     int cont = 0;
     int nspawn=0;
@@ -143,12 +135,13 @@ int Mapa1::Run() {
                 for (int i = nspawn; i < map.getnSpawn(); i++) {
                     Vector2f *v = map.getSpawn()[i];
                     float posicion=v->x-jugador.getPos().x;
-                    
+                    int randomEnemy=0;
                     if (posicion <= 1000) {
                        
                         for (int j = contemigos; j < numeroenemigos; j++) {
+                            randomEnemy = rand() % 4;
                             if (cont < 3) {
-                                enemigos[j] = new Enemigo(4, v->x, v->y);
+                                enemigos[j] = new Enemigo(randomEnemy, v->x, v->y);
                                 contemigos++;
                                 cont++;
                             }if(cont==2){
@@ -159,7 +152,7 @@ int Mapa1::Run() {
                     }
                 }
             }
-            cout<<"numero enemigos---->>>"<<contemigos<<endl;
+            //cout<<"numero enemigos---->>>"<<contemigos<<endl;
 
             //enemigo
             
@@ -187,11 +180,7 @@ int Mapa1::Run() {
             if (Keyboard::isKeyPressed(Keyboard::P))
                 pausa = true;
 
-            if (Keyboard::isKeyPressed(Keyboard::A)) {
-                // sound.setVolume(1);
-                //                disparo.getSonido().play();
-                //sound2.play();
-            }
+           
             if (Keyboard::isKeyPressed(Keyboard::B)) {
                 return 2;
             }

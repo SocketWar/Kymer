@@ -23,11 +23,16 @@ public:
     sonido();
     void setSonido(string ruta);
     Sound getSonido();
+
     void reproducir();
+    bool comprobarReproduccion();
+    void setReproduccion(int n);
+    int  getReproduccion();
     
 private:
     SoundBuffer *buffer;
     Sound *sound;
+    int reprod;
 };
 
 #endif /* SONIDO_H */

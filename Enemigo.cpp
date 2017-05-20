@@ -12,12 +12,43 @@ Enemigo::Enemigo(int tipoE, float posx, float posy) {
     if (tipoE != 4) {
         animacion = new Animacion("res/img/enemigocomun1.png", posx, posy);
         animacion->spritePersonaje('e');
-    } else {
+        sonidoMuerte= new sonido();//sera el mismo para todos excepto la vaca
+        sonidoMuerte->setSonido("res/audio/enemyDead.wav");
+        sonidoMuerte->getSonido().setLoop(false);
+        sonidoMuerte->setReproduccion(0);//solo se reproducira 1 vez
+        if(tipoE==1){//enemigo lanzagranadas
+            sonidoAtaque = new sonido();
+            sonidoAtaque->setSonido("res/audio/FireInTheHole.wav");
+            sonidoAtaque->getSonido().setLoop(false);
+            sonidoAtaque->setReproduccion(0);//0 se preproduce, 1 no
+           
+        }
+        if(tipoE==2){//enemigo metralleta
+            sonidoAtaque = new sonido();
+            sonidoAtaque->setSonido("res/audio/shot.wav");
+            sonidoAtaque->getSonido().setLoop(false);
+            sonidoAtaque->setReproduccion(0);//o se preproduce, 1 no
+        }
+        if(tipoE==3){//enemigo mortero
+            sonidoAtaque = new sonido();
+            sonidoAtaque->setSonido("res/audio/Fireee.wav");
+            sonidoAtaque->getSonido().setLoop(false);
+            sonidoAtaque->setReproduccion(0);//o se preproduce, 1 no
+        }
+    } else {//vaca
         animacion = new Animacion("res/img/VacaBurra.png", posx, posy);
         animacion->spritePersonaje('v');
         hitBoxataqueVaca.setScale(0, 0);
         hitBoxataqueVaca.setSize(Vector2f(12, 12));
         hitBoxataqueVaca.setFillColor(Color::Blue);
+        sonidoAtaque = new sonido();
+        sonidoAtaque->setSonido("res/audio/cow.wav");
+        sonidoAtaque->getSonido().setLoop(false);
+        
+        sonidoMuerte= new sonido();
+        sonidoMuerte->setSonido("res/audio/Cowdead.wav");
+        sonidoMuerte->getSonido().setLoop(false);
+        sonidoMuerte->setReproduccion(0);//solo se reproducira 1 vez
     }
 
     c = new sf::Clock();
@@ -81,6 +112,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         if (abs(dif) > 480 || abs(dify) > 200) {
             //Movimiento random
             sorpresa = false;
+             sonidoAtaque->setReproduccion(0);//cuando no tira la granada se vuelve a 0 para reproducir soniso
             if (c->getElapsedTime().asMilliseconds() > 1000) {
 
                 if (time_aux == -1 || time1 == time_aux) {
@@ -134,7 +166,9 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     time_aux = time1;
                     velocidadAnimacion = 0.1;
                     velocidadmovimiento = 1500.0f;
+                    sonidoAtaque->setReproduccion(0);//cuando no tira la granada se vuelve a 0 para reproducir soniso
                     if (posJugador.x < posEnemigo.x) {
+                        
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
                         animacion->orientacion(1);
@@ -166,6 +200,12 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                         velocidadAnimacion = 0.1;
                         velocidadmovimiento = 180.0f;
                         if (posJugador.x < posEnemigo.x) {
+                            
+                            if(sonidoAtaque->getReproduccion()==0){//solo reproduzco si es la primera vez que lanza granada despues de ver al jugador
+                                sonidoAtaque->reproducir();
+                                 sonidoAtaque->setReproduccion(1);
+                               
+                            }
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
                             actual = 4;
                             animacion->orientacion(1);
@@ -175,6 +215,11 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                             GranadaY = posEnemigo.y - 60;
 
                         } else {
+                            if(sonidoAtaque->getReproduccion()==0){//solo reproduzco si es la primera vez que lanza granada despues de ver al jugador
+                                sonidoAtaque->reproducir();
+                                 sonidoAtaque->setReproduccion(1);
+                               
+                            }
                             totalSpritesAnimacion = animacion->getNumAnimaciones()[4];
                             actual = 4;
                             animacion->orientacion(0);
@@ -324,18 +369,21 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                 float balaY = 0;
                 velocidadAnimacion = 0.1;
                 if (posJugador.x < posEnemigo.x) {
+                    sonidoAtaque->reproducir();
+                            
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
                     actual = 6;
                     animacion->orientacion(1);
-                    speedX = -10;
+                    speedX = -15;
                     balaX = posEnemigo.x;
                     balaY = posEnemigo.y - 60;
 
                 } else {
+                    sonidoAtaque->reproducir();
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
                     actual = 6;
                     animacion->orientacion(0);
-                    speedX = 10;
+                    speedX = 15;
                     balaX = animacion->getSpriteE().getPosition().x + 40;
                     balaY = animacion->getSpriteE().getPosition().y - 60;
 
@@ -363,6 +411,9 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         int vx = 40;
         int vy = 60;
         velocidadAnimacion = 0.07;
+   
+            sonidoAtaque->setReproduccion(0);
+        
         if (posJugador.x < posEnemigo.x) {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
             actual = 8;
@@ -417,7 +468,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
             }
         }
 
-    } else if (tipo == 4) {
+    } else if (tipo == 4) {//vaca
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
         actual = 1;
         if (abs(dif) > 320 || pasota || abs(dify) > 200) {
@@ -500,7 +551,9 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                 }
 
             } else {
-                //atacar
+                //atacar        
+                sonidoAtaque->setReproduccion(0);//seteamos la reproduccion para que se pueda escuchar el sonido
+
                 if (abs(dify) < 100) {
                     velocidadAnimacion = 0.02;
                     velocidadmovimiento = 2000.0f;
@@ -508,10 +561,12 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
                         actual = 0;
                         animacion->orientacion(1);
+                        //sonidoAtaque->reproducir();
                     } else {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[0];
                         actual = 0;
                         animacion->orientacion(0);
+                        //sonidoAtaque->reproducir();
                     }
                     if (getframeActual(tiempoanimacion) == 10) {
 
@@ -608,7 +663,8 @@ void Enemigo::RenderGranada(RenderWindow &window) {
     for (contador = 0; contador < CARGADOR.size(); contador++) {
         window.draw(CARGADOR[contador]->getSprite());
     }
-    for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+    for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {//granadas
+   
         window.draw(CARGADORGRANADA[contador]->getSprite());
     }
 }
@@ -661,6 +717,20 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
     actualizarHitbox();
 
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
+    if(tipo == 3 && getframeActual(tiempo)==11){//para reproducion de sonido de tipo mortero, solo lo hara cuando llegue al frame 11
+        if(sonidoAtaque->getReproduccion()==0){
+            
+        sonidoAtaque->reproducir();
+        sonidoAtaque->setReproduccion(1);
+        }
+    }
+    if(tipo == 4 && getframeActual(tiempo)==8){//para reproducion de sonido de vaca, solo lo hara cuando llegue al frame 8
+        if(sonidoAtaque->getReproduccion()==0){
+            
+        sonidoAtaque->reproducir();
+        sonidoAtaque->setReproduccion(1);
+        }
+    }
     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
 
     RenderGranada(Window);
@@ -758,6 +828,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
             colision = false;
         }
         for (int contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+           
             CARGADORGRANADA[contador]->explota(arrayColisiones[i]);
         }
         //cout << "el suelo es:" << suelo << endl;

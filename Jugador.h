@@ -77,7 +77,8 @@ private:
     int granadas;
     int arma;
     int punt;
-    sonido *soundEffect;
+    sonido *disparo;
+    sonido *muerte;
     bool suelo;
     bool colision;
     bool estadocolision;
@@ -87,6 +88,8 @@ private:
     int numEscopeta;
     //colisiones
     RectangleShape hitBox;
+    //controlMuerte
+    int muerto;
     
     
     //interpolacion

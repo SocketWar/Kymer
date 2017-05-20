@@ -35,3 +35,16 @@ void sonido::reproducir() {
     this->sound->play();
 }
 
+bool sonido::comprobarReproduccion() {
+    return this->sound->Playing;
+}
+
+int sonido::getReproduccion() {
+    return reprod;
+}
+
+void sonido::setReproduccion(int n) {
+    reprod = n;
+}
+
+

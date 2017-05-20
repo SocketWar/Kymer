@@ -2,8 +2,15 @@
 #include "Jugador.h"
 
 Jugador::Jugador(int anchura, int altura,float posx,float posy) {
-    soundEffect = new sonido();
-    soundEffect->setSonido("res/audio/shot.wav");
+    disparo = new sonido();
+    disparo->setSonido("res/audio/shot.wav");
+    disparo->getSonido().setLoop(false);
+    
+    muerto = 0;
+    muerte = new sonido();
+    muerte->setSonido("res/audio/dead.wav");
+    muerte->getSonido().setLoop(false);
+    
 
     arma = 0;
     numEscopeta = 0;
@@ -237,6 +244,7 @@ void Jugador::Disparar() {
 
 
         if (!cuchillo) {
+            disparo->reproducir();
             if(arma==1)
                 velocidadAnimacion = 0.5;
                 
@@ -464,8 +472,12 @@ void Jugador::RenderDisparo(float interpolacion) {
 void Jugador::Morir() {
     //para probar la animacio0n se pone en un boton por defecto "M"
     velocidadAnimacion = 0.2f;
+    if(muerto <4){
+    muerte->reproducir();    
     totalSpritesAnimacion = animacion->getNumAnimaciones()[27];
     actual = 27;
+    muerto++;
+    }
     //animacion->getSprite(27,4);
 }
 
@@ -565,9 +577,6 @@ Estado* Jugador::getNuevo() {
     return nuevo;
 }
 
-sonido Jugador::getSonido() {
-    return *soundEffect;
-}
 
 void Jugador::actualizarHitbox() {
 
@@ -704,7 +713,14 @@ void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
     actualizarHud(h);
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
-    Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    if (muerto<4){
+        
+        Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    }
+    else {
+        
+        Window.draw(animacion->getSprite(27, muerto));
+    }
     RenderDisparo(interpolacion);
     // Window.draw(hitBox);
 

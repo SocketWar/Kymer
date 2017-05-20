@@ -83,6 +83,8 @@ private:
     bool estadocolision;
     bool muro;
     bool cuchillo;
+    sf::Texture TEX3;
+    int numEscopeta;
     //colisiones
     RectangleShape hitBox;
     

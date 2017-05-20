@@ -79,7 +79,7 @@ int Mapa1::Run() {
 
     for (int i = 0; i < map.getnPuntos(); i++) {
         Vector2f *v = map.getPuntuaciones()[i];
-        machineGun[i] = new objetos('g', v->x, v->y);
+        machineGun[i] = new objetos('a', v->x, v->y);
         //OBJETOS: g=granadas, p=puntuacion, v=vidas, a=arma
     }
 

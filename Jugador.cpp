@@ -6,6 +6,7 @@ Jugador::Jugador(int anchura, int altura) {
     soundEffect->setSonido("res/audio/shot.wav");
 
     arma = 0;
+    numEscopeta = 0;
     vidas = 5;
     punt=0;
     granadas = 100;
@@ -38,6 +39,10 @@ Jugador::Jugador(int anchura, int altura) {
         exit(0);
     }
     if (!TEX2.loadFromFile("res/img/SpriteGranada.png")) {
+        std::cerr << "Error en textura Granada";
+        exit(0);
+    }
+    if (!TEX3.loadFromFile("res/img/escopeta.png")) {
         std::cerr << "Error en textura Granada";
         exit(0);
     }
@@ -160,25 +165,42 @@ void Jugador::Saltar() {
 
 }
 
+
 void Jugador::Disparar() {
     velocidadAnimacion = 0.1;
-    int speedX = 0;
-    int speedY = 0;
+    float speedX = 0;
+    float speedY = 0;
     float balaX = 0;
     float balaY = 0;
-
+    cout<< numEscopeta <<endl;
     if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::A)) {
         velocidadAnimacion = 0.085;
-        if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
-            speedY = -25;
-            speedX = 0;
-            balaX = animacion->getSpriteE().getPosition().x - 10;
-            balaY = animacion->getSpriteE().getPosition().y - 90;
-            Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
-            balaDisparo->setPosition(balaX, balaY);
-            balaDisparo->loadSprite(TEX, 0, 0);
-            CARGADOR.push_back(balaDisparo);
-            RelojBala.restart();
+        if (arma == 0) {
+            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+                speedY = -25;
+                speedX = 0;
+                balaX = animacion->getSpriteE().getPosition().x - 10;
+                balaY = animacion->getSpriteE().getPosition().y - 90;
+                Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
+                balaDisparo->setPosition(balaX, balaY);
+                balaDisparo->loadSprite(TEX, 0, 0);
+                CARGADOR.push_back(balaDisparo);
+                RelojBala.restart();
+            }
+        }else{
+            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+                numEscopeta -= 1;
+                speedY = -1;
+                speedX = 0;
+                balaX = animacion->getSpriteE().getPosition().x-20;
+                balaY = animacion->getSpriteE().getPosition().y - 130;
+                Bala *balaDisparo = new Bala(49, 96, speedX, speedY, 3);
+                balaDisparo->setPosition(balaX, balaY);
+                balaDisparo->loadSprite(TEX3, 0, 0);
+                CARGADOR.push_back(balaDisparo);
+                RelojBala.restart();
+            }
+            
         }
         if (arma == 0) {
             totalSpritesAnimacion = animacion->getNumAnimaciones()[7];
@@ -215,6 +237,9 @@ void Jugador::Disparar() {
 
 
         if (!cuchillo) {
+            if(arma==1)
+                velocidadAnimacion = 0.5;
+                
             if (Keyboard::isKeyPressed(Keyboard::Right)) {
 
                 if (arma == 0) {
@@ -254,25 +279,46 @@ void Jugador::Disparar() {
                     actual = 18;
                 }
             }
-            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
-                if (animacion->getOrientacion() != 0) {
-                    speedX = 25;
-                    speedY = 0;
-                    balaX = animacion->getSpriteE().getPosition().x + 50;
-                    balaY = animacion->getSpriteE().getPosition().y - 60;
-                } else {
-                    speedX = -25;
-                    speedY = 0;
-                    balaX = animacion->getSpriteE().getPosition().x - 50;
-                    balaY = animacion->getSpriteE().getPosition().y - 60;
+            if (arma == 0) {
+                if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+                    if (animacion->getOrientacion() != 0) {
+                        speedX = 25;
+                        speedY = 0;
+                        balaX = animacion->getSpriteE().getPosition().x + 50;
+                        balaY = animacion->getSpriteE().getPosition().y - 60;
+                    } else {
+                        speedX = -25;
+                        speedY = 0;
+                        balaX = animacion->getSpriteE().getPosition().x - 50;
+                        balaY = animacion->getSpriteE().getPosition().y - 60;
+                    }
+                    Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
+                    balaDisparo->setPosition(balaX, balaY);
+                    balaDisparo->loadSprite(TEX, 0, 0);
+                    CARGADOR.push_back(balaDisparo);
+                    RelojBala.restart();
                 }
-                Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
-                balaDisparo->setPosition(balaX, balaY);
-                balaDisparo->loadSprite(TEX, 0, 0);
-                CARGADOR.push_back(balaDisparo);
-                RelojBala.restart();
+            } else {
+                if (RelojBala.getElapsedTime().asMilliseconds() > 1000) {
+                    if (animacion->getOrientacion() != 0) {
+                        speedX = 0.1f;
+                        speedY = 0;
+                        balaX = animacion->getSpriteE().getPosition().x + 50;
+                        balaY = animacion->getSpriteE().getPosition().y - 70;
+                    } else {
+                        speedX = -0.1f;
+                        speedY = 0;
+                        balaX = animacion->getSpriteE().getPosition().x - 50;
+                        balaY = animacion->getSpriteE().getPosition().y - 70;
+                    }
+                    Bala *balaDisparo = new Bala(49, 96, speedX, speedY, 3);
+                    balaDisparo->setPosition(balaX, balaY);
+                    balaDisparo->loadSprite(TEX3, 0, 0);
+                    CARGADOR.push_back(balaDisparo);
+                    numEscopeta -= 1;
+                    RelojBala.restart();
+                }
             }
-
         }
     }
 
@@ -482,12 +528,12 @@ int Jugador::getGranadas() {
     return granadas;
 }
 
+
 void Jugador::setArma(int i) {
     arma = i;
-}
-
-int Jugador::getArma() {
-    return arma;
+    if (arma == 1) {
+        numEscopeta += 5;
+    }
 }
 
 void Jugador::actualizarEstado() {

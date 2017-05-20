@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=K5
+PROJECTNAME=todojuntonoche
 
 # Active Configuration
 DEFAULTCONF=Debug

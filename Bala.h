@@ -29,6 +29,7 @@ public:
     Estado* getViejo();
     Estado* getNuevo();
     void actualizarEstado();
+    void setDestruir();
     
 protected:
     int HEIGTH;
@@ -44,6 +45,7 @@ protected:
     Rect<float> *HITBOX;
     Estado *viejo;
     Estado *nuevo;
+    bool DESTRUIR;
 
 };
 

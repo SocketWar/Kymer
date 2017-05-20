@@ -49,7 +49,7 @@ void Bala::loadSprite(Texture textura, int posX, int posY){
  * Si devuelve -1, error
  */
 int Bala::move(){
-    if(TIEMPO!=0){
+    if(TIEMPO!=0 && !DESTRUIR){
         X+=SPEEDX;
         Y+=SPEEDY;
         HITBOX->left=X;
@@ -89,4 +89,8 @@ void Bala::actualizarEstado() {
 
     *viejo=*nuevo;
     
+}
+
+void Bala::setDestruir(){
+    DESTRUIR=true;
 }

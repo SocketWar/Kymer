@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=todogood52
+PROJECTNAME=TodoJuntoSpawn
 
 # Active Configuration
 DEFAULTCONF=Debug

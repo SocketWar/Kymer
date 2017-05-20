@@ -425,6 +425,7 @@ void Jugador::UpdateDisparo() {
 
     }
     CARGADOR = CargadorAux;
+    cout<<"Balas: " << CARGADOR.size() << endl;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
         move = CARGADORGRANADA[contador]->move();
         switch (move) {

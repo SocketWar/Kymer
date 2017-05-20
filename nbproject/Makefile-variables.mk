@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=todogood52
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/todogood52
+CND_ARTIFACT_NAME_Debug=todojuntospawn
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/todojuntospawn
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=todogood52.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/todogood52.tar
+CND_PACKAGE_NAME_Debug=todojuntospawn.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/todojuntospawn.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=todogood52
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/todogood52
+CND_ARTIFACT_NAME_Release=todojuntospawn
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/todojuntospawn
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=todogood52.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/todogood52.tar
+CND_PACKAGE_NAME_Release=todojuntospawn.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/todojuntospawn.tar
 #
 # include compiler specific variables
 #

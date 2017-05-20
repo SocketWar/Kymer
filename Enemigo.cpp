@@ -55,6 +55,29 @@ Enemigo::Enemigo(const Enemigo& orig) {
 }
 
 Enemigo::~Enemigo() {
+    
+    delete animacion;
+    /*delete hitBox;
+    delete hitBoxataqueVaca;
+    delete RelojGranada;
+    delete RelojBala;
+    delete RelojRandom;
+    delete RelojCuchillo;*/
+    for(int i=0; i<CARGADOR.size();i++){
+        delete CARGADOR[i];
+    }
+    CARGADOR.clear();
+    for(int i=0; i<CARGADORGRANADA.size();i++){
+        delete CARGADORGRANADA[i];
+    }
+    CARGADORGRANADA.clear();
+    delete c;
+    delete viejo;
+    delete nuevo;
+    animacion=NULL;
+    c=NULL;
+    viejo=NULL;
+    nuevo=NULL;
 }
 
 Animacion Enemigo::getAnimacion() {
@@ -805,6 +828,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
 
             if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
                 restarVidas();
+                jugador.getArrayBalas()[i]->setDestruir();
                 golpeado = true;
                 cout << "numero de vidas" << getVidas() << endl;
             }

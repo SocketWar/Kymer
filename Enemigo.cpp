@@ -4,16 +4,16 @@
 #include <valarray> 
 #include "Enemigo.h"
 
-Enemigo::Enemigo(int tipoE) {
+Enemigo::Enemigo(int tipoE, float posx, float posy) {
 
     vidas = 10;
 
     velocidadAnimacion = 0.1;
     if (tipoE != 4) {
-        animacion = new Animacion("res/img/enemigocomun1.png");
+        animacion = new Animacion("res/img/enemigocomun1.png", posx, posy);
         animacion->spritePersonaje('e');
     } else {
-        animacion = new Animacion("res/img/VacaBurra.png");
+        animacion = new Animacion("res/img/VacaBurra.png", posx, posy);
         animacion->spritePersonaje('v');
         hitBoxataqueVaca.setScale(0, 0);
         hitBoxataqueVaca.setSize(Vector2f(12, 12));
@@ -530,24 +530,24 @@ void Enemigo::Saltar() {
 
 
 
-    
-        if (muro && suelo) {
-            velocidad.y = -velocidadsalto;
 
-        } else if (!suelo) {
+    if (muro && suelo) {
+        velocidad.y = -velocidadsalto;
 
-            velocidad.y += gravedad;
+    } else if (!suelo) {
 
-        } else {
-            animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
-            velocidad.y = 0;
+        velocidad.y += gravedad;
 
-        }
-        if (!colision) {
-            suelo = false;
-        }
-        animacion->Movimiento(velocidad);
-  
+    } else {
+        animacion->MovimientoInterpolado(Vector2f(getPos().x, distanciasuelo));
+        velocidad.y = 0;
+
+    }
+    if (!colision) {
+        suelo = false;
+    }
+    animacion->Movimiento(velocidad);
+
     /*
     if ((posicion.y + 2) != distanciasuelo) {
         if (arma==0){
@@ -665,7 +665,7 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
 
     RenderGranada(Window);
 
-    Window.draw(hitBoxataqueVaca);
+    //Window.draw(hitBoxataqueVaca);
     //Window.draw(hitBox);
 
 }
@@ -677,12 +677,16 @@ void Enemigo::actualizarHitbox() {
         hitBox.setScale(1.5, 3.7);
         hitBox.setPosition(getPos().x - 25, getPos().y - 115);
 
-    } else if (tipo == 2 || tipo == 1 || tipo == 3) {
+    } else if (tipo == 2 || tipo == 1) {
 
         hitBox.setScale(1.5, 2.2);
         hitBox.setPosition(getPos().x - 25, getPos().y - 70);
 
+    } else if (tipo == 3) {
+        hitBox.setScale(1.5, 1.5);
+        hitBox.setPosition(getPos().x - 25, getPos().y - 60);
     }
+
 }
 
 void Enemigo::actualizarHitBoxataqueVaca() {
@@ -741,7 +745,11 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 colSuelo = true;
                 suelo = true;
                 if (!muro) {
-                    distanciasuelo = a->top + 4;
+                    if (tipo == 3 || tipo == 2) {
+                        distanciasuelo = a->top + 14;
+                    } else if (tipo == 4 || tipo == 1) {
+                        distanciasuelo = a->top + 4;
+                    }
                 }
             }
 

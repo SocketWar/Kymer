@@ -6,6 +6,9 @@
 
 #include "Mapa1.hpp"
 #include "sonido.h"
+#include <stdlib.h>
+#include <iostream>
+#include <cmath>
 
 Mapa1::Mapa1(string mapa, string tileSheet) {
     update = 1000 / 25;
@@ -73,22 +76,21 @@ int Mapa1::Run() {
     // ---------------------------------------
     mapaTmx map(mapa, tileSheet);
 
-    int numeroenemigos = 20;
-    int vacas = 4;
+    int numeroenemigos = 30;
+    int contemigos = 0;
+    int cont = 0;
+    int nspawn=0;
     objetos **machineGun = new objetos*[map.getnPuntos()];
+    Enemigo **enemigos = new Enemigo*[numeroenemigos];
 
     for (int i = 0; i < map.getnPuntos(); i++) {
         Vector2f *v = map.getPuntuaciones()[i];
-        machineGun[i] = new objetos('a', v->x, v->y);
-        //OBJETOS: g=granadas, p=puntuacion, v=vidas, a=arma
+        machineGun[i] = new objetos('v', v->x, v->y);
     }
 
-    Jugador jugador(anchura, altura);
-    Enemigo **enemigos = new Enemigo*[numeroenemigos];
+    Jugador jugador(anchura, altura, 150, 50);
 
-    for (int i = 0; i < numeroenemigos; i++) {
-        enemigos[i] = new Enemigo(3);
-    }
+
 
 
     View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
@@ -110,7 +112,7 @@ int Mapa1::Run() {
     textoPausa.setFont(*fuente);
     textoPausa.setCharacterSize(100);
     textoPausa.setString("PAUSA");
-
+    vista.zoom(2);
     while (Running) {
 
         bucle = 0;
@@ -135,17 +137,46 @@ int Mapa1::Run() {
                 jugador.recogeObjeto(*machineGun[i]);
 
             }
-            //enemigo
-            for (int i = 0; i < numeroenemigos; i++) {
 
+            if (contemigos < numeroenemigos) {
+
+                for (int i = nspawn; i < map.getnSpawn(); i++) {
+                    Vector2f *v = map.getSpawn()[i];
+                    float posicion=v->x-jugador.getPos().x;
+                    
+                    if (posicion <= 1000) {
+                       
+                        for (int j = contemigos; j < numeroenemigos; j++) {
+                            if (cont < 3) {
+                                enemigos[j] = new Enemigo(4, v->x, v->y);
+                                contemigos++;
+                                cont++;
+                            }if(cont==2){
+                                nspawn++;
+                            }
+                        }
+                        cont = 0;
+                    }
+                }
+            }
+            cout<<"numero enemigos---->>>"<<contemigos<<endl;
+
+            //enemigo
+            
+            for (int i = 0; i < contemigos; i++) {
+                int posicion = abs(jugador.getPos().x-enemigos[i]->getPos().x);
+                
+                if(posicion<=1000){
                 enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
                 enemigos[i]->ColisionJugador(jugador);
                 enemigos[i]->update(tiempo, tiempoAnimacion, jugador);
+                }
+                
             }
 
 
 
-          //ELIMINADAS TECLAS HUD
+            //ELIMINADAS TECLAS HUD
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
             }
@@ -183,10 +214,13 @@ int Mapa1::Run() {
             machineGun[i]->RenderObjeto();
         }
 
-        for (int i = 0; i < numeroenemigos; i++) {
-
+        
+        for (int i = 0; i < contemigos; i++) {
+            int posicion = abs(jugador.getPos().x-enemigos[i]->getPos().x);
+                
+                if(posicion<=1000)
             enemigos[i]->render(interpolacion, tiempoAnimacion);
-
+            
         }
 
         vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));

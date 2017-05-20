@@ -8,7 +8,7 @@
 
 class Animacion {
 public:
-    Animacion(string tex);
+    Animacion(string tex,float posx,float posy);
     void spritePersonaje(char l);
     int* getNumAnimaciones();
     Sprite getSprite(int animacion ,int pos);
@@ -27,6 +27,8 @@ private:
     int fotogramaActivo;
     float escala;
     int ORIENTACION;
+    float posX;
+    float posY;
 };
 
 #endif /* ANIMACION_H */

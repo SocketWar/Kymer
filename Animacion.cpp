@@ -1,7 +1,7 @@
 
 #include "Animacion.h"
 
-Animacion::Animacion(string texto) {
+Animacion::Animacion(string texto,float posx,float posy) {
 
     ORIENTACION = 1;
     tex = new Texture(); //reserva de memoria
@@ -11,7 +11,9 @@ Animacion::Animacion(string texto) {
     }
 
     tex->setSmooth(false);
-
+    
+    posX=posx;
+    posY=posy;
 }
 
 //personaje 
@@ -20,8 +22,7 @@ void Animacion::spritePersonaje(char le) {
 
     int xi = 0;
     int yi = 0;
-    int posX = 0;
-    int posY = 0;
+    
 
     switch (le) {
 
@@ -59,8 +60,7 @@ void Animacion::spritePersonaje(char le) {
             animacion[28] = 3; //VICTORIA
             xi = 54;
             yi = 77;
-            posX = 150;
-            posY = 50;
+            
             escala = 2.f;
             break;
         case 'e':
@@ -94,8 +94,7 @@ void Animacion::spritePersonaje(char le) {
             animacion[24] = 4; //escopeta lanzar granada agachado
             animacion[25] = 6; //escopeta cuchillo correr
             animacion[26] = 4; //escopeta cuchillo agachado
-            posX = 275;
-            posY = 505;
+            
             escala = 2.f;
 
             xi = 60;
@@ -134,8 +133,7 @@ void Animacion::spritePersonaje(char le) {
             animacion[24] = 4; //escopeta lanzar granada agachado
             animacion[25] = 6; //escopeta cuchillo correr
             animacion[26] = 4; //escopeta cuchillo agachado
-            posX = 200;
-            posY = 300;
+            
             escala = 2.2f;
                 
             xi = 123;

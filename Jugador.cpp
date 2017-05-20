@@ -1,7 +1,7 @@
 
 #include "Jugador.h"
 
-Jugador::Jugador(int anchura, int altura) {
+Jugador::Jugador(int anchura, int altura,float posx,float posy) {
     soundEffect = new sonido();
     soundEffect->setSonido("res/audio/shot.wav");
 
@@ -20,7 +20,7 @@ Jugador::Jugador(int anchura, int altura) {
     velocidadmovimiento = 2000.0f;
 
     //Sprites
-    animacion = new Animacion("res/img/Personaje13052017.png");
+    animacion = new Animacion("res/img/Personaje13052017.png",posx,posy);
     animacion->spritePersonaje('p');
     velocidadAnimacion = 0.1;
     countBala = 0;

@@ -14,7 +14,7 @@
 
 class Jugador {
 public:
-    Jugador(int anchura, int altura);
+    Jugador(int anchura, int altura,float posx,float posy);
     void update(Time &tiempo);
     void render(float interpolacion,Time &tiempo,hud& h);
     void Movimiento(Time &tiempo);

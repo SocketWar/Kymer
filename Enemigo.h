@@ -7,7 +7,7 @@
 #include "Motor2D.h"
 class Enemigo {
 public:
-    Enemigo(int tipoE);
+    Enemigo(int tipoE,float posx,float posy);
     Animacion getAnimacion();
     Enemigo(const Enemigo& orig);
     virtual ~Enemigo();

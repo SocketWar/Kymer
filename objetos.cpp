@@ -30,6 +30,18 @@ objetos::objetos(char i, float x, float y) {
             cout << "Error cargando la textura de objeto vida" << endl;
         }
         size = Vector2f(31, 31);
+    }else if (i=='p'){
+        tex = new Texture();
+        if (!tex->loadFromFile("res/img/obj_punt.png")) {
+            cout << "Error cargando la textura de objeto puntuacion" << endl;
+        }
+        size = Vector2f(31, 31);
+    }else if (i=='g'){
+        tex = new Texture();
+        if (!tex->loadFromFile("res/img/obj_granada.png")) {
+            cout << "Error cargando la textura de objeto granada" << endl;
+        }
+        size = Vector2f(31, 31);
     }
     tipo = i;
     pos = Vector2f(x, y);

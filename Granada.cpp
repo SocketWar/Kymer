@@ -78,7 +78,7 @@ int Granada::move() {
                 SPRITE->rotate(20);
             }
         } else {
-            SPRITE->setPosition(X, Y - 80);
+            SPRITE->setPosition(X, Y  -62);
             TIEMPO -= 1;
         }
         return 1;
@@ -108,10 +108,10 @@ void Granada::explota(FloatRect *arrayColisiones) {
             std::cerr << "Error en textura Granada";
             exit(0);
         }
-        setDimensiones(50,54);
+        setDimensiones(30,32);
         loadSprite(textura,0,0);
         
-        SPRITE->scale(0.9, 0.9);
+        SPRITE->scale(1.4, 1.4);
     }
         
         SPRITE->setRotation(0);

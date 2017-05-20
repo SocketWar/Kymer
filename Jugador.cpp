@@ -7,6 +7,7 @@ Jugador::Jugador(int anchura, int altura) {
 
     arma = 0;
     vidas = 5;
+    punt=0;
     granadas = 100;
     gravedad = 2.0f;
     distanciasuelo = 700;
@@ -458,14 +459,23 @@ void Jugador::setVidas(int i) {
 int Jugador::getVidas() {
     return vidas;
 }
+void Jugador::setPunt(int i) {
+    if (punt<10000)
+    punt = i;
+}
 
+int Jugador::getPunt() {
+    return punt;
+}
 void Jugador::restarVidas() {
     if (vidas > 0)
         vidas--;
 }
 
 void Jugador::setGranadas(int i) {
+     if (granadas<100)
     granadas = i;
+     
 }
 
 int Jugador::getGranadas() {
@@ -655,15 +665,23 @@ void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
 }
 
 void Jugador::recogeObjeto(objetos &obj) {
-
+  int i=0;
     if (obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())) {
         if (obj.getTipo() == 'a') {
             obj.reproducirSonido();
             this->setArma(1);
         }else if (obj.getTipo() == 'v') {
-            int i=0;
+          
             i=getVidas()+1;
             this->setVidas(i);
+        }else if (obj.getTipo() == 'p') {
+           
+            i=getPunt()+50;
+            this->setPunt(i);
+        }else if (obj.getTipo() == 'g') {
+           
+            i=getGranadas()+1;
+            this->setGranadas(i);
         }
 
     }
@@ -678,4 +696,5 @@ void Jugador::actualizarHud(hud& h) {
     }
     h.changeContHP(vidas);
     h.changeGranada(granadas);
+    h.changePunt(punt);
 }

@@ -79,7 +79,8 @@ int Mapa1::Run() {
 
     for (int i = 0; i < map.getnPuntos(); i++) {
         Vector2f *v = map.getPuntuaciones()[i];
-        machineGun[i] = new objetos('v', v->x, v->y);
+        machineGun[i] = new objetos('g', v->x, v->y);
+        //OBJETOS: g=granadas, p=puntuacion, v=vidas, a=arma
     }
 
     Jugador jugador(anchura, altura);
@@ -144,44 +145,7 @@ int Mapa1::Run() {
 
 
 
-            int lifePlayer = h->getContHP();
-            int cont = h->getPunt();
-            int contg = h->getContGranada();
-
-            if (Keyboard::isKeyPressed(Keyboard::Add)) {
-                lifePlayer = lifePlayer + 1;
-                h->changeContHP(lifePlayer);
-
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Subtract)) {
-                lifePlayer = lifePlayer - 1;
-                h->changeContHP(lifePlayer);
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Multiply)) {
-                cont = cont + 1;
-                h->changePunt(cont);
-
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Divide)) {
-                cont = cont - 1;
-                h->changePunt(cont);
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Num1)) {
-
-                h->changeArma(0);
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Num2)) {
-
-                h->changeArma(1);
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Num3)) {
-                contg++;
-                h->changeGranada(contg);
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Num4)) {
-                contg--;
-                h->changeGranada(contg);
-            }
+          //ELIMINADAS TECLAS HUD
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
             }

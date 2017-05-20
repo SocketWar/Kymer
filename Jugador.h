@@ -37,6 +37,8 @@ public:
     void restarVidas();
     void setVidas(int i);
     int getVidas();
+    void setPunt(int i);
+    int getPunt();
     void setGranadas(int i);
     int getGranadas();
     void setArma(int i);
@@ -74,6 +76,7 @@ private:
     int vidas;
     int granadas;
     int arma;
+    int punt;
     sonido *soundEffect;
     bool suelo;
     bool colision;

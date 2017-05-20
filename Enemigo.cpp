@@ -342,7 +342,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                 }
                 if (RelojBala.getElapsedTime().asMilliseconds() > 800) {
                     Texture TEX;
-                    if (!TEX.loadFromFile("res/img/SpriteBala.png")) {
+                    if (!TEX.loadFromFile("res/img/balada2.png")) {
                         std::cerr << "Error en textura bala";
                         exit(0);
                     }

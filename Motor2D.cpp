@@ -22,7 +22,7 @@ Motor2D::Motor2D() {
     window = new RenderWindow(VideoMode(1280, 720), "Kymer", Style::Close);
     
     //REFERENCIA AL TAMAÑO DE LA IMAGEN DEL MENU
-    escala.x = (float) window->getSize().x/ 1366;
+    escala.x = (float) window->getSize().x/ 1352;
     escala.y = (float) window->getSize().y / 888;
     
     inst = true;

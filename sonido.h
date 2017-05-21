@@ -24,6 +24,7 @@ public:
     void setSonido(string ruta);
     Sound getSonido();
     void reproducir();
+    void setVolumen(float v);
     
 private:
     SoundBuffer *buffer;

@@ -19,6 +19,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Motor2D.h"
+#include "sonido.h"
 using namespace std;
 using namespace sf;
 
@@ -32,6 +33,9 @@ private:
     bool options;
     bool versus;
     bool comoJugar;
+    bool spa;
+    
+    sonido *Sound;
     
 
 public:
@@ -41,4 +45,3 @@ public:
 
 
 #endif /* SCREEN_0_HPP */
-

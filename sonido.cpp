@@ -35,3 +35,7 @@ void sonido::reproducir() {
     this->sound->play();
 }
 
+void sonido::setVolumen(float v){
+    sound->setVolume(v);
+}
+

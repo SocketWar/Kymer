@@ -89,7 +89,7 @@ int Mapa1::Run() {
         machineGun[i] = new objetos('v', v->x, v->y);
     }
 
-    Jugador jugador(anchura, altura, 150, 50);
+    Jugador jugador(anchura, altura, 1900, 50);
 
 
 
@@ -113,7 +113,7 @@ int Mapa1::Run() {
     textoPausa.setFont(*fuente);
     textoPausa.setCharacterSize(100);
     textoPausa.setString("PAUSA");
-    //vista.zoom(2);
+    vista.zoom(1.05);
     while (Running) {
 
         bucle = 0;

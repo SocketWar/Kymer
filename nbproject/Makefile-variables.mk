@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=todojuntospawn
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/todojuntospawn
+CND_ARTIFACT_NAME_Debug=kymer3
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kymer3
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=todojuntospawn.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/todojuntospawn.tar
+CND_PACKAGE_NAME_Debug=kymer3.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kymer3.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=todojuntospawn
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/todojuntospawn
+CND_ARTIFACT_NAME_Release=kymer3
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kymer3
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=todojuntospawn.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/todojuntospawn.tar
+CND_PACKAGE_NAME_Release=kymer3.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kymer3.tar
 #
 # include compiler specific variables
 #

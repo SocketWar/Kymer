@@ -58,7 +58,7 @@ void Jugador::Movimiento(Time &time) {
     if (vidas <= 0) {
         Morir();
 
-    } else if (Keyboard::isKeyPressed(Keyboard::V)) {
+    } else if (Keyboard::isKeyPressed(Keyboard::V) || Joystick::isButtonPressed(0,1)) {
         velocidadAnimacion = 0.1f;
         totalSpritesAnimacion = animacion->getNumAnimaciones()[28];
         actual = 28;
@@ -72,7 +72,7 @@ void Jugador::Movimiento(Time &time) {
             actual = 14;
             totalSpritesAnimacion = animacion->getNumAnimaciones()[14];
         }
-        if (Keyboard::isKeyPressed(Keyboard::Right)) {
+        if (Keyboard::isKeyPressed(Keyboard::Right) || Joystick::isButtonPressed(0,12)) {
             if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                 actual = 1;
@@ -88,7 +88,7 @@ void Jugador::Movimiento(Time &time) {
             }
         }
 
-        if (Keyboard::isKeyPressed(Keyboard::Left)) {
+        if (Keyboard::isKeyPressed(Keyboard::Left) || Joystick::isButtonPressed(0,11)) {
             if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                 actual = 1;
@@ -103,7 +103,7 @@ void Jugador::Movimiento(Time &time) {
                 movimiento.x = 0;
             }
         }
-        if (Keyboard::isKeyPressed(Keyboard::Down)) {
+        if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
             if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[2];
                 actual = 2;
@@ -125,11 +125,11 @@ void Jugador::Saltar() {
     velocidadAnimacion = 0.3;
 
 
-    if (Keyboard::isKeyPressed(Keyboard::C)) {
+    if (Keyboard::isKeyPressed(Keyboard::C) || Joystick::isButtonPressed(0,5)) {
         suelo = false;
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Space) && suelo) {
+    if ((Keyboard::isKeyPressed(Keyboard::Space) || Joystick::isButtonPressed(0,0)) && suelo) {
         velocidad.y = -velocidadsalto;
 
     } else if (!suelo) {
@@ -173,7 +173,7 @@ void Jugador::Disparar() {
     float balaX = 0;
     float balaY = 0;
     cout<< numEscopeta <<endl;
-    if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::A)) {
+    if ((Keyboard::isKeyPressed(Keyboard::Up) || Joystick::isButtonPressed(0,13)) && (Keyboard::isKeyPressed(Keyboard::A) || Joystick::isButtonPressed(0,2))) {
         velocidadAnimacion = 0.085;
         if (arma == 0) {
             if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
@@ -210,13 +210,13 @@ void Jugador::Disparar() {
             actual = 20;
         }
 
-    } else if (Keyboard::isKeyPressed(Keyboard::A)) {
+    } else if (Keyboard::isKeyPressed(Keyboard::A) || Joystick::isButtonPressed(0,2)) {
         velocidadAnimacion = 0.085;
 
         if (cuchillo) {
 
             if (arma == 0) {
-                if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[10];
                     actual = 10;
                 } else {
@@ -224,7 +224,7 @@ void Jugador::Disparar() {
                     actual = 9;
                 }
             } else if (arma == 1) {
-                if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[26];
                     actual = 26;
                 } else {
@@ -240,7 +240,7 @@ void Jugador::Disparar() {
             if(arma==1)
                 velocidadAnimacion = 0.5;
                 
-            if (Keyboard::isKeyPressed(Keyboard::Right)) {
+            if (Keyboard::isKeyPressed(Keyboard::Right) || Joystick::isButtonPressed(0,12)) {
 
                 if (arma == 0) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
@@ -250,7 +250,7 @@ void Jugador::Disparar() {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[21];
                     actual = 21;
                 }
-            } else if (Keyboard::isKeyPressed(Keyboard::Left)) {
+            } else if (Keyboard::isKeyPressed(Keyboard::Left) || Joystick::isButtonPressed(0,11)) {
                 if (arma == 0) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[8];
                     actual = 8;
@@ -259,7 +259,7 @@ void Jugador::Disparar() {
                     actual = 21;
                 }
 
-            } else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+            } else if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
 
                 if (arma == 0) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
@@ -331,10 +331,10 @@ void Jugador::DispararGranada() {
     float GranadaX = 0;
     float GranadaY = 0;
 
-    if (Keyboard::isKeyPressed(Keyboard::G) && granadas > 0) {
+    if ((Keyboard::isKeyPressed(Keyboard::G)||Joystick::isButtonPressed(0,3)) && granadas > 0) {
         velocidadAnimacion = 0.1;
 
-        if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Right) && distanciasuelo == (getPos().y + 4)) {
+        if ((Keyboard::isKeyPressed(Keyboard::G)||Joystick::isButtonPressed(0,3)) && (Keyboard::isKeyPressed(Keyboard::Right)||Joystick::isButtonPressed(0,12)) && distanciasuelo == (getPos().y + 4)) {
             if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
                 actual = 12;
@@ -343,7 +343,7 @@ void Jugador::DispararGranada() {
                 actual = 23;
             }
 
-        } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Left) && distanciasuelo == (getPos().y + 4)) {
+        } else if ((Keyboard::isKeyPressed(Keyboard::G)||Joystick::isButtonPressed(0,3)) && (Keyboard::isKeyPressed(Keyboard::Left)||Joystick::isButtonPressed(0,11)) && distanciasuelo == (getPos().y + 4)) {
             if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[12];
                 actual = 12;
@@ -352,7 +352,7 @@ void Jugador::DispararGranada() {
                 actual = 23;
             }
 
-        } else if (Keyboard::isKeyPressed(Keyboard::G) && Keyboard::isKeyPressed(Keyboard::Down) && distanciasuelo == (getPos().y + 4)) {
+        } else if ((Keyboard::isKeyPressed(Keyboard::G)||Joystick::isButtonPressed(0,3)) && (Keyboard::isKeyPressed(Keyboard::Down)||Joystick::isButtonPressed(0,14)) && distanciasuelo == (getPos().y + 4)) {
             if (arma == 0) {
                 totalSpritesAnimacion = animacion->getNumAnimaciones()[13];
                 actual = 13;
@@ -573,7 +573,7 @@ sonido Jugador::getSonido() {
 void Jugador::actualizarHitbox() {
 
 
-    if (Keyboard::isKeyPressed(Keyboard::Down)) {
+    if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
 
         hitBox.setScale(1.5, 1.5);
         hitBox.setPosition(getPos().x - 25, getPos().y - 48);
@@ -632,7 +632,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 colMuro = true;
                 muro = true;
 
-                if (Keyboard::isKeyPressed(Keyboard::Left) || a->top > hitBox.getGlobalBounds().top) {
+                if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::isButtonPressed(0,11)) || a->top > hitBox.getGlobalBounds().top) {
                     muro = false;
                     //  cout << "yanocolisiona---->" << muro << endl;
                 }
@@ -645,7 +645,7 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 colMuro = true;
                 muro = true;
 
-                if (Keyboard::isKeyPressed(Keyboard::Right) || a->top > hitBox.getGlobalBounds().top) {
+                if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::isButtonPressed(0,12)) || a->top > hitBox.getGlobalBounds().top) {
 
                     muro = false;
                     // cout << "yanocolisiona---->" << muro << endl;

@@ -76,12 +76,13 @@ int Mapa1::Run() {
     // ---------------------------------------
     mapaTmx map(mapa, tileSheet);
 
-    int numeroenemigos = 1;
+    int numeroenemigos = 30;
     int contemigos = 0;
     int cont = 0;
     int nspawn = 0;
     objetos **machineGun = new objetos*[map.getnPuntos()];
-    Enemigo **enemigos = new Enemigo*[numeroenemigos];
+    //Enemigo **enemigos = new Enemigo*[numeroenemigos];
+    std::vector<Enemigo*> enemigos;
 
     for (int i = 0; i < map.getnPuntos(); i++) {
         Vector2f *v = map.getPuntuaciones()[i];
@@ -138,7 +139,7 @@ int Mapa1::Run() {
 
             }
 
-            if (contemigos < numeroenemigos) {
+            if (enemigos.size() < numeroenemigos) {
 
                 for (int i = nspawn; i < map.getnSpawn(); i++) {
                     Vector2f *v = map.getSpawn()[i];
@@ -148,7 +149,8 @@ int Mapa1::Run() {
 
                         for (int j = contemigos; j < numeroenemigos; j++) {
                             if (cont < 3) {
-                                enemigos[j] = new Enemigo(4, v->x, v->y);
+                                Enemigo *enemigo = new Enemigo(4, v->x, v->y);
+                                enemigos.push_back(enemigo);
                                 contemigos++;
                                 cont++;
                             }
@@ -163,25 +165,24 @@ int Mapa1::Run() {
             cout << "numero enemigos---->>>" << contemigos << endl;
 
             //enemigo
-            int j=0;
-            Enemigo **enemigosAux = new Enemigo*[numeroenemigos];
-            for (int i = 0; i < contemigos; i++) {
-                int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
+            std::vector<Enemigo*> enemigosAux;
+            for (int i = 0; i < enemigos.size(); i++) {
                 if(enemigos[i]->getVidas()>0){
+                    int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
                     if (posicion <= 1000) {
                         enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
                         enemigos[i]->ColisionJugador(jugador);
                         enemigos[i]->update(tiempo, tiempoAnimacion, jugador);
                     }
-                    enemigosAux[j]=enemigos[i];
-                    j++;
+                    enemigosAux.push_back(enemigos[i]);
                 }else{
-                    //enemigos[i]->~Enemigo();
-                    cout<< "Enemigo borrado: "<< i << endl;
+                    
+                    enemigos[i]->~Enemigo();
+                    cout << "Muerto " << i << endl;
                 }
 
             }
-            //enemigos=enemigosAux;
+            enemigos=enemigosAux;
 
 
 
@@ -190,7 +191,7 @@ int Mapa1::Run() {
                 h->changeTime(0);
             }
 
-            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            if (Keyboard::isKeyPressed(Keyboard::Escape) || Joystick::isButtonPressed(0,7))
                 return 0;
 
             if (Keyboard::isKeyPressed(Keyboard::P))
@@ -224,11 +225,12 @@ int Mapa1::Run() {
         }
 
 
-        for (int i = 0; i < contemigos; i++) {
-            int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
-            if(enemigos[i]->getVidas()>0)
+        for (int i = 0; i < enemigos.size(); i++) {
+            if(enemigos[i]->getVidas()>0){
+                int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
                 if (posicion <= 1000)
                     enemigos[i]->render(interpolacion, tiempoAnimacion);
+            }
 
         }
 

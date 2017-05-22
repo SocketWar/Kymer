@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=todojunto5
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/todojunto5
+CND_ARTIFACT_NAME_Debug=kymer
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kymer
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=todojunto5.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/todojunto5.tar
+CND_PACKAGE_NAME_Debug=kymer.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kymer.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=todojunto5
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/todojunto5
+CND_ARTIFACT_NAME_Release=kymer
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kymer
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=todojunto5.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/todojunto5.tar
+CND_PACKAGE_NAME_Release=kymer.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kymer.tar
 #
 # include compiler specific variables
 #

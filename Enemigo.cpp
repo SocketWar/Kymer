@@ -7,10 +7,10 @@
 Enemigo::Enemigo(int tipoE, float posx, float posy) {
 
    
-
+    muerto = false;
     velocidadAnimacion = 0.1;
    if (tipoE != 4) {
-        vidas = 2;
+        vidas = 6;
         animacion = new Animacion("res/img/enemigocomun1.png", posx, posy);
         animacion->spritePersonaje('e');
         sonidoMuerte= new sonido();//sera el mismo para todos excepto la vaca
@@ -120,7 +120,9 @@ Animacion Enemigo::getAnimacion() {
 }
 
 void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
-
+    if(vidas>0){
+        
+   
     float tiempo = time.asSeconds();
     Vector2f movimiento(0.0f, 0.0f);
     Vector2f posJugador = jugador.getPos();
@@ -595,6 +597,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         }
     }
     animacion->Movimiento(movimiento);
+        }
 }
 
 void Enemigo::Saltar() {
@@ -708,15 +711,36 @@ int Enemigo::getVidas() {
 }
 
 void Enemigo::restarVidas() {
-    if (vidas > 0)
+    if (vidas > 0){
         vidas--;
+        
+    }
+    if (vidas<=0){
+        if(tipo==1 || tipo == 2){
+            sonidoAtaque->getSonido().stop();
+           totalSpritesAnimacion = animacion->getNumAnimaciones()[7];
+            actual = 7;
+            velocidadAnimacion = 0.2; 
+        }
+        if(tipo == 3 ||tipo== 4){
+            sonidoAtaque->getSonido().stop();
+            sonidoMuerte->reproducir();
+        }
+        
+
+        cout<<"he entrado y estoy muerto"<<vidas<<endl;
+    }   
+        
+    
 }
 
 void Enemigo::update(Time &tiempo, Time &tiempoanimacion, Jugador jugador) {
 
 
     *viejo = *nuevo;
-    Movimiento(tiempo, tiempoanimacion, jugador);
+   
+        Movimiento(tiempo, tiempoanimacion, jugador);
+    
     Saltar();
     //Disparar();
     UpdateGranada();
@@ -748,8 +772,24 @@ void Enemigo::render(float interpolacion, Time &tiempo) {
         sonidoAtaque->setReproduccion(1);
         }
     }
-    Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
-
+    if(actual ==7 ){
+        
+        cout<<"enemigo.cpp-render---------reproduccion sonidgetframeActual(tiempo): "<<getframeActual(tiempo)<<endl;
+        if( sonidoMuerte->getReproduccion()==0){
+        sonidoMuerte->reproducir();
+        sonidoMuerte->setReproduccion(1);//no se reproduce mas
+        cout<<"enemigo.cpp-render---------reproduccion sonido"<<endl;
+            
+        }
+        if(getframeActual(tiempo)==6){
+         
+        muerto = true;
+            
+        }
+    }
+  
+     Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    
     RenderGranada(Window);
 
     //Window.draw(hitBoxataqueVaca);
@@ -926,4 +966,19 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
         }
     
 
+}
+
+int Enemigo::getTipo() {
+    return tipo;
+}
+
+void Enemigo::ReproducirMuerte(){
+    
+    sonidoMuerte->reproducir();
+
+    
+}
+
+bool Enemigo::getMuerto() {
+    return muerto;
 }

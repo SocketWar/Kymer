@@ -6,6 +6,14 @@ Jugador::Jugador(int anchura, int altura,float posx,float posy) {
     disparo->setSonido("res/audio/shot.wav");
     disparo->getSonido().setLoop(false);
     
+    cuchillaco = new sonido();
+    cuchillaco->setSonido("res/audio/cuchillo.wav");
+    cuchillaco->getSonido().setLoop(false);
+    
+    lanzallamas = new sonido();
+    lanzallamas->setSonido("res/audio/faia.wav");
+    lanzallamas->getSonido().setLoop(false);
+    
    
     muerto = 0;
     muerte = new sonido();
@@ -192,7 +200,6 @@ void Jugador::Disparar() {
                 balaDisparo->setPosition(balaX, balaY);
                 balaDisparo->loadSprite(TEX, 0, 0);
                 CARGADOR.push_back(balaDisparo);
-                disparo->reproducir();
                 RelojBala.restart();
             }
         }else{
@@ -208,6 +215,8 @@ void Jugador::Disparar() {
                 disparo->reproducir();
                 CARGADOR.push_back(balaDisparo);
                 RelojBala.restart();
+                lanzallamas->reproducir();
+                        
             }
             
         }
@@ -223,7 +232,7 @@ void Jugador::Disparar() {
         velocidadAnimacion = 0.085;
 
         if (cuchillo) {
-
+            cuchillaco->reproducir();
             if (arma == 0) {
                 if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[10];
@@ -313,7 +322,8 @@ void Jugador::Disparar() {
                     balaDisparo->setPosition(balaX, balaY);
                     balaDisparo->loadSprite(TEX, 0, 0);
                     CARGADOR.push_back(balaDisparo);
-                    disparo->reproducir();
+                        disparo->reproducir();
+                 
 
                     RelojBala.restart();
                 }
@@ -336,6 +346,9 @@ void Jugador::Disparar() {
                     CARGADOR.push_back(balaDisparo);
                     numEscopeta -= 1;
                     RelojBala.restart();
+               
+                            lanzallamas->reproducir();
+                        
                 }
             }
         }

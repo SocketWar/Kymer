@@ -95,8 +95,10 @@ private:
     Estado *nuevo;
     
     //sonidos
-     sonido *disparo;
+    sonido *disparo;
     sonido *muerte;
+    sonido *cuchillaco;
+    sonido *lanzallamas;
 };
 
 

@@ -28,6 +28,9 @@ public:
     void actualizarHitBoxataqueVaca();
     void restarVidas();
     int getVidas();
+    int getTipo();
+    void ReproducirMuerte();
+    bool getMuerto();
 private:
     
     Vector2f velocidad; //velocidad en las dos posiciones
@@ -66,6 +69,7 @@ private:
     int vidas;
     sonido * sonidoAtaque;
     sonido * sonidoMuerte;
+    bool muerto;
 };
 
 #endif /* ENEMIGO_H */

@@ -76,7 +76,7 @@ int Mapa1::Run() {
     // ---------------------------------------
     mapaTmx map(mapa, tileSheet);
 
-    int numeroenemigos = 30;
+    int numeroenemigos = 0;
     int contemigos = 0;
     int cont = 0;
     int nspawn = 0;
@@ -90,7 +90,6 @@ int Mapa1::Run() {
          objetoRandom = rand() % 3;
         Vector2f *v = map.getPuntuaciones()[i];
         machineGun[i] = new objetos(objetoRandom, v->x, v->y);
-        cout<<"se ha creaado el obeto : "<<objetoRandom<<endl;
     }
 
     Jugador jugador(anchura, altura, 1900, 50);
@@ -180,14 +179,24 @@ int Mapa1::Run() {
                         enemigos[i]->update(tiempo, tiempoAnimacion, jugador);
                     }
                     enemigosAux.push_back(enemigos[i]);
-                }else{
-                    
-                    enemigos[i]->~Enemigo();
-                  //  cout << "Muerto " << i << endl;
+                }else 
+                    if(enemigos[i]->getVidas()<=0){
+                        if(enemigos[i]->getTipo() == 1 || enemigos[i]->getTipo()==2){
+                          cout<<"entro"<<endl;
+                           
+                           if (enemigos[i]->getMuerto()==true){
+                             enemigos[i]->~Enemigo();
+                               
+                           }
+                           else{
+                                enemigosAux.push_back(enemigos[i]);
+
+                           }
+                    }
                 }
 
             }
-            enemigos=enemigosAux;
+             enemigos=enemigosAux;
 
 
 
@@ -231,11 +240,12 @@ int Mapa1::Run() {
 
 
         for (int i = 0; i < enemigos.size(); i++) {
-            if(enemigos[i]->getVidas()>0){
-                int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
-                if (posicion <= 1000)
+//            if(enemigos[i]->getVidas()>0){
+//            if(enemigos[i]->getMuerto()== false){
+//                int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
+//                if (posicion <= 1000)
                     enemigos[i]->render(interpolacion, tiempoAnimacion);
-            }
+//            }
 
         }
 

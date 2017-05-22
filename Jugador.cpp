@@ -779,8 +779,8 @@ void Jugador::recogeObjeto(objetos &obj) {
   int i=0;
   //cout<<"tipo de objeto :" <<obj.getTipo()<<endl;
     if (obj.getSprite().getGlobalBounds().intersects(this->hitBox->getGlobalBounds())) {
-        if (obj.getTipo() == 0) {
             obj.reproducirSonido();
+        if (obj.getTipo() == 0) {
             this->setArma(1);
         }else if (obj.getTipo() == 1) {
           

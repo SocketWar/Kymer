@@ -24,12 +24,16 @@ objetos::objetos(int i, float x, float y) {
         }
         size = Vector2f(31, 30);
     } else if (i == 1) {//vidas
+        Sound = new sonido();
+        Sound->setSonido("res/audio/hp.wav");
         tex = new Texture();
         if (!tex->loadFromFile("res/img/obj_hp.png")) {
             cout << "Error cargando la textura de objeto vida" << endl;
         }
         size = Vector2f(31, 31);
     }else if (i==2){
+        Sound = new sonido();
+        Sound->setSonido("res/audio/coin.wav");
         tex = new Texture();
         if (!tex->loadFromFile("res/img/obj_punt.png")) {
             cout << "Error cargando la textura de objeto puntuacion" << endl;
@@ -37,7 +41,7 @@ objetos::objetos(int i, float x, float y) {
         size = Vector2f(31, 31);
     }else if (i==3){
         tex = new Texture();
-        tipo =  'g';
+
         if (!tex->loadFromFile("res/img/obj_granada.png")) {
             cout << "Error cargando la textura de objeto granada" << endl;
         }

@@ -19,7 +19,7 @@ bool Motor2D::inst = false;
 //creamos la ventana en el contructor nada mas crear la instancia
 
 Motor2D::Motor2D() {
-    window = new RenderWindow(VideoMode(1280, 720), "Kymer", Style::Close);
+    window = new RenderWindow(VideoMode(1024, 720), "Kymer", Style::Close);
     
     //REFERENCIA AL TAMAÑO DE LA IMAGEN DEL MENU
     escala.x = (float) window->getSize().x/ 1352;

@@ -795,7 +795,7 @@ void Jugador::recogeObjeto(objetos &obj) {
             i=getGranadas()+1;
             this->setGranadas(i);
         }
-
+            obj.setDestruir();
     }
 }
 

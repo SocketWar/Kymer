@@ -53,6 +53,7 @@ objetos::objetos(int i, float x, float y) {
     sprite->setTextureRect(IntRect(0, 0, size.x, size.y));
     sprite->setPosition(pos);
     tocado = false;
+    DESTRUIR = false;
 
 
 }
@@ -84,4 +85,17 @@ Sprite objetos::getSprite() {
 }
 char objetos::getTipo(){
     return tipo;
+}
+
+void objetos::setDestruir(){
+    DESTRUIR=true;
+}
+bool objetos::getDestruir(){
+    return DESTRUIR;
+}
+
+objetos::~objetos(){
+    delete tex;
+    delete sprite;
+    delete Sound;
 }

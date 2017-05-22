@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=kymer
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kymer
+CND_ARTIFACT_NAME_Debug=todojuntolanzallamas
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/todojuntolanzallamas
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=kymer.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kymer.tar
+CND_PACKAGE_NAME_Debug=todojuntolanzallamas.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/todojuntolanzallamas.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=kymer
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kymer
+CND_ARTIFACT_NAME_Release=todojuntolanzallamas
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/todojuntolanzallamas
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=kymer.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kymer.tar
+CND_PACKAGE_NAME_Release=todojuntolanzallamas.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/todojuntolanzallamas.tar
 #
 # include compiler specific variables
 #

@@ -13,31 +13,31 @@
 
 #include "objetos.h"
 
-objetos::objetos(char i, float x, float y) {
-    if (i == 'a') {
+objetos::objetos(int i, float x, float y) {
+    if (i == 0) {//arma
         Sound = new sonido();
         Sound->setSonido("res/audio/heavyMachine.wav");
-
         tex = new Texture();
         if (!tex->loadFromFile("res/img/heavyMachineGun.png")) {
             cout << "Error cargando la textura de objeto escopeta" << endl;
 
         }
         size = Vector2f(31, 30);
-    } else if (i == 'v') {
+    } else if (i == 1) {//vidas
         tex = new Texture();
         if (!tex->loadFromFile("res/img/obj_hp.png")) {
             cout << "Error cargando la textura de objeto vida" << endl;
         }
         size = Vector2f(31, 31);
-    }else if (i=='p'){
+    }else if (i==2){
         tex = new Texture();
         if (!tex->loadFromFile("res/img/obj_punt.png")) {
             cout << "Error cargando la textura de objeto puntuacion" << endl;
         }
         size = Vector2f(31, 31);
-    }else if (i=='g'){
+    }else if (i==3){
         tex = new Texture();
+        tipo =  'g';
         if (!tex->loadFromFile("res/img/obj_granada.png")) {
             cout << "Error cargando la textura de objeto granada" << endl;
         }

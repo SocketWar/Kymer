@@ -58,9 +58,9 @@ void MovimientoIA::esquivarIA(Time& tiempo, CircleShape& circulo, RectangleShape
     float altoIA = cuadradoIA.getLocalBounds().height;
     float anchoIA = cuadradoIA.getLocalBounds().width;
     
-    cout<<"posicion x circulo------>"<<circulox<<endl;
-    cout<<"posicion alto cuadrado----->"<<posicionyIA<<endl;
-    
+   // cout<<"posicion x circulo------>"<<circulox<<endl;
+    //cout<<"posicion alto cuadrado----->"<<posicionyIA<<endl;
+   // 
     
     
     

@@ -179,7 +179,7 @@ void Jugador::Disparar() {
     float speedY = 0;
     float balaX = 0;
     float balaY = 0;
-    cout<< numEscopeta <<endl;
+   // cout<< numEscopeta <<endl;
     if ((Keyboard::isKeyPressed(Keyboard::Up) || Joystick::isButtonPressed(0,13)) && (Keyboard::isKeyPressed(Keyboard::A) || Joystick::isButtonPressed(0,2))) {
         velocidadAnimacion = 0.085;
         if (arma == 0) {
@@ -444,7 +444,7 @@ void Jugador::UpdateDisparo() {
 
     }
     CARGADOR = CargadorAux;
-    cout<<"Balas: " << CARGADOR.size() << endl;
+   // cout<<"Balas: " << CARGADOR.size() << endl;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
         move = CARGADORGRANADA[contador]->move();
         switch (move) {
@@ -742,19 +742,20 @@ void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
 
 void Jugador::recogeObjeto(objetos &obj) {
   int i=0;
+  //cout<<"tipo de objeto :" <<obj.getTipo()<<endl;
     if (obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())) {
-        if (obj.getTipo() == 'a') {
+        if (obj.getTipo() == 0) {
             obj.reproducirSonido();
             this->setArma(1);
-        }else if (obj.getTipo() == 'v') {
+        }else if (obj.getTipo() == 1) {
           
             i=getVidas()+1;
             this->setVidas(i);
-        }else if (obj.getTipo() == 'p') {
+        }else if (obj.getTipo() == 2) {
            
             i=getPunt()+50;
             this->setPunt(i);
-        }else if (obj.getTipo() == 'g') {
+        }else if (obj.getTipo() == 3) {
            
             i=getGranadas()+1;
             this->setGranadas(i);

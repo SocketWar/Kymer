@@ -38,7 +38,3 @@ Vector2f Estado::getInterpolacion(Estado* viejo, Estado* nuevo, float interpolac
     return interpol;
 }
 
-
-
-
-

@@ -80,13 +80,17 @@ int Mapa1::Run() {
     int contemigos = 0;
     int cont = 0;
     int nspawn = 0;
+    int objetoRandom= 0 ;
+    
     objetos **machineGun = new objetos*[map.getnPuntos()];
     //Enemigo **enemigos = new Enemigo*[numeroenemigos];
     std::vector<Enemigo*> enemigos;
 
     for (int i = 0; i < map.getnPuntos(); i++) {
+         objetoRandom = rand() % 3;
         Vector2f *v = map.getPuntuaciones()[i];
-        machineGun[i] = new objetos('v', v->x, v->y);
+        machineGun[i] = new objetos(objetoRandom, v->x, v->y);
+        cout<<"se ha creaado el obeto : "<<objetoRandom<<endl;
     }
 
     Jugador jugador(anchura, altura, 1900, 50);
@@ -163,7 +167,7 @@ int Mapa1::Run() {
                     }
                 }
             }
-            cout << "numero enemigos---->>>" << contemigos << endl;
+            //cout << "numero enemigos---->>>" << contemigos << endl;
 
             //enemigo
             std::vector<Enemigo*> enemigosAux;
@@ -179,7 +183,7 @@ int Mapa1::Run() {
                 }else{
                     
                     enemigos[i]->~Enemigo();
-                    cout << "Muerto " << i << endl;
+                  //  cout << "Muerto " << i << endl;
                 }
 
             }

@@ -865,7 +865,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
             if (RelojCuchillo.getElapsedTime().asSeconds() > 0.1) {
                 jugador.restarVidas();
                 RelojCuchillo.restart();
-                cout << "ostiaputacomo pegan" << endl;
+                //cout << "ostiaputacomo pegan" << endl;
             }
         }
     }
@@ -892,7 +892,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
                 restarVidas();
                 jugador.getArrayBalas()[i]->setDestruir();
                 golpeado = true;
-                cout << "numero de vidas" << getVidas() << endl;
+              //  cout << "numero de vidas" << getVidas() << endl;
             }
         }
     

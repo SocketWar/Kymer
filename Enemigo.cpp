@@ -640,6 +640,7 @@ void Enemigo::UpdateGranada() {
     std::vector<Granada*> CargadorAuxGranada;
     std::vector<Bala*> CargadorAux;
     for (contador = 0; contador < CARGADOR.size(); contador++) {
+        CARGADOR[contador]->actualizarEstado();
         move = CARGADOR[contador]->move();
         switch (move) {
             case 1:
@@ -657,6 +658,7 @@ void Enemigo::UpdateGranada() {
     }
     CARGADOR = CargadorAux;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+        CARGADORGRANADA[contador]->actualizarEstado();
         move = CARGADORGRANADA[contador]->move();
         switch (move) {
             case 1:
@@ -889,6 +891,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
         for (int i = 0; i < jugador.getArrayBalas().size(); i++) {
 
             if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+                restarVidas();
                 restarVidas();
                 jugador.getArrayBalas()[i]->setDestruir();
                 golpeado = true;

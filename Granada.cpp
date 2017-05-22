@@ -32,6 +32,8 @@ Granada::Granada(int h, int w, float spX, float spY, int dist) {
     Reloj = new Clock();
     explosion = false;
     mortero = false;
+    viejo = new Estado();
+    nuevo = new Estado();
 }
 
 void Granada::setPosition(float xStart, float yStart) {
@@ -101,6 +103,7 @@ bool Granada::colision(Rect<float> hit) {
 
 void Granada::explota(FloatRect *arrayColisiones) {
     if (arrayColisiones->intersects(getSprite().getGlobalBounds())) {
+        //cout << "BOOM! SUELO TOCADO" << endl;
         if (!explosion){
         Texture textura;
         if (!textura.loadFromFile("res/img/explosion3.png")) {
@@ -120,6 +123,24 @@ void Granada::explota(FloatRect *arrayColisiones) {
 void Granada::spriteMortero() {
     mortero = true;
 }
+
+
+Estado* Granada::getViejo() {
+
+    return viejo;
+}
+
+Estado* Granada::getNuevo() {
+
+    return nuevo;
+}
+
+void Granada::actualizarEstado() {
+
+    *viejo=*nuevo;
+    
+}
+
 Granada::~Granada() {
     delete TEX;
     delete SPRITE;

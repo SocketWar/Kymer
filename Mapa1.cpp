@@ -55,7 +55,7 @@ int Mapa1::Run() {
     sound.play();
     sound.setLoop(true);
 
-   
+
 
 
     // ---------------------------------------
@@ -134,18 +134,18 @@ int Mapa1::Run() {
             jugador->calcularColision(map.getColisiones(), map.getnColisiones(), map.getMuerte());
             jugador->update(tiempo);
 
-                std::vector<objetos*> machineGunAux;
-                for (int i = 0; i < machineGun.size(); i++) {
-                    if (!machineGun[i]->getDestruir()) {
-                        jugador->recogeObjeto(*machineGun[i]);
-                        machineGunAux.push_back(machineGun[i]);
-                    } else {
-                        machineGun[i]->~objetos();
-                    }
-
+            std::vector<objetos*> machineGunAux;
+            for (int i = 0; i < machineGun.size(); i++) {
+                if (!machineGun[i]->getDestruir()) {
+                    jugador->recogeObjeto(*machineGun[i]);
+                    machineGunAux.push_back(machineGun[i]);
+                } else {
+                    machineGun[i]->~objetos();
                 }
 
-                machineGun = machineGunAux;
+            }
+
+            machineGun = machineGunAux;
 
             if (enemigos.size() < numeroenemigos) {
 
@@ -184,28 +184,26 @@ int Mapa1::Run() {
                         enemigos[i]->update(tiempo, tiempoAnimacion, *jugador);
                     }
                     enemigosAux.push_back(enemigos[i]);
-                }else 
-                    if(enemigos[i]->getVidas()<=0){
-                        if(enemigos[i]->getTipo() == 1 || enemigos[i]->getTipo()==2){
-                          cout<<"entro"<<endl;
-                           
-                           if (enemigos[i]->getMuerto()==true){
-                             enemigos[i]->~Enemigo();
-                               
-                           }
-                           else{
-                                enemigosAux.push_back(enemigos[i]);
+                } else
+                    if (enemigos[i]->getVidas() <= 0) {
+                    if (enemigos[i]->getTipo() == 1 || enemigos[i]->getTipo() == 2) {
+                        //cout<<"entro"<<endl;
 
-                           }
+                        if (enemigos[i]->getMuerto() == true) {
+                            enemigos[i]->~Enemigo();
+                        } else {
+                            enemigosAux.push_back(enemigos[i]);
+                        }
+                    } else {
+                        enemigos[i]->~Enemigo();
                     }
                 }
 
             }
-             enemigos=enemigosAux;
+            enemigos = enemigosAux;
 
             if (jugador->gethitBox().getGlobalBounds().intersects(map.getFin())) {
-
-                for(int i=0;i<enemigos.size();i++){
+                for (int i = 0; i < enemigos.size(); i++) {
                     enemigos[i]->~Enemigo();
                 }
                 return 2;
@@ -228,9 +226,6 @@ int Mapa1::Run() {
         //interpolacion de movimiento
         interpolacion = float(clock1.getElapsedTime().asMilliseconds() + update - tiempoupdate) / float (update);
 
-
-
-
         //limpiampos pantalla
         App.clear(Color(150, 200, 200));
 
@@ -242,16 +237,15 @@ int Mapa1::Run() {
             machineGun[i]->RenderObjeto();
         }
 
-
         for (int i = 0; i < enemigos.size(); i++) {
-         // if(enemigos[i]->getVidas()>0){
-          if(enemigos[i]->getMuerto() == false){
-              int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
-               if (posicion <= 1000)
+            // if(enemigos[i]->getVidas()>0){
+            if (enemigos[i]->getMuerto() == false) {
+                int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
+                if (posicion <= 1000)
                     enemigos[i]->render(interpolacion, tiempoAnimacion);
-           }
+            }
 
-        //}
+            //}
         }
         vista.setCenter(Vector2f(jugador->getPos().x, vista.getCenter().y));
         App.setView(vista);

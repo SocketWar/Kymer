@@ -80,20 +80,20 @@ int Mapa1::Run() {
     int contemigos = 0;
     int cont = 0;
     int nspawn = 0;
-    int objetoRandom= 0 ;
-    
+    int objetoRandom = 0;
+
     objetos **machineGun = new objetos*[map.getnPuntos()];
     //Enemigo **enemigos = new Enemigo*[numeroenemigos];
     std::vector<Enemigo*> enemigos;
 
     for (int i = 0; i < map.getnPuntos(); i++) {
-         objetoRandom = rand() % 3;
+        objetoRandom = rand() % 3;
         Vector2f *v = map.getPuntuaciones()[i];
         machineGun[i] = new objetos(objetoRandom, v->x, v->y);
-        cout<<"se ha creaado el obeto : "<<objetoRandom<<endl;
+        //cout<<"se ha creaado el obeto : "<<objetoRandom<<endl;
     }
 
-    Jugador *jugador= new Jugador(anchura, altura, 1900, 50);
+    Jugador *jugador = new Jugador(anchura, altura, 1900, 50);
 
 
 
@@ -135,7 +135,7 @@ int Mapa1::Run() {
             //llamadas a update
             //jugador
 
-            jugador->calcularColision(map.getColisiones(), map.getnColisiones());
+            jugador->calcularColision(map.getColisiones(), map.getnColisiones(), map.getMuerte());
             jugador->update(tiempo);
 
             for (int i = 0; i < map.getnPuntos(); i++) {
@@ -148,12 +148,12 @@ int Mapa1::Run() {
                 for (int i = nspawn; i < map.getnSpawn(); i++) {
                     Vector2f *v = map.getSpawn()[i];
                     float posicion = v->x - jugador->getPos().x;
-                    int randomEnemy=0;
+                    int randomEnemy = 0;
                     if (posicion <= 1000) {
 
                         for (int j = contemigos; j < numeroenemigos; j++) {
                             if (cont < 3) {
-                                 randomEnemy = rand() % 5;
+                                randomEnemy = rand() % 5;
                                 Enemigo *enemigo = new Enemigo(randomEnemy, v->x, v->y);
                                 enemigos.push_back(enemigo);
                                 contemigos++;
@@ -172,43 +172,42 @@ int Mapa1::Run() {
             //enemigo
             std::vector<Enemigo*> enemigosAux;
             for (int i = 0; i < enemigos.size(); i++) {
-                if(enemigos[i]->getVidas()>0){
+                if (enemigos[i]->getVidas() > 0) {
                     int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
                     if (posicion <= 1000) {
-                        enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
+                        enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones(), map.getMuerte());
                         enemigos[i]->ColisionJugador(*jugador);
                         enemigos[i]->update(tiempo, tiempoAnimacion, *jugador);
                     }
                     enemigosAux.push_back(enemigos[i]);
-                }else{
-                    
+                } else {
+
                     enemigos[i]->~Enemigo();
                     //cout << "Muerto " << i << endl;
                 }
 
             }
-            enemigos=enemigosAux;
+            enemigos = enemigosAux;
 
+            if (jugador->gethitBox().getGlobalBounds().intersects(map.getFin())) {
 
-
+                for(int i=0;i<enemigos.size();i++){
+                    enemigos[i]->~Enemigo();
+                }
+                return 2;
+            }
             //ELIMINADAS TECLAS HUD
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
             }
 
-            if (Keyboard::isKeyPressed(Keyboard::Escape) || Joystick::isButtonPressed(0,7))
+            if (Keyboard::isKeyPressed(Keyboard::Escape) || Joystick::isButtonPressed(0, 7))
                 return 0;
 
-            if (Keyboard::isKeyPressed(Keyboard::P))
-                pausa = true;
 
-            if (Keyboard::isKeyPressed(Keyboard::A)) {
-                // sound.setVolume(1);
-                //                disparo.getSonido().play();
-                //sound2.play();
-            }
             if (Keyboard::isKeyPressed(Keyboard::B)) {
                 return 2;
+                //cambio de mapa
             }
         }
 
@@ -231,7 +230,7 @@ int Mapa1::Run() {
 
 
         for (int i = 0; i < enemigos.size(); i++) {
-            if(enemigos[i]->getVidas()>0){
+            if (enemigos[i]->getVidas() > 0) {
                 int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
                 if (posicion <= 1000)
                     enemigos[i]->render(interpolacion, tiempoAnimacion);

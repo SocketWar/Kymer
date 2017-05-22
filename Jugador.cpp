@@ -627,7 +627,7 @@ vector<Granada*> Jugador::getArrayGranadas() {
     return CARGADORGRANADA;
 }
 
-void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
+void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos,FloatRect muerte) {
 
 
     /*
@@ -641,6 +641,13 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
      */
     bool colSuelo = false;
     bool colMuro = false;
+    
+    if(muerte.intersects(hitBox->getGlobalBounds())){
+        
+        cout<<"GAMEOVER"<< endl;
+        vidas=0;
+    }
+    
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
 

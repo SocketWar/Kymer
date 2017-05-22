@@ -20,7 +20,7 @@ public:
     int getActual();
     int getframeActual(Time &tiempo);
     void actualizarHitbox();
-    void calcularColision(FloatRect** arrayColisiones,int nobjetos);
+    void calcularColision(FloatRect** arrayColisiones,int nobjetos,FloatRect muerte);
     RectangleShape gethitBox();
     void update(Time &tiempo,Time &tiempoanimacion, Jugador jugador);
     void render(float interpolacion,Time &tiempo);

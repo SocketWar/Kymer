@@ -222,7 +222,7 @@ void Animacion::CambiarColor(bool golpeado) {
 
     if (golpeado) {
         if (getSpriteE().getColor() != Color::Red) {
-            cout<<"rojo"<<endl;
+            //cout<<"rojo"<<endl;
             for (int f = 0; f < totalFotogramas; f++) {
                 for (int j = 0; j < animacion[f]; j++) {
                     sprites[f][j]->setColor(Color::Red);
@@ -231,7 +231,7 @@ void Animacion::CambiarColor(bool golpeado) {
         }
     } else {
         if (getSpriteE().getColor() != Color::White) {
-            cout<<"blanco"<<endl;
+            //cout<<"blanco"<<endl;
             for (int f = 0; f < totalFotogramas; f++) {
                 for (int j = 0; j < animacion[f]; j++) {
                     sprites[f][j]->setColor(Color::White);

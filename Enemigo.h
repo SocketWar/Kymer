@@ -31,6 +31,7 @@ public:
     int getTipo();
     void ReproducirMuerte();
     bool getMuerto();
+    int getPuntos();
 private:
     
     Vector2f velocidad; //velocidad en las dos posiciones

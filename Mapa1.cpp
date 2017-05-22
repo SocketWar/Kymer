@@ -191,12 +191,21 @@ int Mapa1::Run() {
                         if (enemigos[i]->getTipo() == 1 || enemigos[i]->getTipo() == 2) {
                             //cout<<"entro"<<endl;
 
+
                             if (enemigos[i]->getMuerto() == true) {
+                                int j = 0;
+                                j = enemigos[i]->getPuntos();
+                                j = jugador->getPunt() + j;
+                                jugador->setPunt(j);
                                 enemigos[i]->~Enemigo();
                             } else {
                                 enemigosAux.push_back(enemigos[i]);
                             }
                         } else {
+                            int j = 0;
+                            j = enemigos[i]->getPuntos();
+                            j = jugador->getPunt() + j;
+                            jugador->setPunt(j);
                             enemigos[i]->~Enemigo();
                         }
                     }
@@ -260,12 +269,12 @@ int Mapa1::Run() {
             if (Keyboard::isKeyPressed(Keyboard::Escape) || Joystick::isButtonPressed(0, 7))
                 return 0;
 
-            
+
             App.draw(sprtGameOver);
-            
-            
-            
-            Vector2f centro(sprtGameOver.getPosition().x + (gameOver->getSize().x/2), sprtGameOver.getPosition().y + (gameOver->getSize().y/2));
+
+
+
+            Vector2f centro(sprtGameOver.getPosition().x + (gameOver->getSize().x / 2), sprtGameOver.getPosition().y + (gameOver->getSize().y / 2));
             vista.setCenter(centro);
             App.setView(vista);
             App.display();

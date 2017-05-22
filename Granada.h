@@ -2,6 +2,7 @@
 #ifndef GRANADA_H
 #define GRANADA_H
 #include "mapaTmx.h"
+#include "Estado.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;

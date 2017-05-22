@@ -103,7 +103,7 @@ bool Granada::colision(Rect<float> hit) {
 
 void Granada::explota(FloatRect *arrayColisiones) {
     if (arrayColisiones->intersects(getSprite().getGlobalBounds())) {
-        cout << "BOOM! SUELO TOCADO" << endl;
+        //cout << "BOOM! SUELO TOCADO" << endl;
         if (!explosion){
         Texture textura;
         if (!textura.loadFromFile("res/img/explosion3.png")) {

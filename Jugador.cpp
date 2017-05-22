@@ -179,7 +179,7 @@ void Jugador::Disparar() {
     float speedY = 0;
     float balaX = 0;
     float balaY = 0;
-    cout<< numEscopeta <<endl;
+    cout<< "Balas escopeta: "<<numEscopeta <<endl;
     if ((Keyboard::isKeyPressed(Keyboard::Up) || Joystick::isButtonPressed(0,13)) && (Keyboard::isKeyPressed(Keyboard::A) || Joystick::isButtonPressed(0,2))) {
         velocidadAnimacion = 0.085;
         if (arma == 0) {
@@ -713,6 +713,11 @@ void Jugador::update(Time &tiempo) {
 
 
     *viejo = *nuevo;
+    if(numEscopeta<=0){
+        arma=0;
+    }else{
+        arma=1;
+    }
     Movimiento(tiempo);
     Saltar();
     Disparar();

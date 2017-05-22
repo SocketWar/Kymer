@@ -892,6 +892,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
 
             if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
                 restarVidas();
+                restarVidas();
                 jugador.getArrayBalas()[i]->setDestruir();
                 golpeado = true;
                 cout << "numero de vidas" << getVidas() << endl;

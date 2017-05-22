@@ -640,6 +640,7 @@ void Enemigo::UpdateGranada() {
     std::vector<Granada*> CargadorAuxGranada;
     std::vector<Bala*> CargadorAux;
     for (contador = 0; contador < CARGADOR.size(); contador++) {
+        CARGADOR[contador]->actualizarEstado();
         move = CARGADOR[contador]->move();
         switch (move) {
             case 1:
@@ -657,6 +658,7 @@ void Enemigo::UpdateGranada() {
     }
     CARGADOR = CargadorAux;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
+        CARGADORGRANADA[contador]->actualizarEstado();
         move = CARGADORGRANADA[contador]->move();
         switch (move) {
             case 1:

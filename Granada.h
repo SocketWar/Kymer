@@ -28,6 +28,9 @@ public:
     Sprite getSprite(){ return *SPRITE;}
     Texture getTexture(){return *TEX;}
     Rect<float> getHitbox(){return *HITBOX;}
+    Estado* getViejo();
+    Estado* getNuevo();
+    void actualizarEstado();
     
 private:
     int HEIGTH;
@@ -40,6 +43,8 @@ private:
     Sprite *SPRITE;
     Rect<float> *HITBOX;
     sf::Clock *Reloj;
+    Estado *viejo;
+    Estado *nuevo;
     bool explosion;
     bool mortero;
 };

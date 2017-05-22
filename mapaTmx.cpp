@@ -4,7 +4,7 @@ mapaTmx::mapaTmx(string mapa, string texTileSheet) {
     cout << "ENTRADO EN CONSTRUCTOR" << endl;
 
     const string a = mapa;
-    
+
     cout << "CARGANDO LA TEXTURA...";
     tex = new Texture();
     if (!tex->loadFromFile(texTileSheet)) {
@@ -261,6 +261,7 @@ void mapaTmx::CargaObjetos() {
         if (layer->Attribute("name") != NULL) {
             string nombre = layer->Attribute("name");
             //cout << nombre << endl;
+
             if (nombre == "Spawn") {
                 countSpawn++;
             } else {
@@ -308,6 +309,14 @@ void mapaTmx::CargaObjetos() {
                 if (nombre == "Punt") {
                     puntos[countPunt] = new Vector2f(x, y);
                     countPunt++;
+                } else {
+                    if (nombre == "Muerte") {
+                        muerte = new FloatRect(x, y, ancho, alto);
+                    } else {
+                        if (nombre == "Fin") {
+                            fin = new FloatRect(x, y, ancho, alto);
+                        }
+                    }
                 }
             }
         } else {
@@ -321,6 +330,15 @@ void mapaTmx::CargaObjetos() {
 
 Rect<float>** mapaTmx::getColisiones() {
     return colisiones;
+}
+
+FloatRect mapaTmx::getMuerte() {
+    return *muerte;
+}
+
+FloatRect mapaTmx::getFin() {
+    return *fin;
+
 }
 
 Vector2f** mapaTmx::getSpawn() {
@@ -361,23 +379,23 @@ mapaTmx::~mapaTmx() {
     delete doc;
     tileSheet = NULL;
     delete tileSheet;
-    
-  /*
-    delete &m_vertices;
-    delete &dimTiles;
-    delete &dimTileSheet;
-    delete &nElementos;
-    delete &map;
-    delete &tileset;
-    delete &image;
+
+    /*
+      delete &m_vertices;
+      delete &dimTiles;
+      delete &dimTileSheet;
+      delete &nElementos;
+      delete &map;
+      delete &tileset;
+      delete &image;
    
 
 
-    delete &layer;
-    delete &lay;
-    delete &data;
-    delete &colisiones;
-    delete &dimEnTiles;
-    delete sprites;
+      delete &layer;
+      delete &lay;
+      delete &data;
+      delete &colisiones;
+      delete &dimEnTiles;
+      delete sprites;
      */
 }

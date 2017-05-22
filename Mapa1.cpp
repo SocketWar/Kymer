@@ -52,15 +52,10 @@ int Mapa1::Run() {
     Sound sound;
     sound.setBuffer(buffer);
 
-    //sound.play();
+    sound.play();
     sound.setLoop(true);
 
-    SoundBuffer bufferd;
-    if (!bufferd.loadFromFile("res/audio/shot.wav")) {
-        cout << " el archivo de audio Menu no esta disponible" << endl;
-    }
-    Sound sound2;
-    sound2.setBuffer(bufferd);
+   
 
 
     // ---------------------------------------
@@ -76,29 +71,29 @@ int Mapa1::Run() {
     // ---------------------------------------
     mapaTmx map(mapa, tileSheet);
 
-    int numeroenemigos = 0;
+    int numeroenemigos = 10;
     int contemigos = 0;
     int cont = 0;
     int nspawn = 0;
-    int objetoRandom= 0 ;
-    
+    int objetoRandom = 0;
+
     objetos **machineGun = new objetos*[map.getnPuntos()];
     //Enemigo **enemigos = new Enemigo*[numeroenemigos];
     std::vector<Enemigo*> enemigos;
 
     for (int i = 0; i < map.getnPuntos(); i++) {
-         objetoRandom = rand() % 3;
+        objetoRandom = rand() % 3;
         Vector2f *v = map.getPuntuaciones()[i];
         machineGun[i] = new objetos(objetoRandom, v->x, v->y);
     }
 
-    Jugador jugador(anchura, altura, 1900, 50);
+    Jugador *jugador = new Jugador(anchura, altura, 1900, 50);
 
 
 
 
-    View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
-    vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
+    View vista(Vector2f(jugador->getPos().x, jugador->getPos().y), Vector2f(App.getSize().x, App.getSize().y));
+    vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 1.45));
 
 
     // ---------------------------------------
@@ -134,11 +129,11 @@ int Mapa1::Run() {
             //llamadas a update
             //jugador
 
-            jugador.calcularColision(map.getColisiones(), map.getnColisiones());
-            jugador.update(tiempo);
+            jugador->calcularColision(map.getColisiones(), map.getnColisiones(), map.getMuerte());
+            jugador->update(tiempo);
 
             for (int i = 0; i < map.getnPuntos(); i++) {
-                jugador.recogeObjeto(*machineGun[i]);
+                jugador->recogeObjeto(*machineGun[i]);
 
             }
 
@@ -146,13 +141,13 @@ int Mapa1::Run() {
 
                 for (int i = nspawn; i < map.getnSpawn(); i++) {
                     Vector2f *v = map.getSpawn()[i];
-                    float posicion = v->x - jugador.getPos().x;
-                    int randomEnemy=0;
+                    float posicion = v->x - jugador->getPos().x;
+                    int randomEnemy = 0;
                     if (posicion <= 1000) {
 
                         for (int j = contemigos; j < numeroenemigos; j++) {
                             if (cont < 3) {
-                                 randomEnemy = rand() % 5;
+                                randomEnemy = rand() % 5;
                                 Enemigo *enemigo = new Enemigo(randomEnemy, v->x, v->y);
                                 enemigos.push_back(enemigo);
                                 contemigos++;
@@ -171,12 +166,12 @@ int Mapa1::Run() {
             //enemigo
             std::vector<Enemigo*> enemigosAux;
             for (int i = 0; i < enemigos.size(); i++) {
-                if(enemigos[i]->getVidas()>0){
-                    int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
+                if (enemigos[i]->getVidas() > 0) {
+                    int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
                     if (posicion <= 1000) {
-                        enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
-                        enemigos[i]->ColisionJugador(jugador);
-                        enemigos[i]->update(tiempo, tiempoAnimacion, jugador);
+                        enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones(), map.getMuerte());
+                        enemigos[i]->ColisionJugador(*jugador);
+                        enemigos[i]->update(tiempo, tiempoAnimacion, *jugador);
                     }
                     enemigosAux.push_back(enemigos[i]);
                 }else 
@@ -198,26 +193,25 @@ int Mapa1::Run() {
             }
              enemigos=enemigosAux;
 
+            if (jugador->gethitBox().getGlobalBounds().intersects(map.getFin())) {
 
-
+                for(int i=0;i<enemigos.size();i++){
+                    enemigos[i]->~Enemigo();
+                }
+                return 2;
+            }
             //ELIMINADAS TECLAS HUD
             if (Keyboard::isKeyPressed(Keyboard::Num0)) {
                 h->changeTime(0);
             }
 
-            if (Keyboard::isKeyPressed(Keyboard::Escape) || Joystick::isButtonPressed(0,7))
+            if (Keyboard::isKeyPressed(Keyboard::Escape) || Joystick::isButtonPressed(0, 7))
                 return 0;
 
-            if (Keyboard::isKeyPressed(Keyboard::P))
-                pausa = true;
 
-            if (Keyboard::isKeyPressed(Keyboard::A)) {
-                // sound.setVolume(1);
-                //                disparo.getSonido().play();
-                //sound2.play();
-            }
             if (Keyboard::isKeyPressed(Keyboard::B)) {
                 return 2;
+                //cambio de mapa
             }
         }
 
@@ -232,7 +226,7 @@ int Mapa1::Run() {
 
         //dibujamos 
         App.draw(map);
-        jugador.render(interpolacion, tiempoAnimacion, *h);
+        jugador->render(interpolacion, tiempoAnimacion, *h);
 
         for (int i = 0; i < map.getnPuntos(); i++) {
             machineGun[i]->RenderObjeto();
@@ -249,12 +243,12 @@ int Mapa1::Run() {
 
         }
 
-        vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
+        vista.setCenter(Vector2f(jugador->getPos().x, vista.getCenter().y));
         App.setView(vista);
         //enemigo->RenderGranada(App);
         h->Update(vista);
         h->render();
-        jugador.setVidas(h->getContHP());
+        jugador->setVidas(h->getContHP());
         App.display();
 
     }

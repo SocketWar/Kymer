@@ -15,6 +15,9 @@ public:
     mapaTmx(string mapa, string tileSheet);
     bool load(const string& tileset);
     FloatRect** getColisiones();
+    FloatRect getMuerte();
+    FloatRect getFin();
+    
     Vector2f** getSpawn();
     Vector2f** getPuntuaciones();
     int getnColisiones();
@@ -54,6 +57,8 @@ private:
     XMLElement *data;
 
     FloatRect **colisiones; //Array de colisiones
+    FloatRect *muerte; //Array de colisiones
+    FloatRect *fin; //Array de colisiones
     Vector2f **spawn;       //Puntos de spawn de enemigos
     Vector2f **puntos;      //Puntos de puntuacion
     

@@ -17,6 +17,7 @@ public:
     int getOrientacion(){ return ORIENTACION;};
     void Movimiento(Vector2f vector);
     void MovimientoInterpolado(Vector2f vector);
+    void CambiarColor(bool golpeado);
 private:
     Texture *tex;
     int *animacion;

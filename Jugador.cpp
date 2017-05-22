@@ -44,9 +44,10 @@ Jugador::Jugador(int anchura, int altura,float posx,float posy) {
     viejo = new Estado();
     nuevo = new Estado();
     //Colisiones
-    hitBox.setScale(1.5, 2.2);
-    hitBox.setSize(Vector2f(32, 32));
-    hitBox.setFillColor(Color::Blue);
+    hitBox = new RectangleShape();
+    hitBox->setScale(1.5, 2.2);
+    hitBox->setSize(Vector2f(32, 32));
+    hitBox->setFillColor(Color::Blue);
     muro = false;
     cuchillo = false;
     if (!TEX.loadFromFile("res/img/balada2.png")) {
@@ -187,7 +188,7 @@ void Jugador::Disparar() {
     float speedY = 0;
     float balaX = 0;
     float balaY = 0;
-   // cout<< numEscopeta <<endl;
+    //cout<< numEscopeta <<endl;
     if ((Keyboard::isKeyPressed(Keyboard::Up) || Joystick::isButtonPressed(0,13)) && (Keyboard::isKeyPressed(Keyboard::A) || Joystick::isButtonPressed(0,2))) {
         velocidadAnimacion = 0.085;
         if (arma == 0) {
@@ -203,7 +204,7 @@ void Jugador::Disparar() {
                 RelojBala.restart();
             }
         }else{
-            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+            if (RelojBala.getElapsedTime().asMilliseconds() > 100) {
                 numEscopeta -= 1;
                 speedY = -1;
                 speedX = 0;
@@ -328,7 +329,7 @@ void Jugador::Disparar() {
                     RelojBala.restart();
                 }
             } else {
-                if (RelojBala.getElapsedTime().asMilliseconds() > 1000) {
+                if (RelojBala.getElapsedTime().asMilliseconds() > 100) {
                     if (animacion->getOrientacion() != 0) {
                         speedX = 0.1f;
                         speedY = 0;
@@ -457,7 +458,7 @@ void Jugador::UpdateDisparo() {
 
     }
     CARGADOR = CargadorAux;
-   // cout<<"Balas: " << CARGADOR.size() << endl;
+    //cout<<"Balas: " << CARGADOR.size() << endl;
     for (contador = 0; contador < CARGADORGRANADA.size(); contador++) {
         CARGADORGRANADA[contador]->actualizarEstado();
         move = CARGADORGRANADA[contador]->move();
@@ -611,20 +612,20 @@ void Jugador::actualizarHitbox() {
 
     if (Keyboard::isKeyPressed(Keyboard::Down) || Joystick::isButtonPressed(0,14)) {
 
-        hitBox.setScale(1.5, 1.5);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 48);
+        hitBox->setScale(1.5, 1.5);
+        hitBox->setPosition(getPos().x - 25, getPos().y - 48);
 
     } else {
 
-        hitBox.setScale(1.5, 2.2);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 70);
+        hitBox->setScale(1.5, 2.2);
+        hitBox->setPosition(getPos().x - 25, getPos().y - 70);
 
     }
 }
 
 RectangleShape Jugador::gethitBox() {
 
-    return hitBox;
+    return *hitBox;
 }
 
 vector<Bala*> Jugador::getArrayBalas() {
@@ -639,7 +640,7 @@ vector<Granada*> Jugador::getArrayGranadas() {
     return CARGADORGRANADA;
 }
 
-void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
+void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos,FloatRect muerte) {
 
 
     /*
@@ -653,42 +654,49 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
      */
     bool colSuelo = false;
     bool colMuro = false;
+    
+    if(muerte.intersects(hitBox->getGlobalBounds())){
+        
+        cout<<"GAMEOVER"<< endl;
+        vidas=0;
+    }
+    
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
 
-        if (a->intersects(hitBox.getGlobalBounds())) {
+        if (a->intersects(hitBox->getGlobalBounds())) {
 
 
             //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
 
-            if (a->left >= hitBox.getGlobalBounds().left + hitBox.getGlobalBounds().width - 20) {
+            if (a->left >= hitBox->getGlobalBounds().left + hitBox->getGlobalBounds().width - 20) {
 
                 //cout << "colisionmuro" << endl;
                 colMuro = true;
                 muro = true;
 
-                if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::isButtonPressed(0,11)) || a->top > hitBox.getGlobalBounds().top) {
+                if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::isButtonPressed(0,11)) || a->top > hitBox->getGlobalBounds().top) {
                     muro = false;
                     //  cout << "yanocolisiona---->" << muro << endl;
                 }
             }
 
 
-            if (a->left + a->width - 15 <= hitBox.getGlobalBounds().left) {
+            if (a->left + a->width - 15 <= hitBox->getGlobalBounds().left) {
 
                 //cout << "colisionmuro" << endl;
                 colMuro = true;
                 muro = true;
 
-                if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::isButtonPressed(0,12)) || a->top > hitBox.getGlobalBounds().top) {
+                if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::isButtonPressed(0,12)) || a->top > hitBox->getGlobalBounds().top) {
 
                     muro = false;
                     // cout << "yanocolisiona---->" << muro << endl;
                 }
             }
 
-            if (a->top >= hitBox.getGlobalBounds().top) {
+            if (a->top >= hitBox->getGlobalBounds().top) {
                 colSuelo = true;
                 suelo = true;
 
@@ -710,6 +718,14 @@ void Jugador::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
         for (int contador = 0; contador < CARGADORGRANADA.size(); contador++) {
             CARGADORGRANADA[contador]->explota(arrayColisiones[i]);
+        }
+        
+        for (int contador = 0; contador < CARGADOR.size(); contador++) {
+            if(a->intersects(CARGADOR[contador]->getSprite().getGlobalBounds())){
+                
+                CARGADOR[contador]->setDestruir();
+            }
+            
         }
     }
 
@@ -762,7 +778,7 @@ void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
 void Jugador::recogeObjeto(objetos &obj) {
   int i=0;
   //cout<<"tipo de objeto :" <<obj.getTipo()<<endl;
-    if (obj.getSprite().getGlobalBounds().intersects(this->hitBox.getGlobalBounds())) {
+    if (obj.getSprite().getGlobalBounds().intersects(this->hitBox->getGlobalBounds())) {
         if (obj.getTipo() == 0) {
             obj.reproducirSonido();
             this->setArma(1);

@@ -29,6 +29,7 @@ public:
     Sprite getSprite(){ return *SPRITE;}
     Texture getTexture(){return *TEX;}
     Rect<float> getHitbox(){return *HITBOX;}
+    void explotaEnemigo();
     Estado* getViejo();
     Estado* getNuevo();
     void actualizarEstado();

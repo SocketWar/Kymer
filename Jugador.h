@@ -45,7 +45,7 @@ public:
     int getArma();
     sonido getSonido();
     void actualizarHitbox();
-    void calcularColision(FloatRect** arrayColisiones,int nobjetos);
+    void calcularColision(FloatRect** arrayColisiones,int nobjetos,FloatRect muerte);
     RectangleShape gethitBox();
     vector<Bala*> getArrayBalas();
     vector<Granada*> getArrayGranadas();
@@ -87,7 +87,7 @@ private:
     sf::Texture TEX3;
     int numEscopeta;
     //colisiones
-    RectangleShape hitBox;
+    RectangleShape *hitBox;
     
     
     //interpolacion

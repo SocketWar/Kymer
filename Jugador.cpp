@@ -197,7 +197,7 @@ void Jugador::Disparar() {
                 RelojBala.restart();
             }
         }else{
-            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+            if (RelojBala.getElapsedTime().asMilliseconds() > 100) {
                 numEscopeta -= 1;
                 speedY = -1;
                 speedX = 0;
@@ -319,7 +319,7 @@ void Jugador::Disparar() {
                     RelojBala.restart();
                 }
             } else {
-                if (RelojBala.getElapsedTime().asMilliseconds() > 1000) {
+                if (RelojBala.getElapsedTime().asMilliseconds() > 100) {
                     if (animacion->getOrientacion() != 0) {
                         speedX = 0.1f;
                         speedY = 0;

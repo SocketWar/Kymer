@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Kymer4
+PROJECTNAME=todojunto5
 
 # Active Configuration
 DEFAULTCONF=Debug

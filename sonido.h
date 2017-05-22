@@ -25,11 +25,13 @@ public:
     Sound getSonido();
     void reproducir();
     void setVolumen(float v);
+    bool comprobarReproduccion();
+    void setReproduccion(int n);
+    int  getReproduccion();
     
 private:
     SoundBuffer *buffer;
     Sound *sound;
+    int reprod;
 };
-
 #endif /* SONIDO_H */
-

@@ -52,7 +52,7 @@ int Mapa1::Run() {
     Sound sound;
     sound.setBuffer(buffer);
 
-    sound.play();
+    //sound.play();
     sound.setLoop(true);
 
     SoundBuffer bufferd;
@@ -144,12 +144,13 @@ int Mapa1::Run() {
                 for (int i = nspawn; i < map.getnSpawn(); i++) {
                     Vector2f *v = map.getSpawn()[i];
                     float posicion = v->x - jugador.getPos().x;
-
+                    int randomEnemy=0;
                     if (posicion <= 1000) {
 
                         for (int j = contemigos; j < numeroenemigos; j++) {
                             if (cont < 3) {
-                                Enemigo *enemigo = new Enemigo(4, v->x, v->y);
+                                 randomEnemy = rand() % 5;
+                                Enemigo *enemigo = new Enemigo(randomEnemy, v->x, v->y);
                                 enemigos.push_back(enemigo);
                                 contemigos++;
                                 cont++;

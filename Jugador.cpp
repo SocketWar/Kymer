@@ -2,9 +2,16 @@
 #include "Jugador.h"
 
 Jugador::Jugador(int anchura, int altura,float posx,float posy) {
-    soundEffect = new sonido();
-    soundEffect->setSonido("res/audio/shot.wav");
-
+    disparo = new sonido();
+    disparo->setSonido("res/audio/shot.wav");
+    disparo->getSonido().setLoop(false);
+    
+   
+    muerto = 0;
+    muerte = new sonido();
+    muerte->setSonido("res/audio/dead.wav");
+    muerte->getSonido().setLoop(false);
+    
     arma = 0;
     numEscopeta = 0;
     vidas = 5;
@@ -176,7 +183,7 @@ void Jugador::Disparar() {
     if ((Keyboard::isKeyPressed(Keyboard::Up) || Joystick::isButtonPressed(0,13)) && (Keyboard::isKeyPressed(Keyboard::A) || Joystick::isButtonPressed(0,2))) {
         velocidadAnimacion = 0.085;
         if (arma == 0) {
-            if (RelojBala.getElapsedTime().asMilliseconds() > 500) {
+            if (RelojBala.getElapsedTime().asMilliseconds() > 700) {
                 speedY = -25;
                 speedX = 0;
                 balaX = animacion->getSpriteE().getPosition().x - 10;
@@ -185,6 +192,7 @@ void Jugador::Disparar() {
                 balaDisparo->setPosition(balaX, balaY);
                 balaDisparo->loadSprite(TEX, 0, 0);
                 CARGADOR.push_back(balaDisparo);
+                disparo->reproducir();
                 RelojBala.restart();
             }
         }else{
@@ -197,6 +205,7 @@ void Jugador::Disparar() {
                 Bala *balaDisparo = new Bala(49, 96, speedX, speedY, 3);
                 balaDisparo->setPosition(balaX, balaY);
                 balaDisparo->loadSprite(TEX3, 0, 0);
+                disparo->reproducir();
                 CARGADOR.push_back(balaDisparo);
                 RelojBala.restart();
             }
@@ -285,17 +294,27 @@ void Jugador::Disparar() {
                         speedX = 25;
                         speedY = 0;
                         balaX = animacion->getSpriteE().getPosition().x + 50;
-                        balaY = animacion->getSpriteE().getPosition().y - 60;
+                         if(Keyboard::isKeyPressed(Keyboard::Down)){
+                             balaY = animacion->getSpriteE().getPosition().y - 40;
+                        }else{
+                            balaY = animacion->getSpriteE().getPosition().y - 60;
+                        }
                     } else {
                         speedX = -25;
                         speedY = 0;
                         balaX = animacion->getSpriteE().getPosition().x - 50;
-                        balaY = animacion->getSpriteE().getPosition().y - 60;
+                         if(Keyboard::isKeyPressed(Keyboard::Down)){
+                             balaY = animacion->getSpriteE().getPosition().y - 40;
+                        }else{
+                            balaY = animacion->getSpriteE().getPosition().y - 60;
+                        }
                     }
                     Bala *balaDisparo = new Bala(9, 23, speedX, speedY, 50);
                     balaDisparo->setPosition(balaX, balaY);
                     balaDisparo->loadSprite(TEX, 0, 0);
                     CARGADOR.push_back(balaDisparo);
+                    disparo->reproducir();
+
                     RelojBala.restart();
                 }
             } else {
@@ -465,9 +484,12 @@ void Jugador::RenderDisparo(float interpolacion) {
 void Jugador::Morir() {
     //para probar la animacio0n se pone en un boton por defecto "M"
     velocidadAnimacion = 0.2f;
+   if(muerto <4){
+    muerte->reproducir();    
     totalSpritesAnimacion = animacion->getNumAnimaciones()[27];
     actual = 27;
-    //animacion->getSprite(27,4);
+    muerto++;
+    }
 }
 
 Vector2f Jugador::getPos() {
@@ -705,7 +727,14 @@ void Jugador::render(float interpolacion, Time &tiempo, hud& h) {
     actualizarHud(h);
     actualizarHitbox();
     animacion->MovimientoInterpolado(viejo->getInterpolacion(viejo, nuevo, interpolacion));
-    Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    if (muerto<4){
+        
+        Window.draw(animacion->getSprite(actual, getframeActual(tiempo)));
+    }
+    else {
+        
+        Window.draw(animacion->getSprite(27, muerto));
+    }
     RenderDisparo(interpolacion);
     // Window.draw(hitBox);
 

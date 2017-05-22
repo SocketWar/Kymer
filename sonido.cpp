@@ -39,3 +39,16 @@ void sonido::setVolumen(float v){
     sound->setVolume(v);
 }
 
+bool sonido::comprobarReproduccion() {
+    return this->sound->Playing;
+}
+
+int sonido::getReproduccion() {
+    return reprod;
+}
+
+void sonido::setReproduccion(int n) {
+    reprod = n;
+}
+
+

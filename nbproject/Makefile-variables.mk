@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=kymer3
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/kymer3
+CND_ARTIFACT_NAME_Debug=todogood52
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/todogood52
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=kymer3.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/kymer3.tar
+CND_PACKAGE_NAME_Debug=todogood52.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/todogood52.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=kymer3
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/kymer3
+CND_ARTIFACT_NAME_Release=todogood52
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/todogood52
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=kymer3.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/kymer3.tar
+CND_PACKAGE_NAME_Release=todogood52.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/todogood52.tar
 #
 # include compiler specific variables
 #

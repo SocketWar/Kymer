@@ -5,6 +5,7 @@
 #include "Animacion.h"
 #include "Jugador.h"
 #include "Motor2D.h"
+#include "sonido.h"
 class Enemigo {
 public:
     Enemigo(int tipoE,float posx,float posy);
@@ -63,6 +64,8 @@ private:
     bool muro;
     //variables enemigo
     int vidas;
+    sonido * sonidoAtaque;
+    sonido * sonidoMuerte;
 };
 
 #endif /* ENEMIGO_H */

@@ -64,6 +64,7 @@ private:
     Animacion *animacion;
     int totalSpritesAnimacion;
     int actual;
+    int muerto;
     float velocidadanimacion;
     std::vector<Bala*> CARGADOR;
     std::vector<Granada*> CARGADORGRANADA;
@@ -92,6 +93,10 @@ private:
     //interpolacion
     Estado *viejo;
     Estado *nuevo;
+    
+    //sonidos
+     sonido *disparo;
+    sonido *muerte;
 };
 
 

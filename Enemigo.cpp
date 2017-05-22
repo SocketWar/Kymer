@@ -881,6 +881,8 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos,FloatRe
 void Enemigo::ColisionJugador(Jugador &jugador) {
     bool golpeadoj = false;
     bool golpeadoe =false;
+    
+    
     if (tipo == 4) {
         if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca->getGlobalBounds())) {
             if (RelojCuchillo.getElapsedTime().asSeconds() > 0.1) {
@@ -912,7 +914,6 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
         for (int i = 0; i < jugador.getArrayBalas().size(); i++) {
 
             if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox->getGlobalBounds())) {
-                restarVidas();
                 restarVidas();
                 jugador.getArrayBalas()[i]->setDestruir();
                 golpeadoe = true;

@@ -931,7 +931,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
     if (tipo == 4) {
         if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca->getGlobalBounds())) {
             if (RelojCuchillo.getElapsedTime().asSeconds() > 0.1) {
-                jugador.restarVidas();
+                //jugador.restarVidas();
                 RelojCuchillo.restart();
                 golpeadoj=true;
                 //cout << "ostiaputacomo pegan" << endl;
@@ -982,7 +982,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
         for (int i = 0; i < CARGADOR.size(); i++) {
 
             if (CARGADOR[i]->getSprite().getGlobalBounds().intersects(jugador.gethitBox().getGlobalBounds())) {
-                jugador.restarVidas();
+                //jugador.restarVidas();
                 golpeadoj=true;
                 CARGADOR[i]->setDestruir();
             }
@@ -993,7 +993,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
             if (CARGADORGRANADA[i]->getSprite().getGlobalBounds().intersects(jugador.gethitBox().getGlobalBounds())) {
                 CARGADORGRANADA[i]->explotaEnemigo();
                 golpeadoj=true;
-                jugador.restarVidas();
+                //jugador.restarVidas();
             }
         }
     

@@ -71,7 +71,7 @@ int Mapa1::Run() {
     // ---------------------------------------
     mapaTmx map(mapa, tileSheet);
 
-    int numeroenemigos = 10;
+    int numeroenemigos = 80;
     int contemigos = 0;
     int cont = 0;
     int nspawn = 0;
@@ -146,14 +146,14 @@ int Mapa1::Run() {
                     if (posicion <= 1000) {
 
                         for (int j = contemigos; j < numeroenemigos; j++) {
-                            if (cont < 3) {
+                            if (cont < 6) {
                                 randomEnemy = rand() % 5;
                                 Enemigo *enemigo = new Enemigo(randomEnemy, v->x, v->y);
                                 enemigos.push_back(enemigo);
                                 contemigos++;
                                 cont++;
                             }
-                            if (cont == 2) {
+                            if (cont == 5) {
                                 nspawn++;
                             }
                         }
@@ -234,15 +234,15 @@ int Mapa1::Run() {
 
 
         for (int i = 0; i < enemigos.size(); i++) {
-//            if(enemigos[i]->getVidas()>0){
-//            if(enemigos[i]->getMuerto()== false){
-//                int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
-//                if (posicion <= 1000)
+         // if(enemigos[i]->getVidas()>0){
+          if(enemigos[i]->getMuerto() == false){
+              int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
+               if (posicion <= 1000)
                     enemigos[i]->render(interpolacion, tiempoAnimacion);
-//            }
+           }
 
+        //}
         }
-
         vista.setCenter(Vector2f(jugador->getPos().x, vista.getCenter().y));
         App.setView(vista);
         //enemigo->RenderGranada(App);

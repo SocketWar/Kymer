@@ -82,8 +82,8 @@ int Mapa1::Run() {
     std::vector<Enemigo*> enemigos;
 
     for (int i = 0; i < map.getnPuntos(); i++) {
-        //        objetoRandom = rand() % 3;
-        objetoRandom = 0;
+        objetoRandom = rand() % 3;
+
         Vector2f *v = map.getPuntuaciones()[i];
         objetos *objetoA = new objetos(objetoRandom, v->x, v->y);
         machineGun.push_back(objetoA);

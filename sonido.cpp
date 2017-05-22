@@ -51,4 +51,7 @@ void sonido::setReproduccion(int n) {
     reprod = n;
 }
 
+void sonido::detener(){
+    sound->stop();
+}
 

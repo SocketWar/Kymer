@@ -28,6 +28,7 @@ public:
     bool comprobarReproduccion();
     void setReproduccion(int n);
     int  getReproduccion();
+    void detener();
     
 private:
     SoundBuffer *buffer;

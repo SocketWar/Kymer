@@ -87,7 +87,7 @@ private:
     sf::Texture TEX3;
     int numEscopeta;
     //colisiones
-    RectangleShape hitBox;
+    RectangleShape *hitBox;
     
     
     //interpolacion

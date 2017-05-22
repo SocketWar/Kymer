@@ -1,7 +1,7 @@
 
 #include "Animacion.h"
 
-Animacion::Animacion(string texto,float posx,float posy) {
+Animacion::Animacion(string texto, float posx, float posy) {
 
     ORIENTACION = 1;
     tex = new Texture(); //reserva de memoria
@@ -11,9 +11,9 @@ Animacion::Animacion(string texto,float posx,float posy) {
     }
 
     tex->setSmooth(false);
-    
-    posX=posx;
-    posY=posy;
+
+    posX = posx;
+    posY = posy;
 }
 
 //personaje 
@@ -22,7 +22,7 @@ void Animacion::spritePersonaje(char le) {
 
     int xi = 0;
     int yi = 0;
-    
+
 
     switch (le) {
 
@@ -60,7 +60,7 @@ void Animacion::spritePersonaje(char le) {
             animacion[28] = 3; //VICTORIA
             xi = 54;
             yi = 77;
-            
+
             escala = 2.f;
             break;
         case 'e':
@@ -94,7 +94,7 @@ void Animacion::spritePersonaje(char le) {
             animacion[24] = 4; //escopeta lanzar granada agachado
             animacion[25] = 6; //escopeta cuchillo correr
             animacion[26] = 4; //escopeta cuchillo agachado
-            
+
             escala = 2.f;
 
             xi = 60;
@@ -102,11 +102,11 @@ void Animacion::spritePersonaje(char le) {
 
             break;
         case 'v':
-                tex->setSmooth(true);
+            tex->setSmooth(true);
             totalFotogramas = 27;
             animacion = new int [totalFotogramas];
 
-            animacion[0] = 17 ;//alerta
+            animacion[0] = 17; //alerta
             animacion[1] = 8; //correr
             animacion[2] = 4; //reirse
             animacion[3] = 3; //morir
@@ -133,9 +133,9 @@ void Animacion::spritePersonaje(char le) {
             animacion[24] = 4; //escopeta lanzar granada agachado
             animacion[25] = 6; //escopeta cuchillo correr
             animacion[26] = 4; //escopeta cuchillo agachado
-            
+
             escala = 2.2f;
-                
+
             xi = 123;
             yi = 87;
             break;
@@ -155,12 +155,12 @@ void Animacion::spritePersonaje(char le) {
             sprites[f][j]->setScale(escala, escala);
             sprites[f][j]->setTextureRect(IntRect(xi * j, yi * f, xi, yi));
             sprites[f][j]->setPosition(posX, posY);
-            if(le=='p')
-            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
-            else if(le=='e')
-            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width /2 , sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
-            else if(le=='v')
-            sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width /2 , sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);  
+            if (le == 'p')
+                sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 4, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
+            else if (le == 'e')
+                sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 2, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
+            else if (le == 'v')
+                sprites[f][j]->setOrigin(sprites[f][j]->getLocalBounds().width / 2, sprites[f][j]->getLocalBounds().top + sprites[f][j]->getLocalBounds().height);
         }
     }
     if (!sprites) {
@@ -218,5 +218,25 @@ void Animacion::MovimientoInterpolado(Vector2f vector) {
 
 }
 
+void Animacion::CambiarColor(bool golpeado) {
 
-
+    if (golpeado) {
+        if (getSpriteE().getColor() != Color::Red) {
+            cout<<"rojo"<<endl;
+            for (int f = 0; f < totalFotogramas; f++) {
+                for (int j = 0; j < animacion[f]; j++) {
+                    sprites[f][j]->setColor(Color::Red);
+                }
+            }
+        }
+    } else {
+        if (getSpriteE().getColor() != Color::White) {
+            cout<<"blanco"<<endl;
+            for (int f = 0; f < totalFotogramas; f++) {
+                for (int j = 0; j < animacion[f]; j++) {
+                    sprites[f][j]->setColor(Color::White);
+                }
+            }
+        }
+    }
+}

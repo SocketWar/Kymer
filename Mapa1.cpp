@@ -89,12 +89,12 @@ int Mapa1::Run() {
         machineGun[i] = new objetos('v', v->x, v->y);
     }
 
-    Jugador jugador(anchura, altura, 1900, 50);
+    Jugador *jugador= new Jugador(anchura, altura, 1900, 50);
 
 
 
 
-    View vista(Vector2f(jugador.getPos().x, jugador.getPos().y), Vector2f(App.getSize().x, App.getSize().y));
+    View vista(Vector2f(jugador->getPos().x, jugador->getPos().y), Vector2f(App.getSize().x, App.getSize().y));
     vista.setCenter(Vector2f(App.getSize().x / 2, App.getSize().y / 2));
 
 
@@ -131,11 +131,11 @@ int Mapa1::Run() {
             //llamadas a update
             //jugador
 
-            jugador.calcularColision(map.getColisiones(), map.getnColisiones());
-            jugador.update(tiempo);
+            jugador->calcularColision(map.getColisiones(), map.getnColisiones());
+            jugador->update(tiempo);
 
             for (int i = 0; i < map.getnPuntos(); i++) {
-                jugador.recogeObjeto(*machineGun[i]);
+                jugador->recogeObjeto(*machineGun[i]);
 
             }
 
@@ -143,7 +143,7 @@ int Mapa1::Run() {
 
                 for (int i = nspawn; i < map.getnSpawn(); i++) {
                     Vector2f *v = map.getSpawn()[i];
-                    float posicion = v->x - jugador.getPos().x;
+                    float posicion = v->x - jugador->getPos().x;
                     int randomEnemy=0;
                     if (posicion <= 1000) {
 
@@ -163,23 +163,23 @@ int Mapa1::Run() {
                     }
                 }
             }
-            cout << "numero enemigos---->>>" << contemigos << endl;
+            //cout << "numero enemigos---->>>" << contemigos << endl;
 
             //enemigo
             std::vector<Enemigo*> enemigosAux;
             for (int i = 0; i < enemigos.size(); i++) {
                 if(enemigos[i]->getVidas()>0){
-                    int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
+                    int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
                     if (posicion <= 1000) {
                         enemigos[i]->calcularColision(map.getColisiones(), map.getnColisiones());
-                        enemigos[i]->ColisionJugador(jugador);
-                        enemigos[i]->update(tiempo, tiempoAnimacion, jugador);
+                        enemigos[i]->ColisionJugador(*jugador);
+                        enemigos[i]->update(tiempo, tiempoAnimacion, *jugador);
                     }
                     enemigosAux.push_back(enemigos[i]);
                 }else{
                     
                     enemigos[i]->~Enemigo();
-                    cout << "Muerto " << i << endl;
+                    //cout << "Muerto " << i << endl;
                 }
 
             }
@@ -219,7 +219,7 @@ int Mapa1::Run() {
 
         //dibujamos 
         App.draw(map);
-        jugador.render(interpolacion, tiempoAnimacion, *h);
+        jugador->render(interpolacion, tiempoAnimacion, *h);
 
         for (int i = 0; i < map.getnPuntos(); i++) {
             machineGun[i]->RenderObjeto();
@@ -228,19 +228,19 @@ int Mapa1::Run() {
 
         for (int i = 0; i < enemigos.size(); i++) {
             if(enemigos[i]->getVidas()>0){
-                int posicion = abs(jugador.getPos().x - enemigos[i]->getPos().x);
+                int posicion = abs(jugador->getPos().x - enemigos[i]->getPos().x);
                 if (posicion <= 1000)
                     enemigos[i]->render(interpolacion, tiempoAnimacion);
             }
 
         }
 
-        vista.setCenter(Vector2f(jugador.getPos().x, vista.getCenter().y));
+        vista.setCenter(Vector2f(jugador->getPos().x, vista.getCenter().y));
         App.setView(vista);
         //enemigo->RenderGranada(App);
         h->Update(vista);
         h->render();
-        jugador.setVidas(h->getContHP());
+        jugador->setVidas(h->getContHP());
         App.display();
 
     }

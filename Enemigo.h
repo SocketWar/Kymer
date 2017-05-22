@@ -39,8 +39,8 @@ private:
  float velocidadAnimacion;
     Animacion *animacion;
     float velocidadmovimiento;
-    RectangleShape hitBox;
-    RectangleShape hitBoxataqueVaca;
+    RectangleShape *hitBox;
+    RectangleShape *hitBoxataqueVaca;
     int random;
     bool sorpresa;
     int time1;

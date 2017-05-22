@@ -40,9 +40,10 @@ Enemigo::Enemigo(int tipoE, float posx, float posy) {
         vidas = 10;
         animacion = new Animacion("res/img/VacaBurra.png", posx, posy);
         animacion->spritePersonaje('v');
-        hitBoxataqueVaca.setScale(0, 0);
-        hitBoxataqueVaca.setSize(Vector2f(12, 12));
-        hitBoxataqueVaca.setFillColor(Color::Blue);
+        hitBoxataqueVaca = new RectangleShape();
+        hitBoxataqueVaca->setScale(0, 0);
+        hitBoxataqueVaca->setSize(Vector2f(12, 12));
+        hitBoxataqueVaca->setFillColor(Color::Blue);
         sonidoAtaque = new sonido();
         sonidoAtaque->setSonido("res/audio/cow.wav");
         sonidoAtaque->getSonido().setLoop(false);
@@ -68,9 +69,10 @@ Enemigo::Enemigo(int tipoE, float posx, float posy) {
     nuevo = new Estado();
 
     //Colisiones
-    hitBox.setScale(3, 2.2);
-    hitBox.setSize(Vector2f(32, 32));
-    hitBox.setFillColor(Color::Blue);
+    hitBox = new RectangleShape();
+    hitBox->setScale(3, 2.2);
+    hitBox->setSize(Vector2f(32, 32));
+    hitBox->setFillColor(Color::Blue);
     muro = false;
     random = 3;
     sorpresa = false;
@@ -362,7 +364,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     //Movimiento a jugador
                     time_aux = time1;
                     velocidadAnimacion = 0.1;
-                    velocidadmovimiento = 2500.0f;
+                    velocidadmovimiento = 2000.0f;
                     if (posJugador.x < posEnemigo.x) {
                         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
                         actual = 1;
@@ -395,7 +397,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
                     actual = 6;
                     animacion->orientacion(1);
-                    speedX = -10;
+                    speedX = -25;
                     balaX = posEnemigo.x;
                     balaY = posEnemigo.y - 60;
 
@@ -403,12 +405,12 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     totalSpritesAnimacion = animacion->getNumAnimaciones()[6];
                     actual = 6;
                     animacion->orientacion(0);
-                    speedX = 10;
+                    speedX = 25;
                     balaX = animacion->getSpriteE().getPosition().x + 40;
                     balaY = animacion->getSpriteE().getPosition().y - 60;
 
                 }
-                if (RelojBala.getElapsedTime().asMilliseconds() > 200) {
+                if (RelojBala.getElapsedTime().asMilliseconds() > 100) {
                     Texture TEX;
                     if (!TEX.loadFromFile("res/img/balada2.png")) {
                         std::cerr << "Error en textura bala";
@@ -491,7 +493,7 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
         totalSpritesAnimacion = animacion->getNumAnimaciones()[1];
         actual = 1;
         if (abs(dif) > 320 || pasota || abs(dify) > 200) {
-            hitBoxataqueVaca.setScale(0, 0);
+            hitBoxataqueVaca->setScale(0, 0);
             //Movimiento random
             velocidadAnimacion = 0.1;
             velocidadmovimiento = 600.0f;
@@ -586,9 +588,9 @@ void Enemigo::Movimiento(Time &time, Time &tiempoanimacion, Jugador jugador) {
                     }
                     if (getframeActual(tiempoanimacion) == 10) {
 
-                        hitBoxataqueVaca.setScale(7, 4);
+                        hitBoxataqueVaca->setScale(7, 4);
                     } else {
-                        hitBoxataqueVaca.setScale(0, 0);
+                        hitBoxataqueVaca->setScale(0, 0);
                     }
                 }
             }
@@ -759,17 +761,17 @@ void Enemigo::actualizarHitbox() {
 
     if (tipo == 4) {
 
-        hitBox.setScale(1.5, 3.7);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 115);
+        hitBox->setScale(1.5, 3.7);
+        hitBox->setPosition(getPos().x - 25, getPos().y - 115);
 
     } else if (tipo == 2 || tipo == 1) {
 
-        hitBox.setScale(1.5, 2.2);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 70);
+        hitBox->setScale(1.5, 2.2);
+        hitBox->setPosition(getPos().x - 25, getPos().y - 70);
 
     } else if (tipo == 3) {
-        hitBox.setScale(1.5, 1.5);
-        hitBox.setPosition(getPos().x - 25, getPos().y - 60);
+        hitBox->setScale(1.5, 1.5);
+        hitBox->setPosition(getPos().x - 25, getPos().y - 60);
     }
 
 }
@@ -778,16 +780,16 @@ void Enemigo::actualizarHitBoxataqueVaca() {
 
     if (tipo == 4) {
         if (animacion->getOrientacion() == 1)
-            hitBoxataqueVaca.setPosition(getPos().x - 80, getPos().y - 50);
+            hitBoxataqueVaca->setPosition(getPos().x - 80, getPos().y - 50);
         if (animacion->getOrientacion() == 0)
-            hitBoxataqueVaca.setPosition(getPos().x + 10, getPos().y - 50);
+            hitBoxataqueVaca->setPosition(getPos().x + 10, getPos().y - 50);
 
     }
 }
 
 RectangleShape Enemigo::gethitBox() {
 
-    return hitBox;
+    return *hitBox;
 }
 
 void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
@@ -799,13 +801,13 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
     for (int i = 0; i < nobjetos - 2; i++) {
         FloatRect* a = arrayColisiones[i];
 
-        if (a->intersects(hitBox.getGlobalBounds())) {
+        if (a->intersects(hitBox->getGlobalBounds())) {
 
 
             //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
             colision = true;
 
-            if (a->left >= hitBox.getGlobalBounds().left + hitBox.getGlobalBounds().width - 15) {
+            if (a->left >= hitBox->getGlobalBounds().left + hitBox->getGlobalBounds().width - 15) {
 
                 //cout<<"no pasas"<<endl;
                 //cout << "posicion a " << a->top << " PJ " << hitBox.getGlobalBounds().top << endl;
@@ -816,7 +818,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                     //cout << "murito---->" << muro << endl;
                 }
 
-            } else if (a->left + a->width - 15 <= hitBox.getGlobalBounds().left) {
+            } else if (a->left + a->width - 15 <= hitBox->getGlobalBounds().left) {
                 // cout << "no pasas" << endl;
                 muro = true;
                 colMuro = true;
@@ -826,7 +828,7 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
                 }
             }
 
-            if (a->top >= hitBox.getGlobalBounds().top) {
+            if (a->top >= hitBox->getGlobalBounds().top) {
                 colSuelo = true;
                 suelo = true;
                 if (!muro) {
@@ -845,6 +847,14 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
         for (int contador = 0; contador < CARGADORGRANADA.size(); contador++) {
             CARGADORGRANADA[contador]->explota(arrayColisiones[i]);
         }
+        
+        for (int contador = 0; contador < CARGADOR.size(); contador++) {
+            if(a->intersects(CARGADOR[contador]->getSprite().getGlobalBounds())){
+                
+                CARGADOR[contador]->setDestruir();
+            }
+            
+        }
         //cout << "el suelo es:" << suelo << endl;
         //cout << "i: " << i << " => " << a->left << ", " << a->top << " [" << a->width << ", " << a->height << "]" << endl;
     }
@@ -859,48 +869,53 @@ void Enemigo::calcularColision(FloatRect** arrayColisiones, int nobjetos) {
 }
 
 void Enemigo::ColisionJugador(Jugador &jugador) {
-    bool golpeado = false;
+    bool golpeadoj = false;
+    bool golpeadoe =false;
     if (tipo == 4) {
-        if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca.getGlobalBounds())) {
+        if (jugador.gethitBox().getGlobalBounds().intersects(hitBoxataqueVaca->getGlobalBounds())) {
             if (RelojCuchillo.getElapsedTime().asSeconds() > 0.1) {
                 jugador.restarVidas();
                 RelojCuchillo.restart();
-                cout << "ostiaputacomo pegan" << endl;
+                golpeadoj=true;
+                //cout << "ostiaputacomo pegan" << endl;
             }
         }
     }
     //cuchillo
-    if (jugador.gethitBox().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+    if (jugador.gethitBox().getGlobalBounds().intersects(hitBox->getGlobalBounds())) {
         jugador.animacionCuchillo(true);
         if (Keyboard::isKeyPressed(Keyboard::A)) {
             if (RelojCuchillo.getElapsedTime().asSeconds() > 3) {
                 restarVidas();
-                cout << "numero de vidas" << getVidas() << endl;
+                //cout << "numero de vidas" << getVidas() << endl;
+                
                 RelojCuchillo.restart();
             }
-
+            golpeadoe=true;
         }
     } else {
         jugador.animacionCuchillo(false);
     }
 
-    //balas
+    //balasjugador
     
         for (int i = 0; i < jugador.getArrayBalas().size(); i++) {
 
-            if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+            if (jugador.getArrayBalas()[i]->getSprite().getGlobalBounds().intersects(hitBox->getGlobalBounds())) {
                 restarVidas();
                 jugador.getArrayBalas()[i]->setDestruir();
-                golpeado = true;
-                cout << "numero de vidas" << getVidas() << endl;
+                golpeadoe = true;
+                //cout << "numero de vidas" << getVidas() << endl;
             }
         }
     
-    //granadas
+    //granadasjugador
     for (int j = 0; j < jugador.getArrayGranadas().size(); j++) {
 
-        if (jugador.getArrayGranadas()[j]->getSprite().getGlobalBounds().intersects(hitBox.getGlobalBounds())) {
+        if (jugador.getArrayGranadas()[j]->getSprite().getGlobalBounds().intersects(hitBox->getGlobalBounds())) {
+            jugador.getArrayGranadas()[j]->explotaEnemigo();
             restarVidas();
+            golpeadoe=true;
 
         }
     }
@@ -911,6 +926,7 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
 
             if (CARGADOR[i]->getSprite().getGlobalBounds().intersects(jugador.gethitBox().getGlobalBounds())) {
                 jugador.restarVidas();
+                golpeadoj=true;
                 CARGADOR[i]->setDestruir();
             }
         }
@@ -918,9 +934,12 @@ void Enemigo::ColisionJugador(Jugador &jugador) {
         for (int i = 0; i < CARGADORGRANADA.size(); i++) {
 
             if (CARGADORGRANADA[i]->getSprite().getGlobalBounds().intersects(jugador.gethitBox().getGlobalBounds())) {
+                CARGADORGRANADA[i]->explotaEnemigo();
+                golpeadoj=true;
                 jugador.restarVidas();
             }
         }
     
-
+    jugador.getAnimacion().CambiarColor(golpeadoj);
+    animacion->CambiarColor(golpeadoe);
 }

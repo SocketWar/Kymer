@@ -28,7 +28,7 @@ public:
     Sprite getSprite(){ return *SPRITE;}
     Texture getTexture(){return *TEX;}
     Rect<float> getHitbox(){return *HITBOX;}
-    
+    void explotaEnemigo();
 private:
     int HEIGTH;
     int WIDTH;

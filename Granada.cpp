@@ -101,7 +101,7 @@ bool Granada::colision(Rect<float> hit) {
 
 void Granada::explota(FloatRect *arrayColisiones) {
     if (arrayColisiones->intersects(getSprite().getGlobalBounds())) {
-        cout << "BOOM! SUELO TOCADO" << endl;
+        //cout << "BOOM! SUELO TOCADO" << endl;
         if (!explosion){
         Texture textura;
         if (!textura.loadFromFile("res/img/explosion3.png")) {
@@ -118,6 +118,26 @@ void Granada::explota(FloatRect *arrayColisiones) {
         explosion = true;
     }
 }
+
+void Granada::explotaEnemigo() {
+    
+        if (!explosion){
+        Texture textura;
+        if (!textura.loadFromFile("res/img/explosion3.png")) {
+            std::cerr << "Error en textura Granada";
+            exit(0);
+        }
+        setDimensiones(30,32);
+        loadSprite(textura,0,0);
+        
+        SPRITE->scale(1.4, 1.4);
+    }
+        
+        SPRITE->setRotation(0);
+        explosion = true;
+    
+}
+
 void Granada::spriteMortero() {
     mortero = true;
 }

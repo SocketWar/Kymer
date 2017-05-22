@@ -12,7 +12,7 @@
 
 class objetos {
 public:
-    objetos(char i, float x, float y);
+    objetos(int i, float x, float y);
     Vector2f getPos();
     void RenderObjeto();//para mostrar por pantalla
     Vector2f getSize();
@@ -26,7 +26,7 @@ private:
     Vector2f pos;
     Vector2f size;
     sonido *Sound;
-    char tipo;
+    int tipo;
 
 };
 

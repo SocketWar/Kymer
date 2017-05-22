@@ -2,6 +2,7 @@
 #ifndef GRANADA_H
 #define GRANADA_H
 #include "mapaTmx.h"
+#include "Estado.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -29,6 +30,10 @@ public:
     Texture getTexture(){return *TEX;}
     Rect<float> getHitbox(){return *HITBOX;}
     void explotaEnemigo();
+    Estado* getViejo();
+    Estado* getNuevo();
+    void actualizarEstado();
+    
 private:
     int HEIGTH;
     int WIDTH;
@@ -40,6 +45,8 @@ private:
     Sprite *SPRITE;
     Rect<float> *HITBOX;
     sf::Clock *Reloj;
+    Estado *viejo;
+    Estado *nuevo;
     bool explosion;
     bool mortero;
 };

@@ -376,6 +376,7 @@ int menu::Run() {
                             options = false;
                             versus = false;
                             comoJugar = false;
+                            Sound->detener();
                             return (1);
                         } else if (menu == 1){
                             playing = false;
